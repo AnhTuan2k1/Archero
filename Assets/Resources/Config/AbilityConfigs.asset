@@ -1,0 +1,87 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: e95c2104ce6de9f46bdcd982ce8298a5, type: 3}
+  m_Name: AbilityConfigs
+  m_EditorClassIdentifier: 
+  _abilityConfigs:
+  - AbilityType: 0
+    image: {fileID: 21300000, guid: cf36a1e8f3e8a904da4e36c80381e1d2, type: 3}
+    title: Attack Boost
+    description: 
+  - AbilityType: 1
+    image: {fileID: 21300000, guid: b0e0dc38bc7e62a479f1b34bab19f558, type: 3}
+    title: Attack Speed Boost
+    description: 
+  - AbilityType: 2
+    image: {fileID: 21300000, guid: 18c40db416f7cfe489079b7d44becbcc, type: 3}
+    title: Blaze
+    description: 
+  - AbilityType: 3
+    image: {fileID: 21300000, guid: c31538f4129676e4495f0cee61c5419a, type: 3}
+    title: Blood Thirst
+    description: 
+  - AbilityType: 4
+    image: {fileID: 21300000, guid: b08d10452a0fec4439076d24a945f2b4, type: 3}
+    title: Bouncy Wall
+    description: 
+  - AbilityType: 5
+    image: {fileID: 21300000, guid: c406986155163944f809af776fba4aa8, type: 3}
+    title: Crit Master
+    description: 
+  - AbilityType: 6
+    image: {fileID: 21300000, guid: ac9cf62fe6f79e9428b9565403f11ce2, type: 3}
+    title: ' Diagonal Arrow'
+    description: 
+  - AbilityType: 7
+    image: {fileID: 21300000, guid: a18ae238c2f45474a8960bf06a462615, type: 3}
+    title: Fire Circle
+    description: 
+  - AbilityType: 8
+    image: {fileID: 21300000, guid: d4ebb6fcbbf8e17488980c0e95aed085, type: 3}
+    title: Font Arrow
+    description: 
+  - AbilityType: 9
+    image: {fileID: 21300000, guid: c22591dab693b0d48a882d953d2d6524, type: 3}
+    title: Freeze
+    description: 
+  - AbilityType: 10
+    image: {fileID: 21300000, guid: 15b3608822bdcba4a9824f519b703943, type: 3}
+    title: HP Boost
+    description: 
+  - AbilityType: 11
+    image: {fileID: 21300000, guid: 7140277d3a862514581d9dbabb77a267, type: 3}
+    title: Multi Shot
+    description: 
+  - AbilityType: 12
+    image: {fileID: 21300000, guid: 178ba235150aab343ae3831ba028fb5d, type: 3}
+    title: Piercing Shot
+    description: 
+  - AbilityType: 13
+    image: {fileID: 21300000, guid: fe8dd330a1c16564fb416fe1b55ab357, type: 3}
+    title: Poisoned Touch
+    description: 
+  - AbilityType: 14
+    image: {fileID: 21300000, guid: 535ad2d55249097408ef8ab720775a6f, type: 3}
+    title: Rage
+    description: 
+  - AbilityType: 15
+    image: {fileID: 21300000, guid: dcfe34f4cc8c99a4a914d1c2949a2697, type: 3}
+    title: Rear Arrow
+    description: 
+  - AbilityType: 16
+    image: {fileID: 21300000, guid: 1dc329bff7a23b34baed5e0c57dffafd, type: 3}
+    title: Ricochet
+    description: 
+  - AbilityType: 17
+    image: {fileID: 21300000, guid: 5b2bc462be47df24c82db30f10f18baf, type: 3}
+    title: Side Arrow
+    description: 

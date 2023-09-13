@@ -1,0 +1,91 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!1 &2817663320927889492
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 2817663320927889493}
+  - component: {fileID: 2817663320927889490}
+  m_Layer: 0
+  m_Name: Audio
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &2817663320927889493
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2817663320927889492}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: -0.036838576, y: 0.19731697, z: 0.6857194}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 0}
+  m_RootOrder: 0
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &2817663320927889490
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2817663320927889492}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: e734b05efcd217e4dbcc5a1be62520b6, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  sounds:
+  - name: BulletCreate2001001
+    clip: {fileID: 8300000, guid: d0c204f29b74c5d4ea0791618c5a0215, type: 3}
+    volume: 0.5
+    pitch: 1
+    spatialBlend: 0
+    loop: 0
+    audioSource: {fileID: 0}
+  - name: BulletCreate2001002
+    clip: {fileID: 8300000, guid: 5ed9ce728e8759b4081a3e396c7df527, type: 3}
+    volume: 0.5
+    pitch: 1
+    spatialBlend: 0
+    loop: 0
+    audioSource: {fileID: 0}
+  - name: BulletCreate2001004
+    clip: {fileID: 8300000, guid: 64a0b48641d79614db174a3bb2bce09e, type: 3}
+    volume: 0.5
+    pitch: 1
+    spatialBlend: 0
+    loop: 0
+    audioSource: {fileID: 0}
+  - name: Hitted_Body2100001
+    clip: {fileID: 8300000, guid: 27a726d78f8a8bc48994a1c1e1965c99, type: 3}
+    volume: 0.5
+    pitch: 1
+    spatialBlend: 0
+    loop: 0
+    audioSource: {fileID: 0}
+  - name: Hitted_Bone2100005
+    clip: {fileID: 8300000, guid: 2bdeb79470f75ac44a9faa67b2936a1e, type: 3}
+    volume: 0.5
+    pitch: 1
+    spatialBlend: 0
+    loop: 0
+    audioSource: {fileID: 0}
+  - name: BodyHit4100001
+    clip: {fileID: 8300000, guid: efeb1d9f582441a43b20735eeb1f58d8, type: 3}
+    volume: 0.5
+    pitch: 1
+    spatialBlend: 0
+    loop: 0
+    audioSource: {fileID: 0}
+  btnPause: {fileID: 0}
+  btnUnPause: {fileID: 0}
