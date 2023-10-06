@@ -4,10 +4,10 @@ using System;
 
 public class PiercingShot : Ability
 {
-    public PiercingShot() => Name = "PiercingShot";
+    public PiercingShot() => Id = "PiercingShot";
 
     public void ActivePiercingShot(Bullet bullet)
     {
-        bullet.SetVelocity(bullet.direction.normalized * bullet.Speed);
+        bullet.SetVelocity(bullet.Direction.normalized * bullet.Speed);
     }
 }

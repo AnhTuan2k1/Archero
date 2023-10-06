@@ -16,9 +16,9 @@ public class NextArea : MonoBehaviour
 
     private void OnTriggerEnter2D(Collider2D collision)
     {
-        if (collision.gameObject.CompareTag("Player"))
+        if (LevelManager.Instance.IsReadyForNewLevel)
         {
-            if (LevelManager.Instance.IsReadyForNewLevel)
+            if (collision.gameObject.CompareTag("Player"))
             {
                 blackPanel.SetActive(true);
                 Invoke(nameof(TurnToNextArea), 1);

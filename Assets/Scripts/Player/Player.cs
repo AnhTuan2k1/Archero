@@ -97,6 +97,6 @@ public class Player : BaseObject, IGameObserver
     {
         //playerAttack.bullet.gameObject.AddComponent<>();
         //AbilityFactory.AddAbility(type, playerAttack.bullet.gameObject);
-        playerAttack.bulletAbilities.Add(type);
+        playerAttack.abilities.Add(type);
     }
 }

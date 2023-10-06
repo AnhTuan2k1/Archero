@@ -2,5 +2,5 @@
 
 public class AttackBoost : Ability
 {
-    public AttackBoost() => Name = "AttackBoost";
+    public AttackBoost() => Id = "AttackBoost";
 }

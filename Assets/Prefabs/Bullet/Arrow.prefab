@@ -11,9 +11,9 @@ GameObject:
   - component: {fileID: 67913280822801815}
   - component: {fileID: 7749020522523437703}
   - component: {fileID: 264530812}
-  - component: {fileID: 2771216863117508541}
+  - component: {fileID: 7827711263222121568}
   - component: {fileID: 264530811}
-  m_Layer: 10
+  m_Layer: 11
   m_Name: Arrow
   m_TagString: Bullet
   m_Icon: {fileID: 0}
@@ -108,8 +108,8 @@ Rigidbody2D:
   m_SleepingMode: 1
   m_CollisionDetection: 0
   m_Constraints: 4
---- !u!61 &2771216863117508541
-BoxCollider2D:
+--- !u!70 &7827711263222121568
+CapsuleCollider2D:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
@@ -122,18 +122,8 @@ BoxCollider2D:
   m_UsedByEffector: 0
   m_UsedByComposite: 0
   m_Offset: {x: 0, y: 0}
-  m_SpriteTilingProperty:
-    border: {x: 0, y: 0, z: 0, w: 0}
-    pivot: {x: 0.5, y: 0.5}
-    oldSize: {x: 1.55, y: 0.41}
-    newSize: {x: 0.44, y: 0.75}
-    adaptiveTilingThreshold: 0.5
-    drawMode: 0
-    adaptiveTiling: 0
-  m_AutoTiling: 0
-  serializedVersion: 2
-  m_Size: {x: 1.55, y: 0.41}
-  m_EdgeRadius: 0
+  m_Size: {x: 1.5499998, y: 0.40999997}
+  m_Direction: 1
 --- !u!114 &264530811
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -147,7 +137,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   rb: {fileID: 264530812}
-  col: {fileID: 2771216863117508541}
+  col: {fileID: 7827711263222121568}
   hp: 0
   maxhp: 0
   damage: 0
@@ -155,4 +145,3 @@ MonoBehaviour:
   velocity: {x: 0, y: 0, z: 0}
   healthBar: {fileID: 0}
   owner: {fileID: 0}
-  direction: {x: 1, y: -2, z: 0}

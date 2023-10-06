@@ -2,5 +2,5 @@
 
 public class CritMaster : Ability
 {
-    public CritMaster() => Name = "CritMaster";
+    public CritMaster() => Id = "CritMaster";
 }

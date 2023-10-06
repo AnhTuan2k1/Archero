@@ -1,49 +1,43 @@
 
 
 using System;
+using System.Linq;
 using UnityEngine;
 
 public class RearArrow : Ability
 {
-    public RearArrow() => Name = "RearArrow";
+    public RearArrow() => Id = "RearArrow";
     public override void Active(Bullet bullet)
     {
-        ActiveDuplicatedAbility();
-    }
-
-    protected override void ActiveDuplicatedAbility()
-    {
-        RearArrow[] rearArrows = GetComponents<RearArrow>();
-        if (rearArrows.Length == 1)
+        int rearArrowLength = bullet.abilities.Where(a => a is RearArrow).Count();
+        if (rearArrowLength == 1)
         {
-            CloneBehind();
+            CloneBehind(bullet);
         }
-        else if (rearArrows.Length > 1)
+        else if (rearArrowLength > 1)
         {
-            CloneFrontBullet(CloneBehind());
+            CloneFrontBullet(CloneBehind(bullet), rearArrowLength);
         }
     }
 
-    private Bullet CloneBehind()
+    private Bullet CloneBehind(Bullet bullet)
     {
-        Bullet b = Bullet.InstantiateFromOwn(GetComponent<Bullet>());
-        b.direction = -b.direction;
+        Bullet b = Bullet.InstantiateFromOwn(bullet);
+        b.Direction = -bullet.Direction;
         return b;
     }
 
-    private void CloneFrontBullet(Bullet Own)
+    private void CloneFrontBullet(Bullet Own, int rearArrowLength)
     {
-        RearArrow[] rearArrows = Own.GetComponents<RearArrow>();
-
         Vector2 pointA = Own.transform.position;
-        Vector2 n = new Vector2(-Own.direction.y, Own.direction.x).normalized * FontArrow.DISTANCE;
+        Vector2 n = new Vector2(-Own.Direction.y, Own.Direction.x).normalized * FontArrow.DISTANCE;
 
-        for (int i = 1; i < rearArrows.Length; i++)
+        for (int i = 1; i < rearArrowLength; i++)
         {
             Bullet b = Bullet.InstantiateFromOwn(Own);
-            b.gameObject.transform.position = pointA + n * (i - (rearArrows.Length - 1) / 2f);
+            b.gameObject.transform.position = pointA + n * (i - (rearArrowLength - 1) / 2f);
         }
 
-        Own.gameObject.transform.position = pointA - n * (rearArrows.Length - 1) / 2f;
+        Own.gameObject.transform.position = pointA - n * (rearArrowLength - 1) / 2f;
     }
 }

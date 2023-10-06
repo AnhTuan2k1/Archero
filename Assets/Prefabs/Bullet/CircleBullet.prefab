@@ -13,7 +13,7 @@ GameObject:
   - component: {fileID: 7766911768008315337}
   - component: {fileID: 7766911768008315336}
   - component: {fileID: 737253010517521880}
-  m_Layer: 10
+  m_Layer: 11
   m_Name: CircleBullet
   m_TagString: Bullet
   m_Icon: {fileID: 0}
@@ -146,3 +146,4 @@ MonoBehaviour:
   healthBar: {fileID: 0}
   owner: {fileID: 0}
   direction: {x: 0, y: 0, z: 0}
+  isPaused: 0

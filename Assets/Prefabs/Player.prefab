@@ -246,7 +246,7 @@ MonoBehaviour:
   col: {fileID: 4900630605066763450}
   hp: 1000
   maxhp: 0
-  damage: 200
+  damage: 80
   speed: 4
   velocity: {x: 0, y: 0, z: 0}
   healthBar: {fileID: 4900630605923581136}
@@ -283,7 +283,7 @@ MonoBehaviour:
   isAttacked: 0
   isReadyAttack: 0
   bullet: {fileID: 264530811, guid: b48359442c379674395f30f3acccb1a4, type: 3}
-  bulletAbilities: 
+  abilities: 0c0000000b0000000b0000000b0000000b00000006000000060000000600000006000000
   mouseUpPosition: {x: 0, y: 0, z: 0}
 --- !u!1 &4900630605278815392
 GameObject:

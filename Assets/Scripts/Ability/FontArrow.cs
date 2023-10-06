@@ -1,33 +1,32 @@
 
 using System.Collections.Generic;
+using System.Linq;
 using UnityEngine;
 
 public class FontArrow : Ability
 {
     public static readonly float DISTANCE = 0.25f;
-    public FontArrow() => Name = "FontArrow";
+    public FontArrow() => Id = "FontArrow";
 
     public override void Active(Bullet bullet)
     {
-        base.Active(bullet);
-        ActiveDuplicatedAbility();
+        ActiveDuplicatedAbility(bullet);
     }
 
-    protected override void ActiveDuplicatedAbility()
+    protected void ActiveDuplicatedAbility(Bullet bullet)
     {
-        Bullet bullet = GetComponent<Bullet>();
-        FontArrow[] fontArrows = bullet.GetComponents<FontArrow>();
+        int fontArrowLength = bullet.abilities.Where(a => a is FontArrow).Count();
 
         Vector2 pointA = bullet.transform.position;
-        Vector2 n = new Vector2(-bullet.direction.y, bullet.direction.x).normalized * DISTANCE;
+        Vector2 n = new Vector2(-bullet.Direction.y, bullet.Direction.x).normalized * DISTANCE;
 
-        for (int i = 1; i <= fontArrows.Length; i++)
+        for (int i = 1; i <= fontArrowLength; i++)
         {
             Bullet b = Bullet.InstantiateFromOwn(bullet);
-            b.gameObject.transform.position = pointA + n * (i - fontArrows.Length / 2f);
+            b.gameObject.transform.position = pointA + n * (i - fontArrowLength / 2f);
         }
 
-        bullet.gameObject.transform.position = pointA - n * fontArrows.Length / 2f;
+        bullet.gameObject.transform.position = pointA - n * fontArrowLength / 2f;
     }
 
 

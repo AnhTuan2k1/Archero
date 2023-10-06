@@ -2,5 +2,5 @@
 
 public class Rage : Ability
 {
-    public Rage() => Name = "Rage";
+    public Rage() => Id = "Rage";
 }

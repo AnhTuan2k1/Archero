@@ -2,6 +2,6 @@
 
 public class PoisonedTouch : Ability
 {
-    public PoisonedTouch() => Name = "PoisonedTouch";
+    public PoisonedTouch() => Id = "PoisonedTouch";
 
 }

@@ -2,5 +2,5 @@
 
 public class BloodThirst : Ability
 {
-    public BloodThirst() => Name = "BloodThirst";
+    public BloodThirst() => Id = "BloodThirst";
 }

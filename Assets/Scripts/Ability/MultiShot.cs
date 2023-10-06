@@ -1,34 +1,24 @@
 
-
-using System.Linq;
-using System.Threading.Tasks;
 using UnityEngine;
+using System.Threading.Tasks;
 
 public class MultiShot : Ability
 {
     private static readonly int DELAY_TIME = 1400;
-    public MultiShot() => Name = "MultiShot";
+    public MultiShot() => Id = "MultiShot";
 
     public override void Active(Bullet bullet)
     {
-        base.Active(bullet);
-        ActiveDuplicatedAbility();
+        Clone((int)(DELAY_TIME / bullet.Speed), bullet);
     }
 
-    protected override void ActiveDuplicatedAbility()
+    private async void Clone(int millisecondsDelay, Bullet bullet)
     {
-        Clone((int)(DELAY_TIME / GetComponent<Bullet>().Speed));
-    }
-
-    private async void Clone(int millisecondsDelay)
-    {
-        Bullet b = Bullet.InstantiateFromOwn(GetComponent<Bullet>());
-        Destroy(b.gameObject.GetComponent<MultiShot>());
-
-        b.gameObject.SetActive(false);
         await Task.Delay(millisecondsDelay);
-        b?.gameObject.SetActive(true);
 
-        b?.ActiveAllAbility();
+        Bullet b = Bullet.InstantiateFromOwn(bullet);
+        if (b == null) return;
+        b.abilities.Remove(b.abilities.FindLast(a => a.Id == Id));
+        b.ActiveAllAbility();
     }
 }

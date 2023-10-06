@@ -2,7 +2,7 @@
 
 public class Freeze : Ability
 {
-    public Freeze() => Name = "Freeze";
+    public Freeze() => Id = "Freeze";
     public override void Active(Bullet bullet)
     {
 

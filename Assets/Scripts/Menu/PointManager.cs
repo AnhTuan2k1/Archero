@@ -1,12 +1,9 @@
 ﻿
-using System;
-using Unity.VisualScripting;
 using UnityEngine;
 using UnityEngine.UI;
 
 public class PointManager : MonoBehaviour
 {
-    public Player player;
     public int PlayerLevel { get; private set; }
     private float playerExpPoint;
     [SerializeField] protected Slider expBar;

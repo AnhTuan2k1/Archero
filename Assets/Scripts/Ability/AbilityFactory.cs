@@ -1,6 +1,7 @@
 
 
 using System;
+using System.Collections.Generic;
 using UnityEngine;
 
 public class AbilityFactory
@@ -17,63 +18,126 @@ public class AbilityFactory
         }
     }
 
-    public static void AddAbility(AbilityType type, GameObject gameObject)
+    public static void AddAbility(AbilityType type, List<Ability> abilities)
     {
         switch (type)
         {
             case AbilityType.AttackBoost:
-                gameObject.AddComponent<AttackBoost>();
+                abilities.Add(new AttackBoost());
                 break;
             case AbilityType.AttackSpeedBoost:
-                gameObject.AddComponent<AttackSpeedBoost>();
+                abilities.Add(new AttackSpeedBoost());
                 break;
             case AbilityType.Blaze:
-                gameObject.AddComponent<Blaze>();
+                abilities.Add(new Blaze());
                 break;
             case AbilityType.BloodThirst:
-                gameObject.AddComponent<BloodThirst>();
+                abilities.Add(new BloodThirst());
                 break;
             case AbilityType.BouncyWall:
-                gameObject.AddComponent<BouncyWall>();
+                abilities.Add(new BouncyWall());
                 break;
             case AbilityType.CritMaster:
-                gameObject.AddComponent<CritMaster>();
+                abilities.Add(new CritMaster());
                 break;
             case AbilityType.DiagonalArrow:
-                gameObject.AddComponent<DiagonalArrow>();
+                abilities.Add(new DiagonalArrow());
                 break;
             case AbilityType.FireCircle:
-                gameObject.AddComponent<FireCircle>();
+                abilities.Add(new FireCircle());
                 break;
             case AbilityType.FontArrow:
-                gameObject.AddComponent<FontArrow>();
+                abilities.Add(new FontArrow());
                 break;
             case AbilityType.Freeze:
-                gameObject.AddComponent<Freeze>();
+                abilities.Add(new Freeze());
                 break;
             case AbilityType.HPBoost:
-                gameObject.AddComponent<HPBoost>();
+                abilities.Add(new HPBoost());
                 break;
             case AbilityType.MultiShot:
-                gameObject.AddComponent<MultiShot>();
+                abilities.Add(new MultiShot());
                 break;
             case AbilityType.PiercingShot:
-                gameObject.AddComponent<PiercingShot>();
+                abilities.Add(new PiercingShot());
                 break;
             case AbilityType.PoisonedTouch:
-                gameObject.AddComponent<PoisonedTouch>();
+                abilities.Add(new PoisonedTouch());
                 break;
             case AbilityType.Rage:
-                gameObject.AddComponent<Rage>();
+                abilities.Add(new Rage());
                 break;
             case AbilityType.RearArrow:
-                gameObject.AddComponent<RearArrow>();
+                abilities.Add(new RearArrow());
                 break;
             case AbilityType.Ricochet:
-                gameObject.AddComponent<Ricochet>();
+                abilities.Add(new Ricochet());
                 break;
             case AbilityType.SideArrow:
-                gameObject.AddComponent<SideArrow>();
+                abilities.Add(new SideArrow());
+                break;
+            default:
+                throw new System.Exception("This ability type is unsupported");
+        }
+    }
+
+    public static void AddAbility(Ability ability, List<Ability> abilities)
+    {
+        switch (ability)
+        {
+            case AttackBoost:
+                abilities.Add(new AttackBoost());
+                break;
+            case AttackSpeedBoost:
+                abilities.Add(new AttackSpeedBoost());
+                break;
+            case Blaze:
+                abilities.Add(new Blaze());
+                break;
+            case BloodThirst:
+                abilities.Add(new BloodThirst());
+                break;
+            case BouncyWall:
+                abilities.Add(new BouncyWall());
+                break;
+            case CritMaster:
+                abilities.Add(new CritMaster());
+                break;
+            case DiagonalArrow:
+                abilities.Add(new DiagonalArrow());
+                break;
+            case FireCircle:
+                abilities.Add(new FireCircle());
+                break;
+            case FontArrow:
+                abilities.Add(new FontArrow());
+                break;
+            case Freeze:
+                abilities.Add(new Freeze());
+                break;
+            case HPBoost:
+                abilities.Add(new HPBoost());
+                break;
+            case MultiShot:
+                abilities.Add(new MultiShot());
+                break;
+            case PiercingShot:
+                abilities.Add(new PiercingShot());
+                break;
+            case PoisonedTouch:
+                abilities.Add(new PoisonedTouch());
+                break;
+            case Rage:
+                abilities.Add(new Rage());
+                break;
+            case RearArrow:
+                abilities.Add(new RearArrow());
+                break;
+            case Ricochet:
+                abilities.Add(new Ricochet());
+                break;
+            case SideArrow:
+                abilities.Add(new SideArrow());
                 break;
             default:
                 throw new System.Exception("This ability type is unsupported");

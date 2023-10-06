@@ -67,7 +67,7 @@ public class AbilityMenu : MonoBehaviour
     {
         HideMenu();
 
-        PointManager.Instance.player.AddAbility(type);
+        Player.Instance.AddAbility(type);
     }
 }
 

@@ -21,5 +21,5 @@ MonoBehaviour:
   - levelPrefab: {fileID: 2563848288985044282, guid: e6ebae2cf9850d84db791115b5ea1a10, type: 3}
   - levelPrefab: {fileID: 5212369249793884018, guid: 23f31baa402583b44ab6233a7e7c385b, type: 3}
   - levelPrefab: {fileID: 2563848288985044282, guid: e6ebae2cf9850d84db791115b5ea1a10, type: 3}
-  - levelPrefab: {fileID: 2563848288985044282, guid: e6ebae2cf9850d84db791115b5ea1a10, type: 3}
+  - levelPrefab: {fileID: 5212369249793884018, guid: 23f31baa402583b44ab6233a7e7c385b, type: 3}
   - levelPrefab: {fileID: 5533174287258882948, guid: 7a60c0c595d81144c82b44f25e509c24, type: 3}

@@ -6,14 +6,14 @@ using UnityEngine;
 
 public class Ricochet : Ability
 {
-    public Ricochet() => Name = "Ricochet";
+    public Ricochet() => Id = "Ricochet";
     public static readonly int RANGE_ACTIVITY = 4;
     [SerializeField] private int ricochetTimes = 3;
 
     /// <summary>
     /// true if Ricochet actived, otherwise false
     /// </summary>
-    public bool ActiveRicochet(Vector3 enemy)
+    public bool ActiveRicochet(Vector3 enemy, Bullet bullet)
     {
         if (ricochetTimes > 0)
         {
@@ -21,15 +21,14 @@ public class Ricochet : Ability
             Vector3 target = enemyPosition(ref distance, enemy);
             if (distance < RANGE_ACTIVITY)
             {
-                Bullet bullet = GetComponent<Bullet>();
-                Vector2 newDirection = target - transform.position;
+                Vector2 newDirection = target - bullet.transform.position;
 
-                bullet.transform.Rotate(Vector3.forward, Vector2.SignedAngle(bullet.direction, newDirection));
-                bullet.direction = newDirection;
-                bullet.SetVelocity(newDirection.normalized * bullet.Speed);
+                //bullet.transform.Rotate(Vector3.forward, Vector2.SignedAngle(bullet.Direction, newDirection));
+                bullet.Direction = newDirection;
+                //bullet.SetVelocity(newDirection.normalized * bullet.Speed);
 
                 ricochetTimes--;
-                if (ricochetTimes < 1) Destroy(GetComponent<Ricochet>());
+                if (ricochetTimes < 1) bullet.abilities.Remove(this);
                 return true;
             }
             else return false;

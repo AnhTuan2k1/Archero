@@ -2,11 +2,11 @@
 
 using UnityEngine;
 
-public abstract class Ability : MonoBehaviour
+//[System.Serializable]
+public abstract class Ability
 {
-    public string Name;
-    public virtual void Active(Bullet bullet) { }
-    protected virtual void ActiveDuplicatedAbility() { }
+    public string Id;
+    public virtual void Active(Bullet bullet) {}
 }
 
 

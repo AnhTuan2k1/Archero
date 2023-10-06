@@ -9,13 +9,13 @@ public class CircleBullet : Bullet
         base.OnCollisionEnter2D(collision);
         if(collision.gameObject.CompareTag("Player"))
         {
-            collision.gameObject.GetComponent<Player>().TakeDamage(this.owner);
+            collision.gameObject.GetComponent<Player>().TakeDamage(this.Owner);
             Die();
         }
         if (collision.gameObject.CompareTag("Enemy"))
         {
             Physics2D.IgnoreCollision(col, collision.collider, true);
-            SetVelocity(direction.normalized * speed);
+            SetVelocity(Direction.normalized * speed);
         }
     }
 

@@ -1,56 +1,51 @@
 
+using System.Linq;
 using UnityEngine;
 
 public class SideArrow : Ability
 {
-    public SideArrow() => Name = "SideArrow";
+    public SideArrow() => Id = "SideArrow";
     public override void Active(Bullet bullet)
     {
-        ActiveDuplicatedAbility();
-    }
-
-    protected override void ActiveDuplicatedAbility()
-    {
-        SideArrow[] sideArrows = GetComponent<Bullet>().GetComponents<SideArrow>();
-        if (sideArrows.Length == 1)
+        int sideArrowLength = bullet.abilities.Where(a => a is SideArrow).Count();
+        if (sideArrowLength == 1)
         {
-            CloneRight();
-            CloneLeft();
+            CloneRight(bullet);
+            CloneLeft(bullet);
         }
-        else if(sideArrows.Length > 1)
+        else if (sideArrowLength > 1)
         {
-            CloneFrontBullet(CloneRight());
-            CloneFrontBullet(CloneLeft());
+            CloneFrontBullet(CloneRight(bullet), sideArrowLength);
+            CloneFrontBullet(CloneLeft(bullet), sideArrowLength);
         }
     }
 
-    private Bullet CloneRight()
+    private Bullet CloneRight(Bullet bullet)
     {
-        Bullet b = Bullet.InstantiateFromOwn(GetComponent<Bullet>());
-        b.direction = new Vector2(b.direction.y, -b.direction.x);
+        Bullet b = Bullet.InstantiateFromOwn(bullet);
+        b.Direction = new Vector2(b.Direction.y, -b.Direction.x);
         return b;
     }
 
-    private Bullet CloneLeft()
+    private Bullet CloneLeft(Bullet bullet)
     {
-        Bullet b = Bullet.InstantiateFromOwn(GetComponent<Bullet>());
-        b.direction = new Vector2(-b.direction.y, b.direction.x);
+        Bullet b = Bullet.InstantiateFromOwn(bullet);
+        b.Direction = new Vector2(-b.Direction.y, b.Direction.x);
         return b;
     }
 
-    private void CloneFrontBullet(Bullet Own)
+    private void CloneFrontBullet(Bullet Own, int sideArrowLength)
     {
-        SideArrow[] fontArrows = Own.GetComponents<SideArrow>();
 
         Vector2 pointA = Own.transform.position;
-        Vector2 n = new Vector2(-Own.direction.y, Own.direction.x).normalized * FontArrow.DISTANCE;
+        Vector2 n = new Vector2(-Own.Direction.y, Own.Direction.x).normalized * FontArrow.DISTANCE;
 
-        for (int i = 1; i < fontArrows.Length; i++)
+        for (int i = 1; i < sideArrowLength; i++)
         {
             Bullet b = Bullet.InstantiateFromOwn(Own);
-            b.gameObject.transform.position = pointA + n * (i - (fontArrows.Length - 1) / 2f);
+            b.gameObject.transform.position = pointA + n * (i - (sideArrowLength - 1) / 2f);
         }
 
-        Own.gameObject.transform.position = pointA - n * (fontArrows.Length - 1) / 2f;
+        Own.gameObject.transform.position = pointA - n * (sideArrowLength - 1) / 2f;
     }
 }

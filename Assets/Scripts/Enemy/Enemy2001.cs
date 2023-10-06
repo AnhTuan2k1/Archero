@@ -3,6 +3,7 @@
 
 using System.Collections.Generic;
 using UnityEngine;
+using static UnityEngine.UI.GridLayoutGroup;
 
 public class Enemy2001 : Enemy
 {
@@ -36,9 +37,12 @@ public class Enemy2001 : Enemy
 
     private void SpawnBullet()
     {
-        Bullet b = Instantiate(bullet, transform.position, transform.rotation);
-        b.direction = GetBulletDirection();
-        b.owner = this;
+        //Bullet b = Instantiate(bullet, transform.position, transform.rotation);
+        Bullet b = ObjectPooling.Instance
+            .GetObject(bullet.gameObject, transform.position).GetComponent<Bullet>();
+        b.Direction = GetBulletDirection();
+        b.Owner = this;
+        b.abilities = new();
         AddAbilityToBullet(b);
         b.ActiveAllAbility();
     }

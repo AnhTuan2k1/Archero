@@ -68,11 +68,11 @@ public abstract class Enemy : BaseObject, IGameObserver
         {
             collision.gameObject.GetComponent<Player>().TakeDamage(this);
         }
-        else if (collision.gameObject.CompareTag("Enemy"))
-        {
-            // make enemies move through each other
-            IgnoreCollideWith(collision);
-        }
+        //else if (collision.gameObject.CompareTag("Enemy"))
+        //{
+        //    // make enemies move through each other
+        //    IgnoreCollideWith(collision);
+        //}
         else if (collision.gameObject.CompareTag("Bullet"))
         {
             MoveToDirection(Velocity);
@@ -128,8 +128,7 @@ public abstract class Enemy : BaseObject, IGameObserver
         int randomNumber = Random.Range(2, 6);
         for (int i = 0; i < randomNumber; i++)
         {
-            GameObject g = Instantiate(goldCoin, transform.position, transform.rotation);
-            GoldCoin gold = g.GetComponent<GoldCoin>();
+            GoldCoin gold = GoldCoin.Instantiate(goldCoin, transform.position);
             gold.pointExp = maxhp / (100 * randomNumber);
         }
     }

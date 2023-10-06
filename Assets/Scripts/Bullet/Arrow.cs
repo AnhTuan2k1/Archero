@@ -5,21 +5,28 @@ using UnityEngine;
 
 public class Arrow : Bullet
 {
+    public Arrow() => direction = Vector2.right;
+
     protected override void OnCollisionEnter2D(Collision2D collision)
     {
-        base.OnCollisionEnter2D(collision);        
+        if (collision.gameObject.CompareTag("Wall"))
+        {
+            BouncyWall bouncy = (BouncyWall)abilities.FindLast(a => a is BouncyWall);
+            if (bouncy != null) bouncy.BulletBounce(collision, this);
+            else Die(1000);
+        }
 
-        if (collision.gameObject.CompareTag("Enemy") && this.owner is Player)
+        else if (collision.gameObject.CompareTag("Enemy") && this.Owner is Player)
         {
             Physics2D.IgnoreCollision(col, collision.collider, true);
-            collision.gameObject.GetComponent<Enemy>().TakeDamage(this.owner);
+            collision.gameObject.GetComponent<Enemy>().TakeDamage(this.Owner);
 
-            Ricochet ricochet = GetComponent<Ricochet>();
-            PiercingShot piercingShot = GetComponent<PiercingShot>();
+            Ricochet ricochet = (Ricochet)abilities.FindLast(a => a is Ricochet);
+            PiercingShot piercingShot = (PiercingShot)abilities.FindLast(a => a is PiercingShot);
 
             if (ricochet != null)
             {
-                bool isAcvited = ricochet.ActiveRicochet(collision.transform.position);
+                bool isAcvited = ricochet.ActiveRicochet(collision.transform.position, this);
                 if (isAcvited == false)
                 {
                     if (piercingShot != null)

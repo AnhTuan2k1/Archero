@@ -2,6 +2,8 @@ using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.UIElements;
+using static UnityEngine.UI.GridLayoutGroup;
 
 public class PlayerAttack : MonoBehaviour
 {
@@ -12,15 +14,14 @@ public class PlayerAttack : MonoBehaviour
     [SerializeField] bool isReadyAttack = false;
     //[SerializeField] bool isMouseButtonDown = true;
     public Bullet bullet;
-    public List<AbilityType> bulletAbilities;
+    public List<AbilityType> abilities;
     [SerializeField] Vector3 mouseUpPosition;
 
     void Start()
     {
         player = GetComponent<Player>();
         playerMovement = GetComponent<PlayerMovement>();
-        bullet.RemoveAllAbility();
-        bulletAbilities ??= new List<AbilityType>();
+        abilities ??= new List<AbilityType>();
     }
 
     private void Update()
@@ -56,10 +57,13 @@ public class PlayerAttack : MonoBehaviour
 
     private void SpawnBullet()
     {
-        Bullet b = Instantiate(bullet, transform.position, transform.rotation);
-        b.direction = enemyPosition() - player.transform.position;
-        b.owner = player;
-        b.AddAbility(bulletAbilities);
+        //Bullet b = Instantiate(bullet, transform.position, transform.rotation);
+        Bullet b = ObjectPooling.Instance
+            .GetObject(bullet.gameObject, transform.position).GetComponent<Bullet>();
+        b.Direction = enemyPosition() - player.transform.position;
+        b.Owner = player;
+        b.abilities = new();
+        b.AddAbility(abilities);
         b.ActiveAllAbility();
     }
 
@@ -83,24 +87,32 @@ public class PlayerAttack : MonoBehaviour
 
     private Vector3 enemyPosition()
     {
-        Vector3 position = Vector3.zero;
-        if (EnemyManager.Instance.Enemies.Count == 0) return position;
-        else
+        try
         {
-            List<Enemy> enemys = EnemyManager.Instance.Enemies;
-            position = enemys[0].transform.position;
-            float distance = Vector2.Distance(enemys[0].transform.position, player.transform.position);
-            for (int i = 1; i < enemys.Count; i++)
+            Vector3 position = Vector3.zero;
+            if (EnemyManager.Instance.Enemies.Count == 0) return position;
+            else
             {
-                float d = Vector2.Distance(enemys[i]
-                    .transform.position, player.transform.position);
-                if (d < distance)
+                List<Enemy> enemys = EnemyManager.Instance.Enemies;
+                position = enemys[0].transform.position;
+                float distance = Vector2.Distance(enemys[0].transform.position, player.transform.position);
+                for (int i = 1; i < enemys.Count; i++)
                 {
-                    distance = d;
-                    position = enemys[i].transform.position;
+                    float d = Vector2.Distance(enemys[i]
+                        .transform.position, player.transform.position);
+                    if (d < distance)
+                    {
+                        distance = d;
+                        position = enemys[i].transform.position;
+                    }
                 }
+                return position;
             }
-            return position;
+        }
+        catch (Exception e)
+        {
+            Debug.LogException(e);
+            return Vector3.zero;
         }
     }
 
