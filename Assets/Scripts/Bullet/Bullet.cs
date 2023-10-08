@@ -19,7 +19,7 @@ public abstract class Bullet : BaseObject, IGameObserver
         {
             transform.Rotate(Vector3.forward, Vector2.SignedAngle(direction, value));
             direction = value.normalized;
-            SetVelocity(direction * speed);
+            Velocity = direction * speed;
         }
     }
 
@@ -62,27 +62,27 @@ public abstract class Bullet : BaseObject, IGameObserver
 
     public void OnGamePaused(bool isPaused)
     {
-        gameObject.isStatic = isPaused;
+        //gameObject.isStatic = isPaused;
 
-        if (isPaused)
-        {
-            var scriptComponents = this.GetComponents<MonoBehaviour>();
-            foreach (var script in scriptComponents)
-            {
-                script.enabled = false;
-            }
-            velocity = rb.velocity;
-            rb.velocity = Vector2.zero;
-        }
-        else
-        {
-            var scriptComponents = this.GetComponents<MonoBehaviour>();
-            foreach (var script in scriptComponents)
-            {
-                script.enabled = true;
-            }
-            rb.velocity = velocity;
-        }
+        //if (isPaused)
+        //{
+        //    var scriptComponents = this.GetComponents<MonoBehaviour>();
+        //    foreach (var script in scriptComponents)
+        //    {
+        //        script.enabled = false;
+        //    }
+        //    velocity = rb.velocity;
+        //    rb.velocity = Vector2.zero;
+        //}
+        //else
+        //{
+        //    var scriptComponents = this.GetComponents<MonoBehaviour>();
+        //    foreach (var script in scriptComponents)
+        //    {
+        //        script.enabled = true;
+        //    }
+        //    rb.velocity = velocity;
+        //}
     }
 
     public virtual void ActiveAllAbility()
@@ -127,7 +127,7 @@ public abstract class Bullet : BaseObject, IGameObserver
         b.Direction = bullet.Direction;
         b.abilities = new();
         b.AddAbility(bullet.abilities);
-        b.BulletCreateSound();
+        //b.BulletCreateSound();
         return b;
     }
 

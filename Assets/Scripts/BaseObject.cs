@@ -7,28 +7,41 @@ public abstract class BaseObject : MonoBehaviour
 {
     public Rigidbody2D rb;
     public Collider2D col;
-    [SerializeField] protected float hp;
+    [SerializeField] private float hp;
     [SerializeField] protected float maxhp;
     [SerializeField] protected float damage;
     [SerializeField] protected float speed;
-    [SerializeField] protected Vector3 velocity;
+    [SerializeField] private Vector3 velocity;
     [SerializeField] protected Slider healthBar;
-    public float Hp => this.hp;
-    public float Damage => this.damage;
+    [SerializeField] protected GameObject floatingTextPrefab;
+    public virtual float Damage => this.damage;
     public float Speed => this.speed;
-    public Vector3 Velocity => this.velocity;
+    public virtual float HP
+    {
+        get { return hp; }
+        protected set 
+        { 
+            hp = value;
+            UpdateHealth(hp / maxhp);
+        }
+    }
+    public Vector3 Velocity
+    {
+        get { return velocity; }
+        set 
+        {
+            this.velocity = value;
+            rb.velocity = velocity;
+        }
+    }
+
 
     public abstract void Die(int time = 0);
-    public abstract void TakeDamage(BaseObject owner);
     public abstract void HittedSound();
+    public virtual void TakeDamage(BaseObject owner) => HittedSound();
 
     public void UpdateHealth(float fraction)
     {
         if (healthBar != null) healthBar.value = fraction;
-    }
-    public void SetVelocity(Vector3 velocity)
-    {
-        rb.velocity = velocity;
-        this.velocity = velocity;
     }
 }

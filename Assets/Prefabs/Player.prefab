@@ -246,13 +246,17 @@ MonoBehaviour:
   col: {fileID: 4900630605066763450}
   hp: 1000
   maxhp: 0
-  damage: 80
+  damage: 0
   speed: 4
   velocity: {x: 0, y: 0, z: 0}
   healthBar: {fileID: 4900630605923581136}
+  floatingTextPrefab: {fileID: 0}
+  InitalDamage: 160
   textPoint: {fileID: 7024882195199339842}
   maxHealth: 1000
   playerAttack: {fileID: 4900630605066763452}
+  abilities: 0b000000
+  critRate: 0
 --- !u!114 &4900630605066763448
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -279,12 +283,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: a6285af9334a4a74a8621043181b773b, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  delayTime: 0.5
+  delayTime: 1
   isAttacked: 0
   isReadyAttack: 0
   bullet: {fileID: 264530811, guid: b48359442c379674395f30f3acccb1a4, type: 3}
-  abilities: 0c0000000b0000000b0000000b0000000b00000006000000060000000600000006000000
-  mouseUpPosition: {x: 0, y: 0, z: 0}
 --- !u!1 &4900630605278815392
 GameObject:
   m_ObjectHideFlags: 0
@@ -437,8 +439,8 @@ MonoBehaviour:
       m_Calls: []
   m_text: 1000
   m_isRightToLeft: 0
-  m_fontAsset: {fileID: 11400000, guid: 59abdbdb51fb7e64f90e73202b81561f, type: 2}
-  m_sharedMaterial: {fileID: -3642123844173179407, guid: 59abdbdb51fb7e64f90e73202b81561f, type: 2}
+  m_fontAsset: {fileID: 11400000, guid: 2973d29b15d97a745935dd9af6e9afff, type: 2}
+  m_sharedMaterial: {fileID: -6421554675962348808, guid: 2973d29b15d97a745935dd9af6e9afff, type: 2}
   m_fontSharedMaterials: []
   m_fontMaterial: {fileID: 0}
   m_fontMaterials: []

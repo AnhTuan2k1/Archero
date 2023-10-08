@@ -1,12 +1,16 @@
 ﻿
+using System;
+using TMPro;
 using UnityEngine;
 using UnityEngine.UI;
 
 public class PointManager : MonoBehaviour
 {
-    public int PlayerLevel { get; private set; }
+    private int playerLevel;
+    public int PlayerLevel { get => playerLevel; private set => playerLevel = value; }
     private float playerExpPoint;
     [SerializeField] protected Slider expBar;
+    [SerializeField] private TextMeshProUGUI textPlayerLevel;
 
     private static PointManager _instance;
     public static PointManager Instance
@@ -30,7 +34,11 @@ public class PointManager : MonoBehaviour
             AbilityManager.Instance.ShowAbilityMenu();
         }
 
-        expBar.value = playerExpPoint/(PlayerLevel * 22 + 20);
+        expBar.value = playerExpPoint / (PlayerLevel * 22 + 20);
     }
 
+    public void UpDatePoint()
+    {
+        
+    }
 }

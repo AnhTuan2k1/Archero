@@ -16,7 +16,7 @@ public class EnemyManager : MonoBehaviour
     }
 
     public List<Enemy> Enemies { get => enemies;}
-    private List<Enemy> enemies;
+    [SerializeField] private List<Enemy> enemies;
 
     private void Awake()
     {

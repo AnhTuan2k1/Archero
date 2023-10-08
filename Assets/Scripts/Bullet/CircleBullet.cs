@@ -15,7 +15,7 @@ public class CircleBullet : Bullet
         if (collision.gameObject.CompareTag("Enemy"))
         {
             Physics2D.IgnoreCollision(col, collision.collider, true);
-            SetVelocity(Direction.normalized * speed);
+            this.Velocity = Direction.normalized * speed;
         }
     }
 

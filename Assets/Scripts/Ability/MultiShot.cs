@@ -19,6 +19,7 @@ public class MultiShot : Ability
         Bullet b = Bullet.InstantiateFromOwn(bullet);
         if (b == null) return;
         b.abilities.Remove(b.abilities.FindLast(a => a.Id == Id));
+        b.BulletCreateSound();
         b.ActiveAllAbility();
     }
 }

@@ -1,6 +1,5 @@
 using System.Threading.Tasks;
 using UnityEngine;
-using Random = System.Random;
 
 public class GoldCoin : MonoBehaviour, IGameObserver
 {
@@ -11,11 +10,6 @@ public class GoldCoin : MonoBehaviour, IGameObserver
 
     public Transform player;
     public float speed = 7f;
-
-    void Start()
-    {
-        OnInstantiate();
-    }
 
     private void Update()
     {
@@ -50,12 +44,11 @@ public class GoldCoin : MonoBehaviour, IGameObserver
         GameManager.Instance.RegisterObserver(this);
         player = Player.Instance.transform;
 
-        Random random = new Random();
-        int randomNumber = random.Next(-4, 4);
+        float randomNumber = Random.Range(-4, 4.0f);
         rb.AddForce(new Vector2(randomNumber, 18) * force);
 
-        await Task.Delay(random.Next(9, 12) * 100);
-        if (gameObject == null) return;
+        await Task.Delay((int)(Random.Range(5.0f, 8) * 100));
+        if (this == null) return;
         rb.gravityScale = 0;
         rb.velocity = Vector3.zero;
     }

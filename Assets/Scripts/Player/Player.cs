@@ -1,13 +1,43 @@
 ﻿
 using System;
+using System.Collections.Generic;
 using TMPro;
 using UnityEngine;
 
 public class Player : BaseObject, IGameObserver
 {
-    public TextMeshProUGUI textPoint;
-    public float maxHealth = 1000;
+    [SerializeField] private TextMeshProUGUI textPoint;
+    [SerializeField] private float InitalDamage;
+    [SerializeField] private float InitalMaxHealth;
     public PlayerAttack playerAttack;
+
+    [SerializeField] private float critRate;
+    public float CritRate => this.critRate;
+    [SerializeField] private float bloodThirstRate;
+    public float BloodThirstRate => this.bloodThirstRate;
+    [SerializeField] private float rageRate;
+    public float RageRate => this.rageRate;
+    [SerializeField] private List<AbilityType> abilities;
+    public List<AbilityType> Abilities => this.abilities;
+
+    public override float HP
+    {
+        get => base.HP;
+        protected set
+        {
+            base.HP = value;
+
+            // update text point
+            textPoint.SetText(((int)HP).ToString());
+
+            // calculate Rage ability again
+            if(abilities.Contains(AbilityType.Rage))
+                rageRate = Rage.CalculateRageRate(Abilities, 1 - HP / maxhp);
+        }
+
+    }
+
+    public override float Damage => base.Damage + damage*rageRate;
 
     private static Player _instance;
     public static Player Instance
@@ -22,7 +52,10 @@ public class Player : BaseObject, IGameObserver
 
     protected virtual void Start()
     {
+        damage = InitalDamage;
+        HP = maxhp = InitalMaxHealth;
         GameManager.Instance.RegisterObserver(this);
+        abilities ??= new List<AbilityType>();
     }
 
     public override void Die(int time = 0)
@@ -60,12 +93,10 @@ public class Player : BaseObject, IGameObserver
 
     public override void TakeDamage(BaseObject owner)
     {
-        HittedSound();
+        base.TakeDamage(owner);
 
-        hp = hp - owner.Damage;
-        UpdateHealth(hp / maxHealth);
-        textPoint.SetText(((int)hp).ToString());
-        if (hp <= 0) Die();
+        HP -= owner.Damage;
+        if (HP <= 0) Die();
     }
 
     public void OnGamePaused(bool isPaused)
@@ -97,6 +128,37 @@ public class Player : BaseObject, IGameObserver
     {
         //playerAttack.bullet.gameObject.AddComponent<>();
         //AbilityFactory.AddAbility(type, playerAttack.bullet.gameObject);
-        playerAttack.abilities.Add(type);
+        Abilities.Add(type);
+
+        if(type is AbilityType.CritMaster) 
+            critRate = CritMaster.CalculateCritRate(Abilities);
+        else if (type is AbilityType.AttackBoost)
+            damage = InitalDamage * AttackBoost.CalculateAttackBoostRate(Abilities);
+        else if (type is AbilityType.AttackSpeedBoost)
+            playerAttack.AttackSpeed = AttackSpeedBoost.CalculateAttackBoostRate(Abilities);
+        else if (type is AbilityType.BloodThirst)
+            bloodThirstRate = BloodThirst.CalculateBloodThirstRate(Abilities);
+        else if (type is AbilityType.Rage)
+            rageRate = Rage.CalculateRageRate(Abilities, 1 - HP/maxhp);
+        else if (type is AbilityType.HPBoost)
+        {
+            float rate = HPBoost.CalculateHPBoostRate(Abilities);
+            maxhp = InitalMaxHealth * rate;
+            Healing(150*rate);
+        }
+    }
+
+    private void Healing(float heal)
+    {
+        HP+=heal;
+    }
+
+    public void ActiveBloodThirst()
+    {
+        float heal = maxhp * bloodThirstRate;
+        if(heal + HP > maxhp) heal = maxhp - HP;
+
+        Healing(heal);
+        FloatingText.Instantiate(floatingTextPrefab, transform.position).SetText(heal);
     }
 }

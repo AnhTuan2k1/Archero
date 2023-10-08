@@ -3,7 +3,6 @@
 
 using System.Collections.Generic;
 using UnityEngine;
-using static UnityEngine.UI.GridLayoutGroup;
 
 public class Enemy2001 : Enemy
 {
@@ -61,7 +60,7 @@ public class Enemy2001 : Enemy
         List<AbilityType> abi = new();      
         for (int i = 0; i < Random.Range(0, 5); i++)
         {
-            abi.Add(bulletAbilities[Random.Range(0, 4)]);
+            abi.Add(bulletAbilities[Random.Range(0, bulletAbilities.Count - 1)]);
         }
         b.AddAbility(abi);
     }

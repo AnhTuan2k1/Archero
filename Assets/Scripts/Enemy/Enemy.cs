@@ -11,7 +11,8 @@ public abstract class Enemy : BaseObject, IGameObserver
     protected virtual void Start()
     {
         EnemyManager.Instance.AddEnemy(this);
-        hp = maxhp = 2000 * (1+LevelManager.Instance.CurrentLevel);
+        maxhp *= 1+LevelManager.Instance.CurrentLevel;
+        HP = maxhp;
     }
 
     public virtual float Patroling()
@@ -33,22 +34,30 @@ public abstract class Enemy : BaseObject, IGameObserver
 
     public override void TakeDamage(BaseObject owner)
     {
-        HittedSound();
+        base.TakeDamage(owner);
 
-        hp -= owner.Damage;
-        UpdateHealth(hp / maxhp);
+        bool isDamageCrit = CritMaster.IsCritHappen(((Player)owner).CritRate);
+        float Damage = owner.Damage * (isDamageCrit ? 2 : 1);
 
-        if (hp <= 0) Die();
-        else // push enemy
-        {
-            Vector2 force = (transform.position - owner.transform.position).normalized * 10;
-            rb.AddForce(force);
-        }
+        FloatingText.Instantiate(floatingTextPrefab, transform.position)
+            .SetText(-Damage, isDamageCrit);
+
+        HP -= Damage;
+        if (HP <= 0) Die();
+
+        //else // push enemy
+        //{
+        //    Vector2 force = (transform.position - owner.transform.position).normalized * 10;
+        //    rb.AddForce(force);
+        //}
     }
 
     public override void Die(int time = 0)
     {
         EnemyManager.Instance.RemoveEnemy(this);
+        //PointManager.Instance.UpDatePoint();
+
+        Player.Instance.ActiveBloodThirst();
         SpawnGoldCoin();
         Destroy(gameObject);
     }
@@ -87,8 +96,7 @@ public abstract class Enemy : BaseObject, IGameObserver
 
     private void MoveToDirection(Vector2 direction)
     {
-        velocity = direction.normalized * speed;
-        rb.velocity = velocity;
+        Velocity = direction.normalized * speed;
     }
 
     private Vector2 RandomDirection(Vector2 n)
@@ -102,25 +110,25 @@ public abstract class Enemy : BaseObject, IGameObserver
 
     public void OnGamePaused(bool isPaused)
     {
-        if (isPaused)
-        {
-            var scriptComponents = this.GetComponents<MonoBehaviour>();
-            foreach (var script in scriptComponents)
-            {
-                script.enabled = false;
-            }
-            velocity = rb.velocity;
-            rb.velocity = Vector2.zero;
-        }
-        else
-        {
-            var scriptComponents = this.GetComponents<MonoBehaviour>();
-            foreach (var script in scriptComponents)
-            {
-                script.enabled = true;
-            }
-            rb.velocity = velocity;
-        }
+        //if (isPaused)
+        //{
+        //    var scriptComponents = this.GetComponents<MonoBehaviour>();
+        //    foreach (var script in scriptComponents)
+        //    {
+        //        script.enabled = false;
+        //    }
+        //    velocity = rb.velocity;
+        //    rb.velocity = Vector2.zero;
+        //}
+        //else
+        //{
+        //    var scriptComponents = this.GetComponents<MonoBehaviour>();
+        //    foreach (var script in scriptComponents)
+        //    {
+        //        script.enabled = true;
+        //    }
+        //    rb.velocity = velocity;
+        //}
     }
 
     private void SpawnGoldCoin()

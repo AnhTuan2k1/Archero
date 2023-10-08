@@ -101,7 +101,7 @@ Rigidbody2D:
   m_Simulated: 1
   m_UseFullKinematicContacts: 0
   m_UseAutoMass: 0
-  m_Mass: 1
+  m_Mass: 0.0002
   m_LinearDrag: 0
   m_AngularDrag: 0.05
   m_GravityScale: 0
@@ -140,12 +140,13 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   rb: {fileID: -1027361652156665967}
   col: {fileID: 6721925434657621923}
-  hp: 500
-  maxhp: 0
+  hp: 1000
+  maxhp: 1000
   damage: 180
   speed: 1
   velocity: {x: 0, y: 0, z: 0}
   healthBar: {fileID: 7496795316836601960}
+  floatingTextPrefab: {fileID: 3439975688456297023, guid: def7d07d376b64a4c856562adfe266b6, type: 3}
   bullet: {fileID: 737253010517521880, guid: bdab57d4189df4141b3d12e8e15ed6bb, type: 3}
   goldCoin: {fileID: 1246056641529918533, guid: 7b2063c365e3705498f5015ea091b75b, type: 3}
   bulletAbilities: 06000000080000000b0000000f00000011000000

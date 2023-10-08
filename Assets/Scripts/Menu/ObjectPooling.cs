@@ -1,13 +1,8 @@
-using System;
+
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
-using Unity.VisualScripting;
 using UnityEngine;
-using UnityEngine.Pool;
-using UnityEngine.UIElements;
-using static ObjectPooling;
-using static ObjectPoolManager;
 
 public class ObjectPooling : MonoBehaviour
 {
@@ -39,11 +34,14 @@ public class ObjectPooling : MonoBehaviour
     private static GameObject _Arrow;
     private static GameObject _CircleBullet;
     private static GameObject _GoldCoin;
+    private static GameObject _FloatingText;
+    public static Vector2 poolPosition;
 
     private void Awake()
     {
         _objectPoolHolder = new GameObject("Pooled Objects");
         _objectPoolHolder.transform.SetParent(transform);
+        poolPosition = new Vector2(-5, 0);
 
         _Arrow = new GameObject("Arrows");
         _Arrow.transform.SetParent(_objectPoolHolder.transform);
@@ -51,6 +49,8 @@ public class ObjectPooling : MonoBehaviour
         _CircleBullet.transform.SetParent(_objectPoolHolder.transform);
         _GoldCoin = new GameObject("GoldCoin");
         _GoldCoin.transform.SetParent(_objectPoolHolder.transform);
+        _FloatingText = new GameObject("FloatingText");
+        _FloatingText.transform.SetParent(_objectPoolHolder.transform);
     }
 
     private void Start()
@@ -74,13 +74,17 @@ public class ObjectPooling : MonoBehaviour
         int counter = 0;
         for (int i = 0; i < pool.size; i++, counter++)
         {
+            if (this == null) return; // game over
             GameObject obj = Instantiate(pool.prefab);
             obj.SetActive(false);
             objectPool.Enqueue(obj);
 
             obj.transform.SetParent(GetParent(obj));
-            //Debug.Log("object num " + i + " with tag " + pool.tag + " was created");
-            if (counter > 9) await Task.Delay(100);
+            //Debug.Log("object num " + i + " with tag " + pool.type + " was created");
+            if (counter > 20)
+                await Task.Delay(200);
+            else if (counter > 5)
+                await Task.Delay(100);
         }
 
         poolDictionary.Add(pool.type, objectPool);
@@ -141,14 +145,14 @@ public class ObjectPooling : MonoBehaviour
             gameObject.GetComponent<Collider2D>().enabled = true;
 
 
-            gameObject.transform.position = new Vector2(-5, 0);
+            gameObject.transform.position = poolPosition;
             string type = GetType(gameObject);
             gameObject.SetActive(false);
             poolDictionary[type].Enqueue(gameObject);
         }
         else
         {
-            gameObject.transform.position = new Vector2(-5, 0);
+            gameObject.transform.position = poolPosition;
             string type = GetType(gameObject);
             gameObject.SetActive(false);
             poolDictionary[type].Enqueue(gameObject);
@@ -160,6 +164,7 @@ public class ObjectPooling : MonoBehaviour
         if (gameObject.GetComponent<Arrow>()) return "Arrow";
         else if (gameObject.GetComponent<CircleBullet>()) return "CircleBullet";
         else if (gameObject.GetComponent<GoldCoin>()) return "GoldCoin";
+        else if (gameObject.GetComponent<FloatingText>()) return "FloatingText";
         else return null;
     }
 
@@ -168,6 +173,7 @@ public class ObjectPooling : MonoBehaviour
         if (gameObject.GetComponent<Arrow>()) return pools.Where(a => a.type == "Arrow").First().prefab;
         else if (gameObject.GetComponent<CircleBullet>()) return pools.Where(a => a.type == "CircleBullet").First().prefab;
         else if (gameObject.GetComponent<GoldCoin>()) return pools.Where(a => a.type == "GoldCoin").First().prefab;
+        else if (gameObject.GetComponent<FloatingText>()) return pools.Where(a => a.type == "FloatingText").First().prefab;
         else return null;
     }
 
@@ -178,6 +184,7 @@ public class ObjectPooling : MonoBehaviour
             "Arrow" => _Arrow.transform,
             "CircleBullet" => _CircleBullet.transform,
             "GoldCoin" => _GoldCoin.transform,
+            "FloatingText" => _FloatingText.transform,
             _ => null,
         };
     }

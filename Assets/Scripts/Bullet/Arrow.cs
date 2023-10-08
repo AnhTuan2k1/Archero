@@ -1,6 +1,7 @@
 ﻿
 
 using System;
+using System.Threading.Tasks;
 using UnityEngine;
 
 public class Arrow : Bullet
@@ -19,6 +20,8 @@ public class Arrow : Bullet
         else if (collision.gameObject.CompareTag("Enemy") && this.Owner is Player)
         {
             Physics2D.IgnoreCollision(col, collision.collider, true);
+            EnableCollisionAgain(collision.collider, 50);
+
             collision.gameObject.GetComponent<Enemy>().TakeDamage(this.Owner);
 
             Ricochet ricochet = (Ricochet)abilities.FindLast(a => a is Ricochet);
@@ -44,12 +47,11 @@ public class Arrow : Bullet
         }
     }
 
-    protected override void OnCollisionExit2D(Collision2D collision)
+    private async void EnableCollisionAgain(Collider2D collider, int time)
     {
-        base.OnCollisionExit2D(collision);
-        if (collision.gameObject.CompareTag("Enemy"))
-        {
-            Physics2D.IgnoreCollision(col, collision.collider, false);
-        }
+        await Task.Delay(time);
+        if (this == null || collider == null) return;
+        Physics2D.IgnoreCollision(col, collider, false);
     }
+
 }

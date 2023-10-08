@@ -18,7 +18,7 @@ public class AbilityMenu : MonoBehaviour
     {
         gameObject.SetActive(true);
 
-        GameManager.Instance.TogglePause();
+        GameManager.Instance.OnGamePaused();
         ReRollAbility();
     }
 
@@ -26,7 +26,7 @@ public class AbilityMenu : MonoBehaviour
     {
         gameObject.SetActive(false);
 
-        GameManager.Instance.TogglePause();
+        GameManager.Instance.OnGameResume();
         DestroyAbility();
     }
 

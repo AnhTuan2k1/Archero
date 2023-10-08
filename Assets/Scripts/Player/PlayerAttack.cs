@@ -1,44 +1,30 @@
 using System;
-using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
-using UnityEngine.UIElements;
-using static UnityEngine.UI.GridLayoutGroup;
 
 public class PlayerAttack : MonoBehaviour
 {
     private Player player;
     private PlayerMovement playerMovement;
-    [SerializeField] float delayTime = 1.0f;
+    [SerializeField] float delayTime = 1;
     [SerializeField] bool isAttacked = false;
     [SerializeField] bool isReadyAttack = false;
-    //[SerializeField] bool isMouseButtonDown = true;
     public Bullet bullet;
-    public List<AbilityType> abilities;
-    [SerializeField] Vector3 mouseUpPosition;
+
+    public float AttackSpeed
+    {
+        get { return delayTime; }
+        set { delayTime = value; }
+    }
 
     void Start()
     {
         player = GetComponent<Player>();
         playerMovement = GetComponent<PlayerMovement>();
-        abilities ??= new List<AbilityType>();
     }
 
     private void Update()
     {
-        //if (Input.GetMouseButtonDown(0))
-        //{
-        //    mouseUpPosition = Camera.main.ScreenToWorldPoint(
-        //        new Vector3(Input.mousePosition.x, Input.mousePosition.y, Camera.main.nearClipPlane));
-        //    mouseUpPosition = new Vector3(mouseUpPosition.x, mouseUpPosition.y, 0);
-
-        //    isMouseButtonDown = true;
-        //}
-        //if (Input.GetMouseButtonUp(0))
-        //{
-        //    Invoke(nameof(UnableMouseButtonDown), delayTime/2);
-        //}
-
         ArrowAttack();
     }
 
@@ -63,7 +49,8 @@ public class PlayerAttack : MonoBehaviour
         b.Direction = enemyPosition() - player.transform.position;
         b.Owner = player;
         b.abilities = new();
-        b.AddAbility(abilities);
+        b.AddAbility(player.Abilities);
+        b.BulletCreateSound();
         b.ActiveAllAbility();
     }
 
@@ -74,16 +61,12 @@ public class PlayerAttack : MonoBehaviour
 
     public void InvokeUnableReadyAttack()
     {
-        Invoke(nameof(UnableReadyAttack), delayTime/(float)1.5);
+        Invoke(nameof(UnableReadyAttack), delayTime/(float)1.2);
     }
     private void UnableReadyAttack()
     {
         isReadyAttack = true;
     }
-    //private void UnableMouseButtonDown()
-    //{
-    //    isMouseButtonDown = false;
-    //}
 
     private Vector3 enemyPosition()
     {
@@ -115,5 +98,4 @@ public class PlayerAttack : MonoBehaviour
             return Vector3.zero;
         }
     }
-
 }

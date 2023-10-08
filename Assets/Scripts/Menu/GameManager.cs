@@ -31,11 +31,21 @@ public class GameManager : MonoBehaviour
         observers.Remove(observer);
     }
 
-    public void TogglePause()
+    public void OnGamePaused()
     {
-        IsPaused = !IsPaused;
-        NotifyObservers();
+        Time.timeScale = 0;
     }
+
+    public void OnGameResume()
+    {
+        Time.timeScale = 1;
+    }
+
+    //public void TogglePause()
+    //{
+    //    IsPaused = !IsPaused;
+    //    NotifyObservers();
+    //}
 
     private void NotifyObservers()
     {

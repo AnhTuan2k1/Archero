@@ -10,13 +10,13 @@ public class PauseMenu : MonoBehaviour
     public void OnGamePaused()
     {
         gameObject.SetActive(true);
-        GameManager.Instance.TogglePause();
+        GameManager.Instance.OnGamePaused();
     }
 
     public void OnGameResume()
     {
         gameObject.SetActive(false);
-        GameManager.Instance.TogglePause();
+        GameManager.Instance.OnGameResume();
     }
 
     //public void OnGamePaused(bool paused)

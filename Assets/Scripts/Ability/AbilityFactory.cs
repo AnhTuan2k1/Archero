@@ -23,22 +23,22 @@ public class AbilityFactory
         switch (type)
         {
             case AbilityType.AttackBoost:
-                abilities.Add(new AttackBoost());
+                //abilities.Add(new AttackBoost());
                 break;
             case AbilityType.AttackSpeedBoost:
-                abilities.Add(new AttackSpeedBoost());
+                //abilities.Add(new AttackSpeedBoost());
                 break;
             case AbilityType.Blaze:
                 abilities.Add(new Blaze());
                 break;
             case AbilityType.BloodThirst:
-                abilities.Add(new BloodThirst());
+                //abilities.Add(new BloodThirst());
                 break;
             case AbilityType.BouncyWall:
                 abilities.Add(new BouncyWall());
                 break;
             case AbilityType.CritMaster:
-                abilities.Add(new CritMaster());
+                //abilities.Add(new CritMaster());
                 break;
             case AbilityType.DiagonalArrow:
                 abilities.Add(new DiagonalArrow());
@@ -53,7 +53,7 @@ public class AbilityFactory
                 abilities.Add(new Freeze());
                 break;
             case AbilityType.HPBoost:
-                abilities.Add(new HPBoost());
+                //abilities.Add(new HPBoost());
                 break;
             case AbilityType.MultiShot:
                 abilities.Add(new MultiShot());
@@ -65,7 +65,7 @@ public class AbilityFactory
                 abilities.Add(new PoisonedTouch());
                 break;
             case AbilityType.Rage:
-                abilities.Add(new Rage());
+                //abilities.Add(new Rage());
                 break;
             case AbilityType.RearArrow:
                 abilities.Add(new RearArrow());
@@ -86,22 +86,22 @@ public class AbilityFactory
         switch (ability)
         {
             case AttackBoost:
-                abilities.Add(new AttackBoost());
+                //abilities.Add(new AttackBoost());
                 break;
             case AttackSpeedBoost:
-                abilities.Add(new AttackSpeedBoost());
+                //abilities.Add(new AttackSpeedBoost());
                 break;
             case Blaze:
                 abilities.Add(new Blaze());
                 break;
             case BloodThirst:
-                abilities.Add(new BloodThirst());
+                //abilities.Add(new BloodThirst());
                 break;
             case BouncyWall:
                 abilities.Add(new BouncyWall());
                 break;
             case CritMaster:
-                abilities.Add(new CritMaster());
+                //abilities.Add(new CritMaster());
                 break;
             case DiagonalArrow:
                 abilities.Add(new DiagonalArrow());
@@ -116,7 +116,7 @@ public class AbilityFactory
                 abilities.Add(new Freeze());
                 break;
             case HPBoost:
-                abilities.Add(new HPBoost());
+                //abilities.Add(new HPBoost());
                 break;
             case MultiShot:
                 abilities.Add(new MultiShot());
@@ -128,7 +128,7 @@ public class AbilityFactory
                 abilities.Add(new PoisonedTouch());
                 break;
             case Rage:
-                abilities.Add(new Rage());
+                //abilities.Add(new Rage());
                 break;
             case RearArrow:
                 abilities.Add(new RearArrow());
