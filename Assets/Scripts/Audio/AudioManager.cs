@@ -38,7 +38,7 @@ public class AudioManager : MonoBehaviour
         //Play("BossTheme"/*, transform.position*/);
     }
 
-    public void PlaySound(string name)
+    public void PlaySound(Sound.Name name)
     {
         Sound s = Array.Find(sounds, x => x.name == name);
         if (s == null)
@@ -48,12 +48,13 @@ public class AudioManager : MonoBehaviour
         }
         else
         {
-            s.audioSource.Play();
+            //s.audioSource.Play();
+            AudioSource.PlayClipAtPoint(s.audioSource.clip, Vector3.zero);
         }
 
     }
 
-    public void PauseSound(string name)
+    public void PauseSound(Sound.Name name)
     {
         Sound s = Array.Find(sounds, x => x.name == name);
         if (s == null)
@@ -68,7 +69,7 @@ public class AudioManager : MonoBehaviour
         //audioClipPaused = s.audioSource.clip;
     }
 
-    public void UnPauseSound(string name)
+    public void UnPauseSound(Sound.Name name)
     {
         Sound s = Array.Find(sounds, x => x.name == name);
         if (s == null)

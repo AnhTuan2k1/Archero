@@ -4,12 +4,14 @@ using UnityEngine;
 
 public class CircleBullet : Bullet
 {
+    public override ObjectPoolingType BulletType => ObjectPoolingType.CircleBullet;
+
     protected override void OnCollisionEnter2D(Collision2D collision)
     {
         base.OnCollisionEnter2D(collision);
         if(collision.gameObject.CompareTag("Player"))
         {
-            collision.gameObject.GetComponent<Player>().TakeDamage(this.Owner);
+            collision.gameObject.GetComponent<Player>().TakeDamage(Damage);
             Die();
         }
         if (collision.gameObject.CompareTag("Enemy"))

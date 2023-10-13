@@ -29,7 +29,7 @@ public class AbilityFactory
                 //abilities.Add(new AttackSpeedBoost());
                 break;
             case AbilityType.Blaze:
-                abilities.Add(new Blaze());
+                //abilities.Add(new Blaze());
                 break;
             case AbilityType.BloodThirst:
                 //abilities.Add(new BloodThirst());
@@ -62,7 +62,7 @@ public class AbilityFactory
                 abilities.Add(new PiercingShot());
                 break;
             case AbilityType.PoisonedTouch:
-                abilities.Add(new PoisonedTouch());
+                //abilities.Add(new PoisonedTouch());
                 break;
             case AbilityType.Rage:
                 //abilities.Add(new Rage());
@@ -77,7 +77,8 @@ public class AbilityFactory
                 abilities.Add(new SideArrow());
                 break;
             default:
-                throw new System.Exception("This ability type is unsupported");
+                break;
+                //throw new System.Exception("This ability type is unsupported");
         }
     }
 
@@ -92,7 +93,7 @@ public class AbilityFactory
                 //abilities.Add(new AttackSpeedBoost());
                 break;
             case Blaze:
-                abilities.Add(new Blaze());
+                //abilities.Add(new Blaze());
                 break;
             case BloodThirst:
                 //abilities.Add(new BloodThirst());
@@ -125,7 +126,7 @@ public class AbilityFactory
                 abilities.Add(new PiercingShot());
                 break;
             case PoisonedTouch:
-                abilities.Add(new PoisonedTouch());
+                //abilities.Add(new PoisonedTouch());
                 break;
             case Rage:
                 //abilities.Add(new Rage());

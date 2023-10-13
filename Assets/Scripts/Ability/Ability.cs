@@ -29,6 +29,9 @@ public enum AbilityType
     Rage,
     RearArrow,
     Ricochet,
-    SideArrow
+    SideArrow,
+    Bolt,
+    BoltCircle,
+    PoisonCircle
 
 }

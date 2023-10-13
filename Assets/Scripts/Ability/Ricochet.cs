@@ -7,7 +7,7 @@ using UnityEngine;
 public class Ricochet : Ability
 {
     public Ricochet() => Id = "Ricochet";
-    public static readonly int RANGE_ACTIVITY = 4;
+    public static readonly int RANGE_ACTIVITY = 3;
     [SerializeField] private int ricochetTimes = 3;
 
     /// <summary>

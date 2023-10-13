@@ -53,10 +53,10 @@ public class GoldCoin : MonoBehaviour, IGameObserver
         rb.velocity = Vector3.zero;
     }
 
-    public static GoldCoin Instantiate(GameObject goldIcon, Vector3 position)
+    public static GoldCoin Instantiate(Vector3 position)
     {
         GoldCoin g = ObjectPooling.Instance
-            .GetObject(goldIcon, position).GetComponent<GoldCoin>();
+            .GetObject(ObjectPoolingType.GoldCoin, position).GetComponent<GoldCoin>();
         g.OnInstantiate();
         return g;
     }

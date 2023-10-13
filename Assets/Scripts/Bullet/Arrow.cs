@@ -6,6 +6,8 @@ using UnityEngine;
 
 public class Arrow : Bullet
 {
+    public override ObjectPoolingType BulletType => ObjectPoolingType.Arrow;
+
     public Arrow() => direction = Vector2.right;
 
     protected override void OnCollisionEnter2D(Collision2D collision)
@@ -22,7 +24,7 @@ public class Arrow : Bullet
             Physics2D.IgnoreCollision(col, collision.collider, true);
             EnableCollisionAgain(collision.collider, 50);
 
-            collision.gameObject.GetComponent<Enemy>().TakeDamage(this.Owner);
+            PlayerCauseDamageToEnemy(collision);
 
             Ricochet ricochet = (Ricochet)abilities.FindLast(a => a is Ricochet);
             PiercingShot piercingShot = (PiercingShot)abilities.FindLast(a => a is PiercingShot);
@@ -45,6 +47,26 @@ public class Arrow : Bullet
             }
             else Die();
         }
+    }
+
+    private void PlayerCauseDamageToEnemy(Collision2D collision)
+    {
+        GameObject enemy = collision.gameObject;
+
+        bool isDamageCrit = CritMaster.IsCritHappen(Player.Instance.CritRate);
+        float damage = owner.Damage * (isDamageCrit ? 2 : 1);
+        enemy.GetComponent<Enemy>()
+            .TakeDamage(damage, isDamageCrit ? DamageType.Crit : DamageType.Nomal);
+
+        if (Player.Instance.PoisonedRate > 0)
+            enemy.GetComponent<Enemy>()
+                .Poisoned(owner.Damage * Player.Instance.PoisonedRate);
+        if (Player.Instance.BlazeRate > 0)
+            enemy.GetComponent<Enemy>()
+                .Burned(owner.Damage * Player.Instance.BlazeRate);
+        if (Player.Instance.BoltRate > 0)
+            Bolt.LightningStrikeEnemies(enemy.transform.position
+                , owner.Damage * Player.Instance.BoltRate);
     }
 
     private async void EnableCollisionAgain(Collider2D collider, int time)

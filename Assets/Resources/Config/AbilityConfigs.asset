@@ -49,10 +49,6 @@ MonoBehaviour:
     image: {fileID: 21300000, guid: d4ebb6fcbbf8e17488980c0e95aed085, type: 3}
     title: Font Arrow
     description: 
-  - AbilityType: 9
-    image: {fileID: 21300000, guid: c22591dab693b0d48a882d953d2d6524, type: 3}
-    title: Freeze
-    description: 
   - AbilityType: 10
     image: {fileID: 21300000, guid: 15b3608822bdcba4a9824f519b703943, type: 3}
     title: HP Boost
@@ -84,4 +80,16 @@ MonoBehaviour:
   - AbilityType: 17
     image: {fileID: 21300000, guid: 5b2bc462be47df24c82db30f10f18baf, type: 3}
     title: Side Arrow
+    description: 
+  - AbilityType: 18
+    image: {fileID: 21300000, guid: 23516335045520b4eb4c7a93bf7e1c67, type: 3}
+    title: Bolt
+    description: 
+  - AbilityType: 19
+    image: {fileID: 21300000, guid: 641c595fa6b248e43bf4929699e4b59f, type: 3}
+    title: Bolt Circle
+    description: 
+  - AbilityType: 20
+    image: {fileID: 21300000, guid: 0f65b825b692a0640b7f36e1f575038c, type: 3}
+    title: Toxic Circle
     description: 

@@ -17,6 +17,15 @@ public class Player : BaseObject, IGameObserver
     public float BloodThirstRate => this.bloodThirstRate;
     [SerializeField] private float rageRate;
     public float RageRate => this.rageRate;
+    [SerializeField] private float poisonedRate;
+    public float PoisonedRate => this.poisonedRate;
+    [SerializeField] private float blazeRate;
+    public float BlazeRate => this.blazeRate;
+    [SerializeField] private float boltRate;
+    public float BoltRate => this.boltRate;
+    [SerializeField] private BallCircle ballCircle;
+    [SerializeField] private BallCircle poisonCircle;
+    [SerializeField] private BallCircle boltCircle;
     [SerializeField] private List<AbilityType> abilities;
     public List<AbilityType> Abilities => this.abilities;
 
@@ -37,7 +46,11 @@ public class Player : BaseObject, IGameObserver
 
     }
 
-    public override float Damage => base.Damage + damage*rageRate;
+    public override float Damage 
+    {
+        get => base.Damage * (1 + rageRate);
+        protected set => base.Damage = value; 
+    }
 
     private static Player _instance;
     public static Player Instance
@@ -52,7 +65,7 @@ public class Player : BaseObject, IGameObserver
 
     protected virtual void Start()
     {
-        damage = InitalDamage;
+        Damage = InitalDamage;
         HP = maxhp = InitalMaxHealth;
         GameManager.Instance.RegisterObserver(this);
         abilities ??= new List<AbilityType>();
@@ -86,16 +99,16 @@ public class Player : BaseObject, IGameObserver
         }
     }
 
-    public override void HittedSound()
+    public override void HittedSound(DamageType type)
     {
-        AudioManager.instance.PlaySound(Sound.Name.BodyHit4100001.ToString());
+        AudioManager.instance.PlaySound(Sound.Name.BodyHit4100001);
     }
 
-    public override void TakeDamage(BaseObject owner)
+    public override void TakeDamage(float damage, DamageType type = DamageType.Nomal)
     {
-        base.TakeDamage(owner);
+        base.TakeDamage(damage, type);
 
-        HP -= owner.Damage;
+        HP -= damage;
         if (HP <= 0) Die();
     }
 
@@ -132,14 +145,37 @@ public class Player : BaseObject, IGameObserver
 
         if(type is AbilityType.CritMaster) 
             critRate = CritMaster.CalculateCritRate(Abilities);
+
         else if (type is AbilityType.AttackBoost)
-            damage = InitalDamage * AttackBoost.CalculateAttackBoostRate(Abilities);
+            Damage = InitalDamage * AttackBoost.CalculateAttackBoostRate(Abilities);
+
         else if (type is AbilityType.AttackSpeedBoost)
             playerAttack.AttackSpeed = AttackSpeedBoost.CalculateAttackBoostRate(Abilities);
+
         else if (type is AbilityType.BloodThirst)
             bloodThirstRate = BloodThirst.CalculateBloodThirstRate(Abilities);
+
         else if (type is AbilityType.Rage)
             rageRate = Rage.CalculateRageRate(Abilities, 1 - HP/maxhp);
+
+        else if (type is AbilityType.PoisonedTouch)
+            poisonedRate = PoisonedTouch.CalculatePoisonedRate(Abilities);
+
+        else if (type is AbilityType.Blaze)
+            blazeRate = Blaze.CalculateBlazeRate(Abilities);
+
+        else if (type is AbilityType.Bolt)
+            boltRate = Bolt.CalculateBoltRate(Abilities);
+
+        else if (type is AbilityType.FireCircle)
+            ballCircle.FireCircle = FireCircle.CalculateFireCircle(Abilities);
+
+        else if (type is AbilityType.BoltCircle)
+            ballCircle.BoltCircle = BoltCircle.CalculateBoltCircle(Abilities);
+
+        else if (type is AbilityType.PoisonCircle)
+            ballCircle.PoisonCircle = PoisonCircle.CalculatePoisonCircle(Abilities);
+
         else if (type is AbilityType.HPBoost)
         {
             float rate = HPBoost.CalculateHPBoostRate(Abilities);
@@ -148,17 +184,19 @@ public class Player : BaseObject, IGameObserver
         }
     }
 
-    private void Healing(float heal)
-    {
-        HP+=heal;
-    }
-
     public void ActiveBloodThirst()
     {
         float heal = maxhp * bloodThirstRate;
-        if(heal + HP > maxhp) heal = maxhp - HP;
+        if (heal + HP > maxhp) heal = maxhp - HP;
 
-        Healing(heal);
-        FloatingText.Instantiate(floatingTextPrefab, transform.position).SetText(heal);
+        if (heal > 0) Healing(heal);
+    }
+
+    private void Healing(float heal)
+    {
+        HP+=heal;
+
+        FloatingText.Instantiate(transform.position)
+            .SetText(((int)heal).ToString(), DamageType.Healing);
     }
 }

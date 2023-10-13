@@ -1,10 +1,24 @@
 using TMPro;
 using UnityEngine;
 
+public enum DamageType
+{
+    Nomal,
+    Crit,
+    Healing,
+    Poisoned,
+    Blaze,
+    Freeze,
+    Bolt
+}
+
 public class FloatingText : MonoBehaviour
 {
     [SerializeField] private TextMeshProUGUI textMesh;
     private readonly float defaultFontSize = 24;
+    private static readonly Color poisonedColor = new(1, 55 / 255f, 1, 200 / 255f);
+    private static readonly Color blazeColor = new(1, 155 / 255f, 55 / 255f, 200 / 255f);
+    private static readonly Color FreezeColor = new(85 / 255f, 195 / 255f, 1, 200 / 255f);
 
     public void OnInstantiate()
     {
@@ -18,8 +32,6 @@ public class FloatingText : MonoBehaviour
 
     public void Die()
     {
-        textMesh.fontSize = this.defaultFontSize;
-        textMesh.color = Color.white;
         ObjectPooling.Instance.ReturnObject(gameObject);
     }
 
@@ -29,31 +41,58 @@ public class FloatingText : MonoBehaviour
     /// <param name="value"></param>
     /// <param name="isCrit"></param>
     /// <returns></returns>
-    public FloatingText SetText(float value, bool isCrit = false)
+    public FloatingText SetText(string value, DamageType type = DamageType.Nomal)
     {
-        if (value > 0)
+        textMesh.text = value;
+        switch (type)
         {
-            SetColor(Color.green);
-        }
-        else if (isCrit)
-        {
-            SetColor(Color.red);
-            SetFontSize(2);
-        }
+            case DamageType.Nomal:
+                SetColor(Color.white);
+                SetFontSize(1);
+                break;
+            case DamageType.Crit:
+                SetColor(Color.red);
+                SetFontSize(2);
+                break;
 
-        textMesh.text = Mathf.Abs((int)value).ToString();
+            case DamageType.Healing:
+                SetColor(Color.green);
+                break;
+
+            case DamageType.Poisoned:
+                SetColor(poisonedColor);
+                SetFontSize(0.8f);
+                break;
+
+            case DamageType.Blaze:
+                SetColor(blazeColor);
+                SetFontSize(0.8f);
+                break;
+
+            case DamageType.Freeze:
+                SetColor(FreezeColor);
+                SetFontSize(0.8f);
+                break;
+            case DamageType.Bolt:
+                SetColor(Color.yellow);
+                SetFontSize(0.8f);
+                break;
+
+            default:
+                break;
+        }
 
         return this;
     }
 
     public void SetColor(Color color) => textMesh.color = color;
-    public void SetFontSize(float fontSize) => textMesh.fontSize *= fontSize;
+    public void SetFontSize(float fontSize) => textMesh.fontSize = defaultFontSize * fontSize;
 
 
-    public static FloatingText Instantiate(GameObject floatingText, Vector3 position)
+    public static FloatingText Instantiate(Vector3 position)
     {
         FloatingText t = ObjectPooling.Instance
-            .GetObject(floatingText).GetComponent<FloatingText>();
+            .GetObject(ObjectPoolingType.FloatingText).GetComponent<FloatingText>();
         t.transform.position = position;
         t.OnInstantiate();
         return t;

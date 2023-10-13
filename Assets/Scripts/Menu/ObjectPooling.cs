@@ -4,16 +4,25 @@ using System.Linq;
 using System.Threading.Tasks;
 using UnityEngine;
 
+public enum ObjectPoolingType
+{
+    None,
+    Arrow,
+    CircleBullet,
+    GoldCoin,
+    FloatingText,
+    LightningBolt
+}
+
 public class ObjectPooling : MonoBehaviour
 {
     [System.Serializable]
     public class Pool
     {
-        public string type;
+        public ObjectPoolingType type;
         public GameObject prefab;
         public int size;
     }
-
 
     #region Singleton
     private static ObjectPooling _instance;
@@ -27,35 +36,26 @@ public class ObjectPooling : MonoBehaviour
         }
     }
     #endregion
-    [SerializeField] List<Pool> pools;
-    [SerializeField] Dictionary<string, Queue<GameObject>> poolDictionary;
 
-    private GameObject _objectPoolHolder;
-    private static GameObject _Arrow;
-    private static GameObject _CircleBullet;
-    private static GameObject _GoldCoin;
-    private static GameObject _FloatingText;
-    public static Vector2 poolPosition;
+    [SerializeField] List<Pool> pools;
+    [SerializeField] Dictionary<ObjectPoolingType, Queue<GameObject>> poolDictionary;
+
+    [SerializeField] private GameObject _objectPoolHolder;
+    [SerializeField] private GameObject _Arrow;
+    [SerializeField] private GameObject _CircleBullet;
+    [SerializeField] private GameObject _GoldCoin;
+    [SerializeField] private GameObject _FloatingText;
+    [SerializeField] private GameObject _LightningBolt;
+    [SerializeField] private Vector2 poolPosition;
 
     private void Awake()
     {
-        _objectPoolHolder = new GameObject("Pooled Objects");
-        _objectPoolHolder.transform.SetParent(transform);
         poolPosition = new Vector2(-5, 0);
-
-        _Arrow = new GameObject("Arrows");
-        _Arrow.transform.SetParent(_objectPoolHolder.transform);
-        _CircleBullet = new GameObject("CircleBullets");
-        _CircleBullet.transform.SetParent(_objectPoolHolder.transform);
-        _GoldCoin = new GameObject("GoldCoin");
-        _GoldCoin.transform.SetParent(_objectPoolHolder.transform);
-        _FloatingText = new GameObject("FloatingText");
-        _FloatingText.transform.SetParent(_objectPoolHolder.transform);
     }
 
     private void Start()
     {
-        poolDictionary = new Dictionary<string, Queue<GameObject>>();
+        poolDictionary = new Dictionary<ObjectPoolingType, Queue<GameObject>>();
         InitPoolDictionary();
     }
 
@@ -79,7 +79,7 @@ public class ObjectPooling : MonoBehaviour
             obj.SetActive(false);
             objectPool.Enqueue(obj);
 
-            obj.transform.SetParent(GetParent(obj));
+            obj.transform.SetParent(GetParent(pool.type));
             //Debug.Log("object num " + i + " with tag " + pool.type + " was created");
             if (counter > 20)
                 await Task.Delay(200);
@@ -90,22 +90,21 @@ public class ObjectPooling : MonoBehaviour
         poolDictionary.Add(pool.type, objectPool);
     }
 
-    private GameObject InitMoreObject(GameObject gameObject)
+    private GameObject InitMoreObject(ObjectPoolingType type)
     {
-        GameObject obj = Instantiate(GetObjectPoolPrefab(gameObject));
+        GameObject obj = Instantiate(GetObjectPoolPrefab(type));
         
         obj.SetActive(false);
-        obj.transform.SetParent(GetParent(obj));
+        obj.transform.SetParent(GetParent(type));
         return obj;
     }
 
-    public GameObject GetObject(GameObject gameObject)
+    public GameObject GetObject(ObjectPoolingType type)
     {
-        string type = GetType(gameObject);
         GameObject obj;
         if (poolDictionary[type].Count == 0)
         {
-            obj = InitMoreObject(gameObject);
+            obj = InitMoreObject(type);
         }
         else
         {
@@ -116,13 +115,12 @@ public class ObjectPooling : MonoBehaviour
         return obj;
     }
 
-    public GameObject GetObject(GameObject gameObject, Vector3 position)
+    public GameObject GetObject(ObjectPoolingType type, Vector3 position)
     {
-        string type = GetType(gameObject);
         GameObject obj;
         if (poolDictionary[type].Count == 0)
         {
-            obj = InitMoreObject(gameObject);
+            obj = InitMoreObject(type);
         }
         else
         {
@@ -134,7 +132,8 @@ public class ObjectPooling : MonoBehaviour
         return obj;
     }
 
-    public async void ReturnObject(GameObject gameObject, int time = 0)
+    public async void ReturnObject(GameObject gameObject, int time = 0,
+        ObjectPoolingType type = ObjectPoolingType.None)
     {
         if(time > 0)
         {
@@ -146,49 +145,59 @@ public class ObjectPooling : MonoBehaviour
 
 
             gameObject.transform.position = poolPosition;
-            string type = GetType(gameObject);
+            if(type == ObjectPoolingType.None) type = GetType(gameObject);
             gameObject.SetActive(false);
             poolDictionary[type].Enqueue(gameObject);
         }
         else
         {
             gameObject.transform.position = poolPosition;
-            string type = GetType(gameObject);
+            if (type == ObjectPoolingType.None) type = GetType(gameObject);
             gameObject.SetActive(false);
             poolDictionary[type].Enqueue(gameObject);
         }
     }
 
-    private string GetType(GameObject gameObject)
+    private ObjectPoolingType GetType(GameObject gameObject)
     {
-        if (gameObject.GetComponent<Arrow>()) return "Arrow";
-        else if (gameObject.GetComponent<CircleBullet>()) return "CircleBullet";
-        else if (gameObject.GetComponent<GoldCoin>()) return "GoldCoin";
-        else if (gameObject.GetComponent<FloatingText>()) return "FloatingText";
-        else return null;
+        if (gameObject.GetComponent<Arrow>()) return ObjectPoolingType.Arrow;
+        else if (gameObject.GetComponent<CircleBullet>()) return ObjectPoolingType.CircleBullet;
+        else if (gameObject.GetComponent<GoldCoin>()) return ObjectPoolingType.GoldCoin;
+        else if (gameObject.GetComponent<FloatingText>()) return ObjectPoolingType.FloatingText;
+        else if (gameObject.GetComponent<LightningBolt>()) return ObjectPoolingType.LightningBolt;
+        else throw new System.Exception("can't determinate gameobject type");
     }
 
-    private GameObject GetObjectPoolPrefab(GameObject gameObject)
+    private GameObject GetObjectPoolPrefab(ObjectPoolingType type)
     {
-        if (gameObject.GetComponent<Arrow>()) return pools.Where(a => a.type == "Arrow").First().prefab;
-        else if (gameObject.GetComponent<CircleBullet>()) return pools.Where(a => a.type == "CircleBullet").First().prefab;
-        else if (gameObject.GetComponent<GoldCoin>()) return pools.Where(a => a.type == "GoldCoin").First().prefab;
-        else if (gameObject.GetComponent<FloatingText>()) return pools.Where(a => a.type == "FloatingText").First().prefab;
-        else return null;
+        return pools.Where(a => a.type == type).First().prefab;
+    }
+
+    private Transform GetParent(ObjectPoolingType type)
+    {
+        return type switch
+        {
+            ObjectPoolingType.Arrow => _Arrow.transform,
+            ObjectPoolingType.CircleBullet => _CircleBullet.transform,
+            ObjectPoolingType.GoldCoin => _GoldCoin.transform,
+            ObjectPoolingType.FloatingText => _FloatingText.transform,
+            ObjectPoolingType.LightningBolt => _LightningBolt.transform,
+            _ => null,
+        };
     }
 
     private Transform GetParent(GameObject obj)
     {
         return GetType(obj) switch
         {
-            "Arrow" => _Arrow.transform,
-            "CircleBullet" => _CircleBullet.transform,
-            "GoldCoin" => _GoldCoin.transform,
-            "FloatingText" => _FloatingText.transform,
+            ObjectPoolingType.Arrow => _Arrow.transform,
+            ObjectPoolingType.CircleBullet => _CircleBullet.transform,
+            ObjectPoolingType.GoldCoin => _GoldCoin.transform,
+            ObjectPoolingType.FloatingText => _FloatingText.transform,
+            ObjectPoolingType.LightningBolt => _LightningBolt.transform,
             _ => null,
         };
     }
-
 
     //public GameObject SpawnFromPool(string tag, Vector3 position, Quaternion rotation)
     //{

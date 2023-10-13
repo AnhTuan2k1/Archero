@@ -9,25 +9,28 @@ public abstract class BaseObject : MonoBehaviour
     public Collider2D col;
     [SerializeField] private float hp;
     [SerializeField] protected float maxhp;
-    [SerializeField] protected float damage;
+    [SerializeField] private float damage;
     [SerializeField] protected float speed;
     [SerializeField] private Vector3 velocity;
     [SerializeField] protected Slider healthBar;
-    [SerializeField] protected GameObject floatingTextPrefab;
-    public virtual float Damage => this.damage;
     public float Speed => this.speed;
     public virtual float HP
     {
-        get { return hp; }
+        get => hp;
         protected set 
         { 
             hp = value;
             UpdateHealth(hp / maxhp);
         }
     }
+    public virtual float Damage
+    {
+        get => damage;
+        protected set => damage = value;
+    }
     public Vector3 Velocity
     {
-        get { return velocity; }
+        get => velocity;
         set 
         {
             this.velocity = value;
@@ -37,8 +40,8 @@ public abstract class BaseObject : MonoBehaviour
 
 
     public abstract void Die(int time = 0);
-    public abstract void HittedSound();
-    public virtual void TakeDamage(BaseObject owner) => HittedSound();
+    public virtual void HittedSound(DamageType type) { }
+    public virtual void TakeDamage(float damage, DamageType type) => HittedSound(type);
 
     public void UpdateHealth(float fraction)
     {

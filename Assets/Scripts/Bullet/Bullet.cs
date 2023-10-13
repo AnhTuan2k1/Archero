@@ -1,16 +1,15 @@
 ﻿
 
-
-using System;
 using System.Collections.Generic;
 using System.Linq;
 using UnityEngine;
 
 public abstract class Bullet : BaseObject, IGameObserver
 {
-    protected BaseObject owner;
-    protected Vector3 direction;
+    [SerializeField] protected BaseObject owner;
+    [SerializeField] protected Vector3 direction;
     public List<Ability> abilities;
+    public virtual ObjectPoolingType BulletType => ObjectPoolingType.None;
 
     public Vector3 Direction 
     { 
@@ -39,9 +38,6 @@ public abstract class Bullet : BaseObject, IGameObserver
         ObjectPooling.Instance.ReturnObject(gameObject, time);
     }
 
-    public override void TakeDamage(BaseObject owner) { }
-    public override void HittedSound() { }
-
     protected virtual void OnCollisionEnter2D(Collision2D collision)
     {
         if (collision.gameObject.CompareTag("Wall"))
@@ -57,7 +53,7 @@ public abstract class Bullet : BaseObject, IGameObserver
 
     public virtual void BulletCreateSound()
     {
-        AudioManager.instance.PlaySound(Sound.Name.BulletCreate2001001.ToString());
+        AudioManager.instance.PlaySound(Sound.Name.BulletCreate2001001);
     }
 
     public void OnGamePaused(bool isPaused)
@@ -120,7 +116,7 @@ public abstract class Bullet : BaseObject, IGameObserver
 
         //Bullet b = Instantiate(bullet, Owner.position, Owner.rotation);
         Bullet b = ObjectPooling.Instance
-            .GetObject(bullet.gameObject, Owner.transform.position).GetComponent<Bullet>();
+            .GetObject(bullet.BulletType, Owner.transform.position).GetComponent<Bullet>();
         GameManager.Instance.RegisterObserver(b);
 
         b.Owner = bullet.Owner;

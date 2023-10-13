@@ -101,6 +101,77 @@ MonoBehaviour:
   m_BlockingMask:
     serializedVersion: 2
     m_Bits: 4294967295
+--- !u!1 &1457010269
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 1457010270}
+  - component: {fileID: 1457010271}
+  - component: {fileID: 1457010272}
+  m_Layer: 11
+  m_Name: BallCircle
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &1457010270
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1457010269}
+  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
+  m_LocalPosition: {x: 0, y: -0.112500004, z: 0}
+  m_LocalScale: {x: 1.25, y: 1.25, z: 1.25}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 4900630605066763446}
+  m_RootOrder: 3
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!95 &1457010271
+Animator:
+  serializedVersion: 4
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1457010269}
+  m_Enabled: 1
+  m_Avatar: {fileID: 0}
+  m_Controller: {fileID: 9100000, guid: 4a9eb46b93525034db1d81a669931eed, type: 2}
+  m_CullingMode: 0
+  m_UpdateMode: 0
+  m_ApplyRootMotion: 0
+  m_LinearVelocityBlending: 0
+  m_StabilizeFeet: 0
+  m_WarningMessage: 
+  m_HasTransformHierarchy: 1
+  m_AllowConstantClipSamplingOptimization: 1
+  m_KeepAnimatorControllerStateOnDisable: 0
+--- !u!114 &1457010272
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1457010269}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 7ce14c8465430b441a15eccda64c56a3, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  fireCircleBallPrefab: {fileID: 0}
+  poisonCircleBallPrefab: {fileID: 0}
+  boltCircleBallPrefab: {fileID: 0}
+  fireCircleAbility: 0
+  poisonCircleAbility: 0
+  boltCircleAbility: 0
 --- !u!1 &4900630605066763447
 GameObject:
   m_ObjectHideFlags: 0
@@ -138,6 +209,7 @@ Transform:
   - {fileID: 4900630605278815395}
   - {fileID: 4900630604832560488}
   - {fileID: 1375955323}
+  - {fileID: 1457010270}
   m_Father: {fileID: 0}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
@@ -244,19 +316,26 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   rb: {fileID: 4900630605066763453}
   col: {fileID: 4900630605066763450}
-  hp: 1000
+  hp: 0
   maxhp: 0
   damage: 0
   speed: 4
   velocity: {x: 0, y: 0, z: 0}
   healthBar: {fileID: 4900630605923581136}
-  floatingTextPrefab: {fileID: 0}
-  InitalDamage: 160
   textPoint: {fileID: 7024882195199339842}
-  maxHealth: 1000
+  InitalDamage: 160
+  InitalMaxHealth: 1000
   playerAttack: {fileID: 4900630605066763452}
-  abilities: 0b000000
   critRate: 0
+  bloodThirstRate: 0
+  rageRate: 0
+  poisonedRate: 0
+  blazeRate: 0
+  boltRate: 0
+  ballCircle: {fileID: 0}
+  poisonCircle: {fileID: 0}
+  boltCircle: {fileID: 0}
+  abilities: 0000000000000000
 --- !u!114 &4900630605066763448
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -676,7 +755,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 8170153791668043268, guid: 0d230cc8be529a542a08cb878ab14b18, type: 3}
       propertyPath: m_SizeDelta.y
-      value: 960
+      value: 1920
       objectReference: {fileID: 0}
     - target: {fileID: 8170153791668043268, guid: 0d230cc8be529a542a08cb878ab14b18, type: 3}
       propertyPath: m_LocalPosition.x

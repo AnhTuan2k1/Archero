@@ -1,4 +1,5 @@
 using System;
+using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
@@ -45,7 +46,7 @@ public class PlayerAttack : MonoBehaviour
     {
         //Bullet b = Instantiate(bullet, transform.position, transform.rotation);
         Bullet b = ObjectPooling.Instance
-            .GetObject(bullet.gameObject, transform.position).GetComponent<Bullet>();
+            .GetObject(bullet.BulletType, transform.position).GetComponent<Bullet>();
         b.Direction = enemyPosition() - player.transform.position;
         b.Owner = player;
         b.abilities = new();
@@ -61,7 +62,7 @@ public class PlayerAttack : MonoBehaviour
 
     public void InvokeUnableReadyAttack()
     {
-        Invoke(nameof(UnableReadyAttack), delayTime/(float)1.2);
+        Invoke(nameof(UnableReadyAttack), delayTime/(float)0.9);
     }
     private void UnableReadyAttack()
     {
@@ -94,7 +95,8 @@ public class PlayerAttack : MonoBehaviour
         }
         catch (Exception e)
         {
-            Debug.LogException(e);
+            Debug.LogWarning(e);
+            EnemyManager.Instance.Enemies.RemoveAll(x => !x);
             return Vector3.zero;
         }
     }

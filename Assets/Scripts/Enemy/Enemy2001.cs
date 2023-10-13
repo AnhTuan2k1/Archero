@@ -38,7 +38,7 @@ public class Enemy2001 : Enemy
     {
         //Bullet b = Instantiate(bullet, transform.position, transform.rotation);
         Bullet b = ObjectPooling.Instance
-            .GetObject(bullet.gameObject, transform.position).GetComponent<Bullet>();
+            .GetObject(ObjectPoolingType.CircleBullet, transform.position).GetComponent<Bullet>();
         b.Direction = GetBulletDirection();
         b.Owner = this;
         b.abilities = new();

@@ -1,4 +1,7 @@
 ﻿
+using System.Collections;
+using System.Threading;
+using System.Threading.Tasks;
 using UnityEngine;
 
 public abstract class Enemy : BaseObject, IGameObserver
@@ -32,24 +35,15 @@ public abstract class Enemy : BaseObject, IGameObserver
         return 10;
     }
 
-    public override void TakeDamage(BaseObject owner)
+    public override void TakeDamage(float damage, DamageType type = DamageType.Nomal)
     {
-        base.TakeDamage(owner);
+        base.TakeDamage(damage, type);
 
-        bool isDamageCrit = CritMaster.IsCritHappen(((Player)owner).CritRate);
-        float Damage = owner.Damage * (isDamageCrit ? 2 : 1);
+        FloatingText.Instantiate(transform.position)
+            .SetText(((int)damage).ToString(), type);
 
-        FloatingText.Instantiate(floatingTextPrefab, transform.position)
-            .SetText(-Damage, isDamageCrit);
-
-        HP -= Damage;
+        HP -= damage;
         if (HP <= 0) Die();
-
-        //else // push enemy
-        //{
-        //    Vector2 force = (transform.position - owner.transform.position).normalized * 10;
-        //    rb.AddForce(force);
-        //}
     }
 
     public override void Die(int time = 0)
@@ -62,9 +56,18 @@ public abstract class Enemy : BaseObject, IGameObserver
         Destroy(gameObject);
     }
 
-    public override void HittedSound()
+    public override void HittedSound(DamageType type)
     {
-        AudioManager.instance.PlaySound(Sound.Name.Hitted_Body2100001.ToString());
+        switch (type)
+        {
+            case DamageType.Nomal:
+                AudioManager.instance.PlaySound(Sound.Name.Hitted_Body2100001);
+                break;
+            case DamageType.Bolt:
+                AudioManager.instance.PlaySound(Sound.Name.Thunder);
+                break;
+        }
+
     }
 
     protected virtual void OnCollisionEnter2D(Collision2D collision)
@@ -75,7 +78,7 @@ public abstract class Enemy : BaseObject, IGameObserver
         }
         else if (collision.gameObject.CompareTag("Player"))
         {
-            collision.gameObject.GetComponent<Player>().TakeDamage(this);
+            collision.gameObject.GetComponent<Player>().TakeDamage(Damage);
         }
         //else if (collision.gameObject.CompareTag("Enemy"))
         //{
@@ -88,11 +91,11 @@ public abstract class Enemy : BaseObject, IGameObserver
         }
     }
 
-    protected virtual void IgnoreCollideWith(Collision2D collision)
-    {
-        Physics2D.IgnoreCollision(col, collision.collider, true);
-        MoveToDirection(Velocity);
-    }
+    //protected virtual void IgnoreCollideWith(Collision2D collision)
+    //{
+    //    Physics2D.IgnoreCollision(col, collision.collider, true);
+    //    MoveToDirection(Velocity);
+    //}
 
     private void MoveToDirection(Vector2 direction)
     {
@@ -136,8 +139,60 @@ public abstract class Enemy : BaseObject, IGameObserver
         int randomNumber = Random.Range(2, 6);
         for (int i = 0; i < randomNumber; i++)
         {
-            GoldCoin gold = GoldCoin.Instantiate(goldCoin, transform.position);
+            GoldCoin gold = GoldCoin.Instantiate(transform.position);
             gold.pointExp = maxhp / (100 * randomNumber);
         }
     }
+
+    #region poisoned blaze freeze
+    #region poisoned
+    private float poisonedDamage;
+    private Coroutine poisonedCoroutine;
+    public void Poisoned(float damage)
+    {
+        if (poisonedDamage != damage) poisonedDamage = damage;
+        poisonedCoroutine ??= StartCoroutine(StartPoisoned());
+    }
+
+    private IEnumerator StartPoisoned()
+    {
+        while (true)
+        {
+            yield return new WaitForSeconds(PoisonedTouch.POISONED_DELAY);
+            TakeDamage(poisonedDamage, DamageType.Poisoned);
+        }
+    }
+
+    #endregion
+    #region blaze
+    private float burnDamage;
+    private float burnTime;
+    public void Burned(float damage)
+    {
+        if (burnDamage != damage) burnDamage = damage;
+
+        if (burnTime > 0)
+        {
+            burnTime = Blaze.BLAZE_TIME;
+        }
+        else
+        {
+            burnTime = Blaze.BLAZE_TIME;
+            StartCoroutine(StartBurn());
+        }
+
+    }
+
+    private IEnumerator StartBurn()
+    {
+        while (burnTime > 0)
+        {
+            yield return new WaitForSeconds(Blaze.BLAZE_DELAY);
+            burnTime -= Blaze.BLAZE_DELAY;
+            TakeDamage(burnDamage, DamageType.Blaze);
+        }
+    }
+    #endregion
+
+    #endregion
 }
