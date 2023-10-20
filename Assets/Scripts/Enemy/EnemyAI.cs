@@ -13,11 +13,14 @@ public class EnemyAI : MonoBehaviour
     public bool playerInAttackRange;
     public bool playerInSightRange;
 
-    private void Start()
+    private void Awake()
     {
-        enemyTransform = GetComponentInParent<Transform>();
-        player = GameObject.FindWithTag("Player")?.transform;
+        player = Player.Instance.transform;
+    }
 
+    public void Oninstantiate(Transform enemy)
+    {
+        enemyTransform = enemy;
         StartCoroutine(InactiveAfter((float)0.5));
     }
 

@@ -6,8 +6,16 @@ using UnityEngine;
 
 public class Enemy2001 : Enemy
 {
+    public override ObjectPoolingType EnemyType => ObjectPoolingType.Enemy2001;
     public List<AbilityType> bulletAbilities;
     int attackRange = 10;
+
+    public override void OnInstantiate()
+    {
+        base.OnInstantiate();
+        attackRange = Random.Range(4, 12);
+        GetComponent<EnemyAI>().Oninstantiate(this.transform);
+    }
 
     public override float Patroling()
     {
@@ -19,13 +27,6 @@ public class Enemy2001 : Enemy
     public override float AttackRange() => attackRange;
     public override float SightRange() => 0;
 
-    protected override void Start()
-    {
-        base.Start();
-        attackRange = Random.Range(4, 12);
-    }
-
-
     public override float Attack()
     {
         attackRange = 0;
@@ -36,9 +37,8 @@ public class Enemy2001 : Enemy
 
     private void SpawnBullet()
     {
-        //Bullet b = Instantiate(bullet, transform.position, transform.rotation);
         Bullet b = ObjectPooling.Instance
-            .GetObject(ObjectPoolingType.CircleBullet, transform.position).GetComponent<Bullet>();
+            .GetObject(bullet.BulletType, transform.position).GetComponent<Bullet>();
         b.Direction = GetBulletDirection();
         b.Owner = this;
         b.abilities = new();
@@ -50,18 +50,37 @@ public class Enemy2001 : Enemy
     {
         Vector3 direction = Player.Instance.transform.position - transform.position;
         
-        // tạo góc bắn có độ lệch lớn nhất là 10
+        // tạo góc bắn có độ lệch không quá 10
         float randomAngle = Random.Range(-10, 10);
         return Quaternion.Euler(0, 0, randomAngle) * direction;
     }
 
     private void AddAbilityToBullet(Bullet b)
     {
-        List<AbilityType> abi = new();      
-        for (int i = 0; i < Random.Range(0, 5); i++)
+        if(bulletAbilities.Count > 0)
         {
-            abi.Add(bulletAbilities[Random.Range(0, bulletAbilities.Count - 1)]);
+            List<AbilityType> abi = new();
+            int level = LevelManager.Instance.CurrentLevel / 11;
+            for (int i = 0; i < level; i++)
+            {
+                abi.Add(bulletAbilities[Random.Range(0, bulletAbilities.Count)]);
+            }
+            b.AddAbility(abi);
         }
-        b.AddAbility(abi);
     }
+}
+
+
+public interface AIEnemyRandomMove
+{
+    void RandomPos();
+    void MovePos();
+}
+public  interface AIEnemyChasingPlayer
+{
+    void MoveToPlayer();
+}
+public interface AIJumping
+{
+    void PosJump();
 }

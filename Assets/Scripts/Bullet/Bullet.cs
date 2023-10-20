@@ -4,13 +4,18 @@ using System.Collections.Generic;
 using System.Linq;
 using UnityEngine;
 
-public abstract class Bullet : BaseObject, IGameObserver
+public abstract class Bullet : BaseObject
 {
-    [SerializeField] protected BaseObject owner;
-    [SerializeField] protected Vector3 direction;
     public List<Ability> abilities;
     public virtual ObjectPoolingType BulletType => ObjectPoolingType.None;
 
+    public override float Damage 
+    { 
+        get => base.Damage + Owner.Damage; 
+        protected set => base.Damage = value; 
+    }
+
+    [SerializeField] protected Vector3 direction;
     public Vector3 Direction 
     { 
         get => direction;
@@ -18,23 +23,23 @@ public abstract class Bullet : BaseObject, IGameObserver
         {
             transform.Rotate(Vector3.forward, Vector2.SignedAngle(direction, value));
             direction = value.normalized;
-            Velocity = direction * speed;
+            Velocity = direction * Speed;
         }
     }
 
+    [SerializeField] protected BaseObject owner;
     public BaseObject Owner 
     { 
         get => owner; 
         set
         {
             owner = value;
-            Physics2D.IgnoreCollision(col, owner.col, true);
+            if(col != null) Physics2D.IgnoreCollision(col, owner.col, true);
         } 
     }
 
     public override void Die(int time = 0)
     {
-        GameManager.Instance.UnregisterObserver(this);
         ObjectPooling.Instance.ReturnObject(gameObject, time);
     }
 
@@ -54,31 +59,6 @@ public abstract class Bullet : BaseObject, IGameObserver
     public virtual void BulletCreateSound()
     {
         AudioManager.instance.PlaySound(Sound.Name.BulletCreate2001001);
-    }
-
-    public void OnGamePaused(bool isPaused)
-    {
-        //gameObject.isStatic = isPaused;
-
-        //if (isPaused)
-        //{
-        //    var scriptComponents = this.GetComponents<MonoBehaviour>();
-        //    foreach (var script in scriptComponents)
-        //    {
-        //        script.enabled = false;
-        //    }
-        //    velocity = rb.velocity;
-        //    rb.velocity = Vector2.zero;
-        //}
-        //else
-        //{
-        //    var scriptComponents = this.GetComponents<MonoBehaviour>();
-        //    foreach (var script in scriptComponents)
-        //    {
-        //        script.enabled = true;
-        //    }
-        //    rb.velocity = velocity;
-        //}
     }
 
     public virtual void ActiveAllAbility()
@@ -114,10 +94,8 @@ public abstract class Bullet : BaseObject, IGameObserver
         if (bullet.owner == null) return null;
         Transform Owner = bullet.owner.gameObject.transform;
 
-        //Bullet b = Instantiate(bullet, Owner.position, Owner.rotation);
         Bullet b = ObjectPooling.Instance
             .GetObject(bullet.BulletType, Owner.transform.position).GetComponent<Bullet>();
-        GameManager.Instance.RegisterObserver(b);
 
         b.Owner = bullet.Owner;
         b.Direction = bullet.Direction;

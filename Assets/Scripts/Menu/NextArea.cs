@@ -1,17 +1,17 @@
-using System.Collections;
-using System.Collections.Generic;
+
 using UnityEngine;
 
 public class NextArea : MonoBehaviour
 {
     [SerializeField] private GameObject blackPanel;
     [SerializeField] private Player player;
+    [SerializeField] private Cleaner cleaner;
 
 
     void Start()
     {
         blackPanel.SetActive(false);
-        player ??= FindObjectOfType<Player>();
+        player = player != null ? player : FindObjectOfType<Player>();
     }
 
     private void OnTriggerEnter2D(Collider2D collision)
@@ -21,6 +21,7 @@ public class NextArea : MonoBehaviour
             if (collision.gameObject.CompareTag("Player"))
             {
                 blackPanel.SetActive(true);
+                cleaner.Clean(transform.position);
                 Invoke(nameof(TurnToNextArea), 1);
             }
         }
@@ -28,10 +29,10 @@ public class NextArea : MonoBehaviour
 
     void TurnToNextArea()
     {
-        blackPanel?.SetActive(false);
+        blackPanel.SetActive(false);
+        player.ReturnToInitialPosition();
 
-        player?.ReturnToInitialPosition();
-        LevelManager.Instance.SpawnNextLevel();
+        LevelManager.Instance.SpawnEndlessLevel();
     }
 
 }

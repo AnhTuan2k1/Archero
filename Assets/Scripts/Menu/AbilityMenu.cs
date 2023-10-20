@@ -11,7 +11,8 @@ public class AbilityMenu : MonoBehaviour
     private void Start()
     {
         gameObject.SetActive(false);
-        ShowMenu();
+
+        Invoke(nameof(ShowMenu), 1);
     }
 
     public void ShowMenu()

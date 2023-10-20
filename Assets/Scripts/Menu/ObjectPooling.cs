@@ -11,7 +11,10 @@ public enum ObjectPoolingType
     CircleBullet,
     GoldCoin,
     FloatingText,
-    LightningBolt
+    LightningBolt,
+    Laser,
+    Bat,
+    Enemy2001
 }
 
 public class ObjectPooling : MonoBehaviour
@@ -46,6 +49,9 @@ public class ObjectPooling : MonoBehaviour
     [SerializeField] private GameObject _GoldCoin;
     [SerializeField] private GameObject _FloatingText;
     [SerializeField] private GameObject _LightningBolt;
+    [SerializeField] private GameObject _Laser;
+    [SerializeField] private GameObject _Bat;
+    [SerializeField] private GameObject _Enemy2001;
     [SerializeField] private Vector2 poolPosition;
 
     private void Awake()
@@ -68,7 +74,7 @@ public class ObjectPooling : MonoBehaviour
 
     }
 
-    private async void InitPool(Pool pool)
+    private /*async*/ void InitPool(Pool pool)
     {
         Queue<GameObject> objectPool = new Queue<GameObject>();
         int counter = 0;
@@ -81,10 +87,10 @@ public class ObjectPooling : MonoBehaviour
 
             obj.transform.SetParent(GetParent(pool.type));
             //Debug.Log("object num " + i + " with tag " + pool.type + " was created");
-            if (counter > 20)
-                await Task.Delay(200);
-            else if (counter > 5)
-                await Task.Delay(100);
+            //if (counter > 20)
+            //    await Task.Delay(200);
+            //else if (counter > 5)
+            //    await Task.Delay(100);
         }
 
         poolDictionary.Add(pool.type, objectPool);
@@ -165,6 +171,9 @@ public class ObjectPooling : MonoBehaviour
         else if (gameObject.GetComponent<GoldCoin>()) return ObjectPoolingType.GoldCoin;
         else if (gameObject.GetComponent<FloatingText>()) return ObjectPoolingType.FloatingText;
         else if (gameObject.GetComponent<LightningBolt>()) return ObjectPoolingType.LightningBolt;
+        else if (gameObject.GetComponent<Laser>()) return ObjectPoolingType.Laser;
+        else if (gameObject.GetComponent<Bat>()) return ObjectPoolingType.Bat;
+        else if (gameObject.GetComponent<Enemy2001>()) return ObjectPoolingType.Enemy2001;
         else throw new System.Exception("can't determinate gameobject type");
     }
 
@@ -182,37 +191,10 @@ public class ObjectPooling : MonoBehaviour
             ObjectPoolingType.GoldCoin => _GoldCoin.transform,
             ObjectPoolingType.FloatingText => _FloatingText.transform,
             ObjectPoolingType.LightningBolt => _LightningBolt.transform,
+            ObjectPoolingType.Laser => _Laser.transform,
+            ObjectPoolingType.Bat => _Bat.transform,
+            ObjectPoolingType.Enemy2001 => _Enemy2001.transform,
             _ => null,
         };
     }
-
-    private Transform GetParent(GameObject obj)
-    {
-        return GetType(obj) switch
-        {
-            ObjectPoolingType.Arrow => _Arrow.transform,
-            ObjectPoolingType.CircleBullet => _CircleBullet.transform,
-            ObjectPoolingType.GoldCoin => _GoldCoin.transform,
-            ObjectPoolingType.FloatingText => _FloatingText.transform,
-            ObjectPoolingType.LightningBolt => _LightningBolt.transform,
-            _ => null,
-        };
-    }
-
-    //public GameObject SpawnFromPool(string tag, Vector3 position, Quaternion rotation)
-    //{
-    //    if (!poolDictionary.ContainsKey(tag))
-    //    {
-    //        Debug.LogWarning("Pool with tag " + tag + " doesn't exist.");
-    //        return null;
-    //    }
-
-    //    GameObject objectToSpawn = poolDictionary[tag].Dequeue();
-    //    objectToSpawn.transform.SetPositionAndRotation(position, rotation);
-    //    objectToSpawn.SetActive(true);
-
-
-    //    poolDictionary[tag].Enqueue(objectToSpawn);
-    //    return objectToSpawn;
-    //}
 }

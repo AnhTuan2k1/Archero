@@ -1,5 +1,4 @@
 
-using System.Collections.Generic;
 using System.Linq;
 using UnityEngine;
 
@@ -9,11 +8,6 @@ public class FontArrow : Ability
     public FontArrow() => Id = "FontArrow";
 
     public override void Active(Bullet bullet)
-    {
-        ActiveDuplicatedAbility(bullet);
-    }
-
-    protected void ActiveDuplicatedAbility(Bullet bullet)
     {
         int fontArrowLength = bullet.abilities.Where(a => a is FontArrow).Count();
 
@@ -28,7 +22,6 @@ public class FontArrow : Ability
 
         bullet.gameObject.transform.position = pointA - n * fontArrowLength / 2f;
     }
-
 
     //private void CloneFront()
     //{

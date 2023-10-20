@@ -7,13 +7,17 @@ public abstract class BaseObject : MonoBehaviour
 {
     public Rigidbody2D rb;
     public Collider2D col;
-    [SerializeField] private float hp;
     [SerializeField] protected float maxhp;
-    [SerializeField] private float damage;
-    [SerializeField] protected float speed;
-    [SerializeField] private Vector3 velocity;
     [SerializeField] protected Slider healthBar;
-    public float Speed => this.speed;
+
+    [SerializeField] private float speed;
+    public virtual float Speed
+    {
+        get => speed;
+        protected set => speed = value;
+    }
+
+    [SerializeField] private float hp;
     public virtual float HP
     {
         get => hp;
@@ -23,18 +27,22 @@ public abstract class BaseObject : MonoBehaviour
             UpdateHealth(hp / maxhp);
         }
     }
+
+    [SerializeField] private float damage;
     public virtual float Damage
     {
         get => damage;
         protected set => damage = value;
     }
-    public Vector3 Velocity
+
+    [SerializeField] private Vector3 velocity;
+    public virtual Vector3 Velocity
     {
         get => velocity;
         set 
         {
             this.velocity = value;
-            rb.velocity = velocity;
+            if(rb != null) rb.velocity = velocity;
         }
     }
 

@@ -1,14 +1,15 @@
 ﻿
 using System;
 using System.Collections.Generic;
+using System.Threading.Tasks;
 using TMPro;
 using UnityEngine;
 
-public class Player : BaseObject, IGameObserver
+public class Player : BaseObject
 {
     [SerializeField] private TextMeshProUGUI textPoint;
-    [SerializeField] private float InitalDamage;
-    [SerializeField] private float InitalMaxHealth;
+    [SerializeField] private int InitalDamage;
+    [SerializeField] private int InitalMaxHealth;
     public PlayerAttack playerAttack;
 
     [SerializeField] private float critRate;
@@ -24,8 +25,6 @@ public class Player : BaseObject, IGameObserver
     [SerializeField] private float boltRate;
     public float BoltRate => this.boltRate;
     [SerializeField] private BallCircle ballCircle;
-    [SerializeField] private BallCircle poisonCircle;
-    [SerializeField] private BallCircle boltCircle;
     [SerializeField] private List<AbilityType> abilities;
     public List<AbilityType> Abilities => this.abilities;
 
@@ -67,28 +66,25 @@ public class Player : BaseObject, IGameObserver
     {
         Damage = InitalDamage;
         HP = maxhp = InitalMaxHealth;
-        GameManager.Instance.RegisterObserver(this);
         abilities ??= new List<AbilityType>();
     }
 
     public override void Die(int time = 0)
     {
-        GameManager.Instance.UnregisterObserver(this);
+
     }
 
-    private void OnCollisionEnter2D(Collision2D collision)
+    private async void OnCollisionEnter2D(Collision2D collision)
     {
         if (collision.gameObject.CompareTag("Enemy"))
         {
             // prevent enemy push player temporary.
             Physics2D.IgnoreCollision(col, collision.collider, true);
-            rb.velocity = Vector3.zero;
         }
-        else 
-        if (collision.gameObject.CompareTag("Bullet"))
-        {
-            rb.velocity = Vector3.zero;
-        }
+
+        await Task.Delay(50);
+        if (this == null) return;
+        rb.velocity = Vector3.zero;
     }
 
     private void OnCollisionExit2D(Collision2D collision)
@@ -108,33 +104,15 @@ public class Player : BaseObject, IGameObserver
     {
         base.TakeDamage(damage, type);
 
+        FloatingText.Instantiate(transform.position).SetText("-" + damage.ToString(), type);
+
         HP -= damage;
         if (HP <= 0) Die();
     }
 
-    public void OnGamePaused(bool isPaused)
-    {
-        if (isPaused)
-        {
-            var scriptComponents = this.GetComponents<MonoBehaviour>();
-            foreach (var script in scriptComponents)
-            {
-                script.enabled = false;
-            }
-        }
-        else
-        {
-            var scriptComponents = this.GetComponents<MonoBehaviour>();
-            foreach (var script in scriptComponents)
-            {
-                script.enabled = true;
-            }
-        }
-    }
-
     public void ReturnToInitialPosition()
     {
-        gameObject.transform.position = new Vector2(0, -2);
+        gameObject.transform.position = new Vector2(0, -3);
     }
 
     public void AddAbility(AbilityType type)
@@ -199,4 +177,24 @@ public class Player : BaseObject, IGameObserver
         FloatingText.Instantiate(transform.position)
             .SetText(((int)heal).ToString(), DamageType.Healing);
     }
+
+    //public void OnGamePaused(bool isPaused)
+    //{
+    //    if (isPaused)
+    //    {
+    //        var scriptComponents = this.GetComponents<MonoBehaviour>();
+    //        foreach (var script in scriptComponents)
+    //        {
+    //            script.enabled = false;
+    //        }
+    //    }
+    //    else
+    //    {
+    //        var scriptComponents = this.GetComponents<MonoBehaviour>();
+    //        foreach (var script in scriptComponents)
+    //        {
+    //            script.enabled = true;
+    //        }
+    //    }
+    //}
 }

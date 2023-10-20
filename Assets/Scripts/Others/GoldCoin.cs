@@ -1,7 +1,7 @@
 using System.Threading.Tasks;
 using UnityEngine;
 
-public class GoldCoin : MonoBehaviour, IGameObserver
+public class GoldCoin : MonoBehaviour
 {
     [SerializeField] private Rigidbody2D rb;
     [SerializeField] private float force;
@@ -29,7 +29,6 @@ public class GoldCoin : MonoBehaviour, IGameObserver
 
     public void Die()
     {
-        GameManager.Instance.UnregisterObserver(this);
         ObjectPooling.Instance.ReturnObject(gameObject);
         rb.gravityScale = 1;
     }
@@ -41,7 +40,6 @@ public class GoldCoin : MonoBehaviour, IGameObserver
 
     public async void OnInstantiate()
     {
-        GameManager.Instance.RegisterObserver(this);
         player = Player.Instance.transform;
 
         float randomNumber = Random.Range(-4, 4.0f);

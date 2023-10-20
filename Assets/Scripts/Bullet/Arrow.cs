@@ -8,8 +8,6 @@ public class Arrow : Bullet
 {
     public override ObjectPoolingType BulletType => ObjectPoolingType.Arrow;
 
-    public Arrow() => direction = Vector2.right;
-
     protected override void OnCollisionEnter2D(Collision2D collision)
     {
         if (collision.gameObject.CompareTag("Wall"))
@@ -22,7 +20,7 @@ public class Arrow : Bullet
         else if (collision.gameObject.CompareTag("Enemy") && this.Owner is Player)
         {
             Physics2D.IgnoreCollision(col, collision.collider, true);
-            EnableCollisionAgain(collision.collider, 50);
+            EnableCollisionAgain(collision.collider, 70);
 
             PlayerCauseDamageToEnemy(collision);
 
@@ -54,19 +52,21 @@ public class Arrow : Bullet
         GameObject enemy = collision.gameObject;
 
         bool isDamageCrit = CritMaster.IsCritHappen(Player.Instance.CritRate);
-        float damage = owner.Damage * (isDamageCrit ? 2 : 1);
+        float damage = Damage * (isDamageCrit ? 2 : 1);
         enemy.GetComponent<Enemy>()
             .TakeDamage(damage, isDamageCrit ? DamageType.Crit : DamageType.Nomal);
 
+        if (!enemy.activeInHierarchy) return;
+
         if (Player.Instance.PoisonedRate > 0)
             enemy.GetComponent<Enemy>()
-                .Poisoned(owner.Damage * Player.Instance.PoisonedRate);
+                .Poisoned(Damage * Player.Instance.PoisonedRate);
         if (Player.Instance.BlazeRate > 0)
             enemy.GetComponent<Enemy>()
-                .Burned(owner.Damage * Player.Instance.BlazeRate);
+                .Burned(Damage * Player.Instance.BlazeRate);
         if (Player.Instance.BoltRate > 0)
             Bolt.LightningStrikeEnemies(enemy.transform.position
-                , owner.Damage * Player.Instance.BoltRate);
+                , Damage * Player.Instance.BoltRate);
     }
 
     private async void EnableCollisionAgain(Collider2D collider, int time)

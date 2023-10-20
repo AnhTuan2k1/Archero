@@ -14,11 +14,11 @@ public class FireCircleBullet : Bullet
         if (collision.gameObject.CompareTag("Enemy"))
         {
             Enemy enemy = collision.gameObject.GetComponent<Enemy>();
-            enemy.TakeDamage(owner.Damage * 1.5f, DamageType.Blaze);
+            enemy.TakeDamage(Damage * 1.5f, DamageType.Blaze);
 
             float fireRate = Player.Instance.BlazeRate;
-            if (fireRate == 0) fireRate = Blaze.BLAZE_RATE;
-            enemy.Burned(owner.Damage * fireRate);
+            if (fireRate == 0) fireRate = Blaze.BLAZE_RATE/2f;
+            enemy.Burned(Damage * fireRate);
         }
     }
 }

@@ -7,7 +7,7 @@ using UnityEngine;
 public class Bolt : Ability
 {
     public static readonly int RANGE_ACTIVITY = 4;
-    public static readonly float BOLT_RATE = 0.3f;
+    public static readonly float BOLT_RATE = 0.27f;
     public Bolt() => Id = "Bolt";
 
     public static float CalculateBoltRate(List<AbilityType> abilities)
@@ -24,12 +24,15 @@ public class Bolt : Ability
         {
             foreach (Enemy e in EnemyManager.Instance.Enemies)
             {
-                Vector3 position = e.gameObject.transform.position;
-                float distance = Vector2.Distance(position, origin);
-                if (0.1 < distance && distance < RANGE_ACTIVITY)
+                if (e.gameObject.activeInHierarchy)
                 {
-                    LightningBolt.Instantiate(origin, position);
-                    e.TakeDamage(damage, DamageType.Bolt);
+                    Vector3 position = e.gameObject.transform.position;
+                    float distance = Vector2.Distance(position, origin);
+                    if (0.1 < distance && distance < RANGE_ACTIVITY)
+                    {
+                        LightningBolt.Instantiate(origin, position);
+                        e.TakeDamage(damage, DamageType.Bolt);
+                    }
                 }
             }
         }

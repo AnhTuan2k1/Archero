@@ -4,18 +4,35 @@ using System.Threading;
 using System.Threading.Tasks;
 using UnityEngine;
 
-public abstract class Enemy : BaseObject, IGameObserver
+public abstract class Enemy : BaseObject
 {
     public Bullet bullet;
-    [SerializeField] private GameObject goldCoin;
+    [SerializeField] private int initalMaxHealth;
+    [SerializeField] private int initalDamage;
+    public virtual ObjectPoolingType EnemyType => ObjectPoolingType.None;
     public virtual float SightRange() => 2000;
     public virtual float AttackRange() => 2000;
+    [SerializeField] bool CausedDamage = false;
 
-    protected virtual void Start()
+    public static Enemy Instantiate(Vector3 position, ObjectPoolingType type)
     {
+        Enemy enemy = ObjectPooling.Instance
+            .GetObject(type).GetComponent<Enemy>();
+        enemy.transform.position = position;
+
+        enemy.OnInstantiate();
+        return enemy;
+    }
+
+    public virtual void OnInstantiate()
+    {
+        col.enabled = true;
         EnemyManager.Instance.AddEnemy(this);
-        maxhp *= 1+LevelManager.Instance.CurrentLevel;
+
+        int level = LevelManager.Instance.CurrentLevel;
+        maxhp = initalMaxHealth * (1 + 2*level / 10 + 0.05f * (level % 10));
         HP = maxhp;
+        Damage = initalDamage * (1 + 0.5f * level / 10 + 0.02f * (level % 10));
     }
 
     public virtual float Patroling()
@@ -46,14 +63,19 @@ public abstract class Enemy : BaseObject, IGameObserver
         if (HP <= 0) Die();
     }
 
-    public override void Die(int time = 0)
+    public override async void Die(int time = 0)
     {
+        col.enabled = false;
+
         EnemyManager.Instance.RemoveEnemy(this);
-        //PointManager.Instance.UpDatePoint();
+        PointManager.Instance.AddPoint(this is BossEnemy ? 5 : 1);
 
         Player.Instance.ActiveBloodThirst();
         SpawnGoldCoin();
-        Destroy(gameObject);
+
+        await Task.Delay(100);
+        ObjectPooling.Instance.ReturnObject(gameObject);
+        EnemyManager.Instance.RemoveEnemy(this);
     }
 
     public override void HittedSound(DamageType type)
@@ -72,34 +94,34 @@ public abstract class Enemy : BaseObject, IGameObserver
 
     protected virtual void OnCollisionEnter2D(Collision2D collision)
     {
-        if (collision.gameObject.CompareTag("Wall"))
+        if (collision.gameObject.CompareTag(TagDefine.Tag_Wall))
         {          
             MoveToDirection(RandomDirection(collision.contacts[0].normal));
         }
-        else if (collision.gameObject.CompareTag("Player"))
+        else if (collision.gameObject.CompareTag(TagDefine.Tag_Player))
         {
+            if (CausedDamage) return;
+
             collision.gameObject.GetComponent<Player>().TakeDamage(Damage);
+            CausedDamage = true;
+            EnableCausedDamageAgain(800);
         }
-        //else if (collision.gameObject.CompareTag("Enemy"))
-        //{
-        //    // make enemies move through each other
-        //    IgnoreCollideWith(collision);
-        //}
-        else if (collision.gameObject.CompareTag("Bullet"))
+        else if (collision.gameObject.CompareTag(TagDefine.Tag_Bullet))
         {
             MoveToDirection(Velocity);
         }
     }
 
-    //protected virtual void IgnoreCollideWith(Collision2D collision)
-    //{
-    //    Physics2D.IgnoreCollision(col, collision.collider, true);
-    //    MoveToDirection(Velocity);
-    //}
+    private async void EnableCausedDamageAgain(int time)
+    {
+        await Task.Delay(time);
+        if (this == null) return;
+        CausedDamage = false;
+    }
 
     private void MoveToDirection(Vector2 direction)
     {
-        Velocity = direction.normalized * speed;
+        Velocity = direction.normalized * Speed;
     }
 
     private Vector2 RandomDirection(Vector2 n)
@@ -111,36 +133,13 @@ public abstract class Enemy : BaseObject, IGameObserver
         return vector;
     }
 
-    public void OnGamePaused(bool isPaused)
-    {
-        //if (isPaused)
-        //{
-        //    var scriptComponents = this.GetComponents<MonoBehaviour>();
-        //    foreach (var script in scriptComponents)
-        //    {
-        //        script.enabled = false;
-        //    }
-        //    velocity = rb.velocity;
-        //    rb.velocity = Vector2.zero;
-        //}
-        //else
-        //{
-        //    var scriptComponents = this.GetComponents<MonoBehaviour>();
-        //    foreach (var script in scriptComponents)
-        //    {
-        //        script.enabled = true;
-        //    }
-        //    rb.velocity = velocity;
-        //}
-    }
-
     private void SpawnGoldCoin()
     {
         int randomNumber = Random.Range(2, 6);
         for (int i = 0; i < randomNumber; i++)
         {
             GoldCoin gold = GoldCoin.Instantiate(transform.position);
-            gold.pointExp = maxhp / (100 * randomNumber);
+            gold.pointExp = 14.0f / randomNumber;
         }
     }
 
@@ -150,6 +149,7 @@ public abstract class Enemy : BaseObject, IGameObserver
     private Coroutine poisonedCoroutine;
     public void Poisoned(float damage)
     {
+        if (!isActiveAndEnabled) return;
         if (poisonedDamage != damage) poisonedDamage = damage;
         poisonedCoroutine ??= StartCoroutine(StartPoisoned());
     }
@@ -169,6 +169,7 @@ public abstract class Enemy : BaseObject, IGameObserver
     private float burnTime;
     public void Burned(float damage)
     {
+        if (!isActiveAndEnabled) return;
         if (burnDamage != damage) burnDamage = damage;
 
         if (burnTime > 0)

@@ -7,7 +7,7 @@
 
 using UnityEngine;
 using System.Collections.Generic;
-using Unity.VisualScripting;
+using System.Threading.Tasks;
 
 /// <summary>
 /// Types of animations for lightning bolts
@@ -356,6 +356,12 @@ public class LightningBolt : MonoBehaviour
         }
     }
 
+    private void Awake()
+    {
+        orthographic = (Camera.main != null && Camera.main.orthographic);
+        UpdateFromMaterialChange();
+    }
+
     public static LightningBolt Instantiate(Vector3 start, Vector3 end)
     {
         LightningBolt bolt = ObjectPooling.Instance
@@ -367,13 +373,16 @@ public class LightningBolt : MonoBehaviour
         return bolt;
     }
 
-    public void OnInstantiate()
+    public async void OnInstantiate()
     {
-        orthographic = (Camera.main != null && Camera.main.orthographic);
-        lineRenderer.positionCount = 0;
-        UpdateFromMaterialChange();
+        Trigger();
 
-        Invoke(nameof(Die), 0.15f);
+        int timeChange = Random.Range(40, 90);
+        await Task.Delay(timeChange);
+        if (this == null) return;
+        Trigger();
+
+        Invoke(nameof(Die), 0.12f - timeChange/1000);
     }
 
     private void Die()

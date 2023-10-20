@@ -11,21 +11,18 @@ public class Ricochet : Ability
     [SerializeField] private int ricochetTimes = 3;
 
     /// <summary>
-    /// true if Ricochet actived, otherwise false
+    /// return true if Ricochet actived, otherwise false
     /// </summary>
     public bool ActiveRicochet(Vector3 enemy, Bullet bullet)
     {
         if (ricochetTimes > 0)
         {
             float distance = 1000;
-            Vector3 target = enemyPosition(ref distance, enemy);
+            Vector3 target = EnemyPosition(ref distance, enemy);
             if (distance < RANGE_ACTIVITY)
             {
                 Vector2 newDirection = target - bullet.transform.position;
-
-                //bullet.transform.Rotate(Vector3.forward, Vector2.SignedAngle(bullet.Direction, newDirection));
                 bullet.Direction = newDirection;
-                //bullet.SetVelocity(newDirection.normalized * bullet.Speed);
 
                 ricochetTimes--;
                 if (ricochetTimes < 1) bullet.abilities.Remove(this);
@@ -36,7 +33,7 @@ public class Ricochet : Ability
         else return false;
     }
 
-    private Vector3 enemyPosition(ref float distance, Vector3 enemy)
+    private Vector3 EnemyPosition(ref float distance, Vector3 enemy)
     {
         List<Enemy> enemys = EnemyManager.Instance.Enemies;
 

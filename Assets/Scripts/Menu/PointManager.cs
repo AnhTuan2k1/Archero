@@ -1,16 +1,44 @@
 ﻿
-using System;
 using TMPro;
 using UnityEngine;
 using UnityEngine.UI;
 
 public class PointManager : MonoBehaviour
 {
-    private int playerLevel;
-    public int PlayerLevel { get => playerLevel; private set => playerLevel = value; }
-    private float playerExpPoint;
+    [SerializeField] private TextMeshProUGUI textplayerExpPoint;
     [SerializeField] protected Slider expBar;
+    private float playerExpPoint;
+
     [SerializeField] private TextMeshProUGUI textPlayerLevel;
+    private int playerLevel;
+    public int PlayerLevel 
+    {
+        get => playerLevel; 
+        private set
+        {
+            playerLevel = value;
+            textPlayerLevel.text = "Level " + value;
+        }
+    }
+
+    [SerializeField] private TextMeshProUGUI textpoint;
+    private int point;
+    public int Point
+    {
+        get => point;
+        private set
+        {
+            point = value;
+            textpoint.text = value.ToString();
+        }
+    }
+
+    private void Awake()
+    {
+        PlayerLevel = 1;
+        Point = 0;
+    }
+
 
     private static PointManager _instance;
     public static PointManager Instance
@@ -26,19 +54,21 @@ public class PointManager : MonoBehaviour
     public void GetExpPoint(float pointExp)
     {
         playerExpPoint += pointExp;
-        if (playerExpPoint > PlayerLevel * 22 + 20)
+        float expLevelUp = PlayerLevel * 5 + 50 * (1 + PlayerLevel / 10);
+
+        if (playerExpPoint > expLevelUp)
         {
-            playerExpPoint -= PlayerLevel * 22 + 20;
+            playerExpPoint -= expLevelUp;
 
             PlayerLevel++;
             AbilityManager.Instance.ShowAbilityMenu();
         }
 
-        expBar.value = playerExpPoint / (PlayerLevel * 22 + 20);
+        expBar.value = playerExpPoint / expLevelUp;
     }
 
-    public void UpDatePoint()
+    public void AddPoint(int point)
     {
-        
+        Point += point;
     }
 }

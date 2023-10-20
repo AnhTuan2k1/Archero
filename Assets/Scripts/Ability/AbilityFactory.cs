@@ -12,8 +12,7 @@ public class AbilityFactory
     {
         get 
         {
-            if (_instance == null)
-                _instance = new AbilityFactory();
+            _instance ??= new AbilityFactory();
             return _instance;
         }
     }

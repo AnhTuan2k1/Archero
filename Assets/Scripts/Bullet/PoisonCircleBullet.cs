@@ -14,11 +14,11 @@ public class PoisonCircleBullet : Bullet
         if (collision.gameObject.CompareTag("Enemy"))
         {
             Enemy enemy = collision.gameObject.GetComponent<Enemy>();
-            enemy.TakeDamage(owner.Damage * 1.5f, DamageType.Poisoned);
+            enemy.TakeDamage(Damage * 1.5f, DamageType.Poisoned);
 
-            float poisonRate = Player.Instance.BlazeRate;
-            if (poisonRate == 0) poisonRate = PoisonedTouch.POISONED_RATE;
-            enemy.Poisoned(owner.Damage * poisonRate);
+            float poisonRate = Player.Instance.PoisonedRate;
+            if (poisonRate == 0) poisonRate = PoisonedTouch.POISONED_RATE/2f;
+            enemy.Poisoned(Damage * poisonRate);
         }
     }
 }

@@ -4,20 +4,46 @@ using System.Collections.Generic;
 
 public class GameManager : MonoBehaviour
 {
-    public static GameManager Instance { get; private set; }
+    private static GameManager _instance;
+    public static GameManager Instance
+    {
+        get
+        {
+            if (_instance == null)
+                _instance = FindObjectOfType<GameManager>();
+            return _instance;
+        }
+    }
 
     public List<IGameObserver> observers = new List<IGameObserver>();
-    [SerializeField] public bool IsPaused { get; private set; } = false;
+    [SerializeField] private bool isPaused = false;
+    public bool IsPaused 
+    { 
+        get => isPaused;
+        set
+        {
+            isPaused = value;
+            NotifyObservers();
+        } 
+    }
 
-    private void Awake()
+    public void OnGamePaused()
     {
-        if (Instance == null)
+        Time.timeScale = 0;
+        IsPaused = true;
+    }
+
+    public void OnGameResume()
+    {
+        IsPaused = false;
+        Time.timeScale = 1;
+    }
+
+    private void NotifyObservers()
+    {
+        foreach (var observer in observers)
         {
-            Instance = this;
-        }
-        else
-        {
-            Destroy(gameObject);
+            observer.OnGamePaused(IsPaused);
         }
     }
 
@@ -29,29 +55,5 @@ public class GameManager : MonoBehaviour
     public void UnregisterObserver(IGameObserver observer)
     {
         observers.Remove(observer);
-    }
-
-    public void OnGamePaused()
-    {
-        Time.timeScale = 0;
-    }
-
-    public void OnGameResume()
-    {
-        Time.timeScale = 1;
-    }
-
-    //public void TogglePause()
-    //{
-    //    IsPaused = !IsPaused;
-    //    NotifyObservers();
-    //}
-
-    private void NotifyObservers()
-    {
-        foreach (var observer in observers)
-        {
-            observer.OnGamePaused(IsPaused);
-        }
     }
 }

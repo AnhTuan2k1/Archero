@@ -138,11 +138,11 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   rb: {fileID: 7766911768008315337}
   col: {fileID: 7766911768008315336}
-  hp: 0
   maxhp: 0
-  damage: 100
-  speed: 3
-  velocity: {x: 0, y: 0, z: 0}
   healthBar: {fileID: 0}
-  owner: {fileID: 0}
+  speed: 3
+  hp: 0
+  damage: 30
+  velocity: {x: 0, y: 0, z: 0}
   direction: {x: 0, y: 0, z: 0}
+  owner: {fileID: 0}

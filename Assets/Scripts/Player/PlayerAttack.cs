@@ -11,6 +11,7 @@ public class PlayerAttack : MonoBehaviour
     [SerializeField] bool isAttacked = false;
     [SerializeField] bool isReadyAttack = false;
     public Bullet bullet;
+    public Aim Targeted;
 
     public float AttackSpeed
     {
@@ -37,7 +38,7 @@ public class PlayerAttack : MonoBehaviour
 
             isAttacked = true;
             SpawnBullet();
-            Invoke(nameof(UnableAttack), delayTime);
+            Invoke(nameof(UnableAttack), delayTime/1.1f);
         }
         else if(playerMovement.IsMoving) isReadyAttack = false;
     }
@@ -47,7 +48,7 @@ public class PlayerAttack : MonoBehaviour
         //Bullet b = Instantiate(bullet, transform.position, transform.rotation);
         Bullet b = ObjectPooling.Instance
             .GetObject(bullet.BulletType, transform.position).GetComponent<Bullet>();
-        b.Direction = enemyPosition() - player.transform.position;
+        b.Direction = Targeted.Target - player.transform.position;
         b.Owner = player;
         b.abilities = new();
         b.AddAbility(player.Abilities);
@@ -69,35 +70,35 @@ public class PlayerAttack : MonoBehaviour
         isReadyAttack = true;
     }
 
-    private Vector3 enemyPosition()
-    {
-        try
-        {
-            Vector3 position = Vector3.zero;
-            if (EnemyManager.Instance.Enemies.Count == 0) return position;
-            else
-            {
-                List<Enemy> enemys = EnemyManager.Instance.Enemies;
-                position = enemys[0].transform.position;
-                float distance = Vector2.Distance(enemys[0].transform.position, player.transform.position);
-                for (int i = 1; i < enemys.Count; i++)
-                {
-                    float d = Vector2.Distance(enemys[i]
-                        .transform.position, player.transform.position);
-                    if (d < distance)
-                    {
-                        distance = d;
-                        position = enemys[i].transform.position;
-                    }
-                }
-                return position;
-            }
-        }
-        catch (Exception e)
-        {
-            Debug.LogWarning(e);
-            EnemyManager.Instance.Enemies.RemoveAll(x => !x);
-            return Vector3.zero;
-        }
-    }
+    //private Vector3 enemyPosition()
+    //{
+    //    try
+    //    {
+    //        Vector3 position = Vector3.zero;
+    //        if (EnemyManager.Instance.Enemies.Count == 0) return position;
+    //        else
+    //        {
+    //            List<Enemy> enemys = EnemyManager.Instance.Enemies;
+    //            position = enemys[0].transform.position;
+    //            float distance = Vector2.Distance(enemys[0].transform.position, player.transform.position);
+    //            for (int i = 1; i < enemys.Count; i++)
+    //            {
+    //                float d = Vector2.Distance(enemys[i]
+    //                    .transform.position, player.transform.position);
+    //                if (d < distance)
+    //                {
+    //                    distance = d;
+    //                    position = enemys[i].transform.position;
+    //                }
+    //            }
+    //            return position;
+    //        }
+    //    }
+    //    catch (Exception e)
+    //    {
+    //        Debug.LogWarning(e);
+    //        EnemyManager.Instance.Enemies.RemoveAll(x => !x);
+    //        return Vector3.zero;
+    //    }
+    //}
 }

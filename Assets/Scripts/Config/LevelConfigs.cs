@@ -6,7 +6,7 @@ using UnityEngine;
 [CreateAssetMenu(fileName = "LevelConfigs", menuName = "Configs/Level")]
 public class LevelConfigs : ScriptableObject
 {
-    public List<LevelConfig> _levelConfigs;
+    [SerializeField] private List<LevelConfig> _levelConfigs;
     private static LevelConfigs _instance;
     public static LevelConfigs Instance
     {
@@ -22,10 +22,21 @@ public class LevelConfigs : ScriptableObject
     {
         return _levelConfigs[level];
     }
+
+    public LevelConfig GetRandomLevelConfig()
+    {
+        return _levelConfigs[Random.Range(1, _levelConfigs.Count)];
+    }
+
+    public int GetLevelConfigCount()
+    {
+        return _levelConfigs.Count;
+    }
 }
 
 [System.Serializable]
 public class LevelConfig
 {
+    public int levelID;
     public GameObject levelPrefab;
 }
