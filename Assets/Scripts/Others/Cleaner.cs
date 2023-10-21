@@ -32,3 +32,4 @@ public class Cleaner : MonoBehaviour
 // player die
 // animation ability
 // show attribute player
+// boss bullet

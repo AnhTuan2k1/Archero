@@ -149,6 +149,7 @@ MonoBehaviour:
   bullet: {fileID: 737253010517521880, guid: bdab57d4189df4141b3d12e8e15ed6bb, type: 3}
   initalMaxHealth: 600
   initalDamage: 120
+  CausedDamage: 0
   bulletAbilities: 06000000060000000b0000000f00000011000000
 --- !u!114 &4677263221125039454
 MonoBehaviour:

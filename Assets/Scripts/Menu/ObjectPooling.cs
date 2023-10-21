@@ -14,7 +14,10 @@ public enum ObjectPoolingType
     LightningBolt,
     Laser,
     Bat,
-    Enemy2001
+    Enemy2001,
+    FireBullet,
+    BounceFireBullet,
+    SupperBat
 }
 
 public class ObjectPooling : MonoBehaviour
@@ -52,6 +55,9 @@ public class ObjectPooling : MonoBehaviour
     [SerializeField] private GameObject _Laser;
     [SerializeField] private GameObject _Bat;
     [SerializeField] private GameObject _Enemy2001;
+    [SerializeField] private GameObject _FireBullet;
+    [SerializeField] private GameObject _BounceFireBullet;
+    [SerializeField] private GameObject _SupperBat;
     [SerializeField] private Vector2 poolPosition;
 
     private void Awake()
@@ -174,6 +180,10 @@ public class ObjectPooling : MonoBehaviour
         else if (gameObject.GetComponent<Laser>()) return ObjectPoolingType.Laser;
         else if (gameObject.GetComponent<Bat>()) return ObjectPoolingType.Bat;
         else if (gameObject.GetComponent<Enemy2001>()) return ObjectPoolingType.Enemy2001;
+        else if (gameObject.GetComponent<FireBullet>()) return ObjectPoolingType.FireBullet;
+        else if (gameObject.GetComponent<BounceFireBullet>()) return ObjectPoolingType.BounceFireBullet;
+        else if (gameObject.GetComponent<SupperBat>()) return ObjectPoolingType.SupperBat;
+
         else throw new System.Exception("can't determinate gameobject type");
     }
 
@@ -194,6 +204,9 @@ public class ObjectPooling : MonoBehaviour
             ObjectPoolingType.Laser => _Laser.transform,
             ObjectPoolingType.Bat => _Bat.transform,
             ObjectPoolingType.Enemy2001 => _Enemy2001.transform,
+            ObjectPoolingType.FireBullet => _FireBullet.transform,
+            ObjectPoolingType.BounceFireBullet => _BounceFireBullet.transform,
+            ObjectPoolingType.SupperBat => _SupperBat.transform,
             _ => null,
         };
     }

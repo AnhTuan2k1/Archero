@@ -28,6 +28,8 @@ public class Player : BaseObject
     [SerializeField] private List<AbilityType> abilities;
     public List<AbilityType> Abilities => this.abilities;
 
+    private bool immortal = false;
+
     public override float HP
     {
         get => base.HP;
@@ -71,7 +73,7 @@ public class Player : BaseObject
 
     public override void Die(int time = 0)
     {
-
+        GameManager.Instance.OnGameOver();
     }
 
     private async void OnCollisionEnter2D(Collision2D collision)
@@ -102,6 +104,7 @@ public class Player : BaseObject
 
     public override void TakeDamage(float damage, DamageType type = DamageType.Nomal)
     {
+        if (immortal) return;
         base.TakeDamage(damage, type);
 
         FloatingText.Instantiate(transform.position).SetText("-" + damage.ToString(), type);
@@ -176,6 +179,15 @@ public class Player : BaseObject
 
         FloatingText.Instantiate(transform.position)
             .SetText(((int)heal).ToString(), DamageType.Healing);
+    }
+
+    public async void Revive()
+    {
+        HP = maxhp * 0.7f;
+        immortal = true;
+        await Task.Delay(1500);
+        if (this == null) return;
+        immortal = false;
     }
 
     //public void OnGamePaused(bool isPaused)

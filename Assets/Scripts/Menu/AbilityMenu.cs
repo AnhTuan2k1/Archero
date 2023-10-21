@@ -7,6 +7,7 @@ public class AbilityMenu : MonoBehaviour
 {
     [SerializeField] GameObject abilityTemplate;
     [SerializeField] Transform parentTransform;
+    [SerializeField] bool reroll;
 
     private void Start()
     {
@@ -17,10 +18,12 @@ public class AbilityMenu : MonoBehaviour
 
     public void ShowMenu()
     {
+        reroll = true;
         gameObject.SetActive(true);
 
         GameManager.Instance.OnGamePaused();
         ReRollAbility();
+        reroll = true;
     }
 
     public void HideMenu()
@@ -60,8 +63,12 @@ public class AbilityMenu : MonoBehaviour
 
     public void ReRollAbility()
     {
-        DestroyAbility();
-        SpawnAbility();
+        if (reroll)
+        {
+            DestroyAbility();
+            SpawnAbility();
+            reroll = false;
+        }
     }
 
     private void AbilityClicked(AbilityType type)

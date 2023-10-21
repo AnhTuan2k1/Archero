@@ -22,10 +22,9 @@ public class Aim : MonoBehaviour
         {
             if (target == null || !target.isActiveAndEnabled) FindCloestTaget();
 
-            if(target == null)
+            if(target == null || !target.isActiveAndEnabled)
             {
-                EnemyManager.Instance.Clean();
-                return Vector3.zero;
+                return EnemyManager.Instance.Clean();
             }
             else return target.transform.position; 
         }
@@ -40,7 +39,7 @@ public class Aim : MonoBehaviour
         else if (enemys.Count == 1) target = enemys[0];
         else
         {
-            if (target == null || !target.isActiveAndEnabled) target = enemys[0];
+            target = enemys[0];
             float distance = Vector2.Distance(target.transform.position, player.position);
             
             for (int i = 1; i < enemys.Count; i++)

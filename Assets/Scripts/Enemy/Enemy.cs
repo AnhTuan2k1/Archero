@@ -7,8 +7,8 @@ using UnityEngine;
 public abstract class Enemy : BaseObject
 {
     public Bullet bullet;
-    [SerializeField] private int initalMaxHealth;
-    [SerializeField] private int initalDamage;
+    [SerializeField] protected int initalMaxHealth;
+    [SerializeField] protected int initalDamage;
     public virtual ObjectPoolingType EnemyType => ObjectPoolingType.None;
     public virtual float SightRange() => 2000;
     public virtual float AttackRange() => 2000;
@@ -30,7 +30,8 @@ public abstract class Enemy : BaseObject
         EnemyManager.Instance.AddEnemy(this);
 
         int level = LevelManager.Instance.CurrentLevel;
-        maxhp = initalMaxHealth * (1 + 2*level / 10 + 0.05f * (level % 10));
+        maxhp = initalMaxHealth * (1 + 5*(level / 10) + 0.2f * (level % 10))
+            + Mathf.Pow(2, 3 + level / 10) * 10;
         HP = maxhp;
         Damage = initalDamage * (1 + 0.5f * level / 10 + 0.02f * (level % 10));
     }
@@ -68,14 +69,13 @@ public abstract class Enemy : BaseObject
         col.enabled = false;
 
         EnemyManager.Instance.RemoveEnemy(this);
-        PointManager.Instance.AddPoint(this is BossEnemy ? 5 : 1);
+        PointManager.Instance.AddPoint(1);
 
         Player.Instance.ActiveBloodThirst();
         SpawnGoldCoin();
 
         await Task.Delay(100);
         ObjectPooling.Instance.ReturnObject(gameObject);
-        EnemyManager.Instance.RemoveEnemy(this);
     }
 
     public override void HittedSound(DamageType type)

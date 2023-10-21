@@ -1,9 +1,11 @@
 using UnityEngine;
-using System;
 using System.Collections.Generic;
 
 public class GameManager : MonoBehaviour
 {
+    public GameObject expBar;
+    public GameOverMenu gameOverMenu;
+
     private static GameManager _instance;
     public static GameManager Instance
     {
@@ -37,6 +39,11 @@ public class GameManager : MonoBehaviour
     {
         IsPaused = false;
         Time.timeScale = 1;
+    }
+
+    public void OnGameOver()
+    {
+        gameOverMenu.ShowMenu();
     }
 
     private void NotifyObservers()

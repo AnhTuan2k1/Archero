@@ -28,6 +28,11 @@ public class LevelConfigs : ScriptableObject
         return _levelConfigs[Random.Range(1, _levelConfigs.Count)];
     }
 
+    public LevelConfig GetBossLevelConfig()
+    {
+        return _levelConfigs[0];
+    }
+
     public int GetLevelConfigCount()
     {
         return _levelConfigs.Count;

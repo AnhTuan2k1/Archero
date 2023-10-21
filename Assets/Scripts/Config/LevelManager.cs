@@ -4,7 +4,6 @@ using System.Collections.Generic;
 using System.Linq;
 using TMPro;
 using UnityEngine;
-using UnityEngine.UIElements;
 
 public class LevelManager : MonoBehaviour
 {
@@ -93,12 +92,43 @@ public class LevelManager : MonoBehaviour
         foreach (Transform enemyPos in enemyPosition)
         {
             Enemy.Instantiate(enemyPos.position,
-                EnemyManager.Instance.RandomAnEnemyType());
+                EnemyManager.Instance.RandomAnEnemyType(level));
         }
 
         CurrentLevel = level;
         if (level == 0) IsReadyForNewLevel = true;
         else IsReadyForNewLevel = false;
+    }
+
+    private void SpawnBossLevel(int level)
+    {
+        currentLevelObject.SetActive(false);
+
+        //get level map
+        LevelConfig newLevelConfig = LevelConfigs.Instance.GetBossLevelConfig();
+        LevelConfig[] oldLevelConfig =
+            levels.Where(l => l.levelID == newLevelConfig.levelID).ToArray();
+        if (oldLevelConfig.Length > 0)
+        {
+            currentLevelObject = oldLevelConfig[0].levelPrefab;
+        }
+        else
+        {
+            currentLevelObject = Instantiate(newLevelConfig.levelPrefab);
+            currentLevelObject.transform.SetParent(maps.transform);
+            LevelConfig l = new()
+            {
+                levelID = newLevelConfig.levelID,
+                levelPrefab = currentLevelObject
+            };
+            levels.Add(l);
+        }
+
+        currentLevelObject.SetActive(true);
+        EnemyManager.Instance.InstantiateBoss(level);
+
+
+        CurrentLevel = level;
     }
 
     public void SpawnNextLevel()
@@ -109,7 +139,8 @@ public class LevelManager : MonoBehaviour
 
     public void SpawnEndlessLevel()
     {
-        SpawnNewLevel(CurrentLevel + 1);
+        if (CurrentLevel % 10 == 9) SpawnBossLevel(CurrentLevel + 1);
+        else SpawnNewLevel(CurrentLevel + 1);
     }
 
     public bool SetIsReadyForNewLevel(bool Iseady)

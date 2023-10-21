@@ -16,6 +16,7 @@ public class EnemyManager : MonoBehaviour
     }
 
     public List<Enemy> Enemies { get => enemies;}
+    public List<BossEnemy> BossPrefab; 
     [SerializeField] private List<Enemy> enemies;
 
     private void Awake()
@@ -38,11 +39,23 @@ public class EnemyManager : MonoBehaviour
             LevelManager.Instance.SetIsReadyForNewLevel(true);
     }
 
-    public void Clean()
+    public Vector3 Clean()
     {
+        if(enemies.Count != 0)
+        {
+            foreach (Enemy enemy in enemies)
+            {
+                if (enemy.isActiveAndEnabled)
+                {
+                    return enemy.transform.position;
+                }
+            }
+        }
+
         enemies.Clear();
         enemies = new List<Enemy>();
         LevelManager.Instance.SetIsReadyForNewLevel(true);
+        return Vector3.zero;
     }
 
     public void AddEnemy(Enemy enemy)
@@ -50,16 +63,22 @@ public class EnemyManager : MonoBehaviour
         enemies.Add(enemy);
     }
 
-    public ObjectPoolingType RandomAnEnemyType()
+    public ObjectPoolingType RandomAnEnemyType(int level)
     {
-        switch (Random.Range(1, 3))
-        {
-            case 1:
-                return ObjectPoolingType.Enemy2001;
-            case 2:
-                return ObjectPoolingType.Bat;
-            default:
-                return ObjectPoolingType.Enemy2001;
-        }
+        int random = Random.Range(1, 3 + level/10);
+        if (random == 1)
+            return ObjectPoolingType.Enemy2001;
+        else if (random == 2 || random == 5 || random == 7)
+            return ObjectPoolingType.Bat;
+        else if(random == 3)
+            return ObjectPoolingType.SupperBat;
+
+        else return ObjectPoolingType.SupperBat;
+    }
+
+    public void InstantiateBoss(int level)
+    {
+        BossEnemy boss = Instantiate(BossPrefab[Random.Range(0, BossPrefab.Count)]);
+
     }
 }
