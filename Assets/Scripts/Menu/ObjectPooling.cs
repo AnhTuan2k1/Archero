@@ -17,7 +17,7 @@ public enum ObjectPoolingType
     Enemy2001,
     FireBullet,
     BounceFireBullet,
-    SupperBat
+    SuperBat
 }
 
 public class ObjectPooling : MonoBehaviour
@@ -144,30 +144,18 @@ public class ObjectPooling : MonoBehaviour
         return obj;
     }
 
-    public async void ReturnObject(GameObject gameObject, int time = 0,
+    public void ReturnObject(GameObject gameObject,
         ObjectPoolingType type = ObjectPoolingType.None)
     {
-        if(time > 0)
-        {
-            gameObject.GetComponent<Collider2D>().enabled = false;
-            gameObject.GetComponent<Rigidbody2D>().velocity = Vector2.zero;
-            await Task.Delay(time);
-            if (gameObject == null) return; // end game
-            gameObject.GetComponent<Collider2D>().enabled = true;
 
 
-            gameObject.transform.position = poolPosition;
-            if(type == ObjectPoolingType.None) type = GetType(gameObject);
-            gameObject.SetActive(false);
-            poolDictionary[type].Enqueue(gameObject);
-        }
-        else
-        {
+
+
             gameObject.transform.position = poolPosition;
             if (type == ObjectPoolingType.None) type = GetType(gameObject);
             gameObject.SetActive(false);
             poolDictionary[type].Enqueue(gameObject);
-        }
+        
     }
 
     private ObjectPoolingType GetType(GameObject gameObject)
@@ -182,7 +170,7 @@ public class ObjectPooling : MonoBehaviour
         else if (gameObject.GetComponent<Enemy2001>()) return ObjectPoolingType.Enemy2001;
         else if (gameObject.GetComponent<FireBullet>()) return ObjectPoolingType.FireBullet;
         else if (gameObject.GetComponent<BounceFireBullet>()) return ObjectPoolingType.BounceFireBullet;
-        else if (gameObject.GetComponent<SupperBat>()) return ObjectPoolingType.SupperBat;
+        else if (gameObject.GetComponent<SuperBat>()) return ObjectPoolingType.SuperBat;
 
         else throw new System.Exception("can't determinate gameobject type");
     }
@@ -206,7 +194,7 @@ public class ObjectPooling : MonoBehaviour
             ObjectPoolingType.Enemy2001 => _Enemy2001.transform,
             ObjectPoolingType.FireBullet => _FireBullet.transform,
             ObjectPoolingType.BounceFireBullet => _BounceFireBullet.transform,
-            ObjectPoolingType.SupperBat => _SupperBat.transform,
+            ObjectPoolingType.SuperBat => _SupperBat.transform,
             _ => null,
         };
     }

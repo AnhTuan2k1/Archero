@@ -11,6 +11,7 @@ public class Player : BaseObject
     [SerializeField] private int InitalDamage;
     [SerializeField] private int InitalMaxHealth;
     public PlayerAttack playerAttack;
+    public PlayerMovement playerMovement;
 
     [SerializeField] private float critRate;
     public float CritRate => this.critRate;
@@ -69,11 +70,19 @@ public class Player : BaseObject
         Damage = InitalDamage;
         HP = maxhp = InitalMaxHealth;
         abilities ??= new List<AbilityType>();
+        OnInstantiate();
     }
 
     public override void Die(int time = 0)
     {
         GameManager.Instance.OnGameOver();
+    }
+
+    public override void OnGamePaused(bool isPaused)
+    {
+        base.OnGamePaused(isPaused);
+        playerAttack.enabled = !isPaused;
+        playerMovement.enabled = !isPaused;
     }
 
     private async void OnCollisionEnter2D(Collision2D collision)
@@ -160,8 +169,10 @@ public class Player : BaseObject
         else if (type is AbilityType.HPBoost)
         {
             float rate = HPBoost.CalculateHPBoostRate(Abilities);
+            if(InitalMaxHealth * rate > maxhp)
+                Healing(InitalMaxHealth * rate - maxhp);
             maxhp = InitalMaxHealth * rate;
-            Healing(150*rate);
+
         }
     }
 

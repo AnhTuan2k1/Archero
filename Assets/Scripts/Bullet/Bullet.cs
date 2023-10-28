@@ -2,6 +2,7 @@
 
 using System.Collections.Generic;
 using System.Linq;
+using System.Threading.Tasks;
 using UnityEngine;
 
 public abstract class Bullet : BaseObject
@@ -38,9 +39,16 @@ public abstract class Bullet : BaseObject
         } 
     }
 
-    public override void Die(int time = 0)
+    public async override void Die(int time = 0)
     {
-        ObjectPooling.Instance.ReturnObject(gameObject, time);
+        col.enabled = false;
+        rb.velocity = Vector2.zero;
+        await Task.Delay(time);
+        if (gameObject == null) return;
+        col.enabled = true;
+
+        ObjectPooling.Instance.ReturnObject(gameObject);
+        base.Die(time);
     }
 
     protected virtual void OnCollisionEnter2D(Collision2D collision)
@@ -102,7 +110,7 @@ public abstract class Bullet : BaseObject
         b.abilities = new();
         b.AddAbility(bullet.abilities);
         //b.BulletCreateSound();
+        b.OnInstantiate();
         return b;
     }
-
 }

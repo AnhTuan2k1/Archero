@@ -30,8 +30,9 @@ public class Laser : Bullet
         return laser;
     }
 
-    public void OnInstantiate()
+    public override void OnInstantiate()
     {
+        base.OnInstantiate();
         Invoke(nameof(Die), 0.5f);
     }
 

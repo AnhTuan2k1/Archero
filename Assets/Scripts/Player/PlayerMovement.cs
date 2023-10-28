@@ -1,7 +1,7 @@
 
 using UnityEngine;
 
-public class PlayerMovement : MonoBehaviour, IGameObserver
+public class PlayerMovement : MonoBehaviour
 {
     private Player player;
     private PlayerAttack playerAttack;
@@ -22,16 +22,10 @@ public class PlayerMovement : MonoBehaviour, IGameObserver
         get => isMoving;
     }
 
-    public void OnGamePaused(bool isPaused)
-    {
-        this.enabled = !isPaused;
-    }
-
     void Start()
     {
         player = GetComponent<Player>();
         playerAttack = GetComponent<PlayerAttack>();
-        GameManager.Instance.RegisterObserver(this);
     }
 
     void Update()

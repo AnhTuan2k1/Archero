@@ -24,8 +24,9 @@ public abstract class Enemy : BaseObject
         return enemy;
     }
 
-    public virtual void OnInstantiate()
+    public override void OnInstantiate()
     {
+        base.OnInstantiate();
         col.enabled = true;
         EnemyManager.Instance.AddEnemy(this);
 
@@ -33,7 +34,7 @@ public abstract class Enemy : BaseObject
         maxhp = initalMaxHealth * (1 + 5*(level / 10) + 0.2f * (level % 10))
             + Mathf.Pow(2, 3 + level / 10) * 10;
         HP = maxhp;
-        Damage = initalDamage * (1 + 0.5f * level / 10 + 0.02f * (level % 10));
+        Damage = initalDamage /** (1 + 0.5f * level / 10 + 0.02f * (level % 10))*/;
     }
 
     public virtual float Patroling()
@@ -76,6 +77,7 @@ public abstract class Enemy : BaseObject
 
         await Task.Delay(100);
         ObjectPooling.Instance.ReturnObject(gameObject);
+        base.Die(time);
     }
 
     public override void HittedSound(DamageType type)
@@ -141,6 +143,12 @@ public abstract class Enemy : BaseObject
             GoldCoin gold = GoldCoin.Instantiate(transform.position);
             gold.pointExp = 14.0f / randomNumber;
         }
+    }
+
+    public override void OnGamePaused(bool isPaused)
+    {
+        base.OnGamePaused(isPaused);
+        StopAllCoroutines();
     }
 
     #region poisoned blaze freeze

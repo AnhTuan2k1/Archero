@@ -43,6 +43,7 @@ public class Bat : Enemy
         b.abilities = new();
         AddAbilityToBullet(b);
         b.ActiveAllAbility();
+        b.OnInstantiate();
     }
 
     private Vector3 GetBulletDirection()

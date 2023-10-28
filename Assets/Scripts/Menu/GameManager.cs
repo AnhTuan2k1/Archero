@@ -31,14 +31,14 @@ public class GameManager : MonoBehaviour
 
     public void OnGamePaused()
     {
-        Time.timeScale = 0;
+        //Time.timeScale = 0;
         IsPaused = true;
     }
 
     public void OnGameResume()
     {
         IsPaused = false;
-        Time.timeScale = 1;
+        //Time.timeScale = 1;
     }
 
     public void OnGameOver()

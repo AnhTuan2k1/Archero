@@ -35,5 +35,4 @@ public class AbilityManager: MonoBehaviour
     }
 
     public void ShowAbilityMenu() => menu.ShowMenu();
-    public void HideAbilityMenu() => menu.HideMenu();
 }

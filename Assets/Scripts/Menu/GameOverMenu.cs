@@ -8,10 +8,12 @@ public class GameOverMenu : MonoBehaviour
 {
     [SerializeField] private TextMeshProUGUI textDieTimes;
     [SerializeField] private int reviveTimes;
+    [SerializeField] private GameObject buttonRevive;
 
     private void Awake()
     {
-        reviveTimes = 0;
+        reviveTimes = 3;
+        textDieTimes.text = "Lives: " + reviveTimes;
     }
 
     public void ShowMenu()
@@ -30,10 +32,12 @@ public class GameOverMenu : MonoBehaviour
 
     public void ButtonRevive()
     {
-        Player.Instance.Revive();
-        reviveTimes++;
-        textDieTimes.text = "Die Times: " + reviveTimes;
         HideMenu();
+        Player.Instance.Revive();
+        reviveTimes--;
+        textDieTimes.text = "Lives: " + reviveTimes;
+
+        if(reviveTimes <= 0) buttonRevive.SetActive(false);
     }
 
     public void ButtonPlayAgain()

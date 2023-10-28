@@ -370,9 +370,10 @@ MonoBehaviour:
   damage: 0
   velocity: {x: 0, y: 0, z: 0}
   textPoint: {fileID: 7024882195199339842}
-  InitalDamage: 150
-  InitalMaxHealth: 1000
+  InitalDamage: 1500
+  InitalMaxHealth: 1500
   playerAttack: {fileID: 4900630605066763452}
+  playerMovement: {fileID: 4900630605066763448}
   critRate: 0
   bloodThirstRate: 0
   rageRate: 0

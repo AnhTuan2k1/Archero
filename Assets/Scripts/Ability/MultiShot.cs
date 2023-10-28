@@ -15,6 +15,7 @@ public class MultiShot : Ability
     private async void Clone(int millisecondsDelay, Bullet bullet)
     {
         await Task.Delay(millisecondsDelay);
+        if (GameManager.Instance.IsPaused) return;
 
         Bullet b = Bullet.InstantiateFromOwn(bullet);
         if (b == null) return;

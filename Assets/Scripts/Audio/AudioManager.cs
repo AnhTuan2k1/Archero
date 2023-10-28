@@ -69,6 +69,32 @@ public class AudioManager : MonoBehaviour
         //audioClipPaused = s.audioSource.clip;
     }
 
+    public void PlaySingleSound(Sound.Name name)
+    {
+        Sound s = Array.Find(sounds, x => x.name == name);
+        if (s == null)
+        {
+            Debug.Log("Sound " + name + ": not found");
+            return;
+        }
+        else
+        {
+            s.audioSource.Play();
+        }
+
+    }
+
+    public void PauseSingleSound(Sound.Name name)
+    {
+        Sound s = Array.Find(sounds, x => x.name == name);
+        if (s == null)
+        {
+            Debug.Log("Sound " + name + ": not found");
+            return;
+        }
+        s.audioSource.Pause();
+    }
+
     public void UnPauseSound(Sound.Name name)
     {
         Sound s = Array.Find(sounds, x => x.name == name);

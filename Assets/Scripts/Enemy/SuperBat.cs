@@ -1,12 +1,11 @@
-﻿
-
-
+using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class Enemy2001 : Enemy
+public class SuperBat : Enemy
 {
-    public override ObjectPoolingType EnemyType => ObjectPoolingType.Enemy2001;
+    public override ObjectPoolingType EnemyType => ObjectPoolingType.SuperBat;
+
     public List<AbilityType> bulletAbilities;
     int attackRange = 10;
 
@@ -50,18 +49,17 @@ public class Enemy2001 : Enemy
     private Vector3 GetBulletDirection()
     {
         Vector3 direction = Player.Instance.transform.position - transform.position;
-        
-        // tạo góc bắn có độ lệch không quá 10
+
         float randomAngle = Random.Range(-10, 10);
         return Quaternion.Euler(0, 0, randomAngle) * direction;
     }
 
     private void AddAbilityToBullet(Bullet b)
     {
-        if(bulletAbilities.Count > 0)
+        if (bulletAbilities.Count > 0)
         {
-            List<AbilityType> abi = new();
-            int level = LevelManager.Instance.CurrentLevel / 11;
+            List<AbilityType> abi = new() { AbilityType.BouncyWall };
+            int level = LevelManager.Instance.CurrentLevel / 11 - 1;
             for (int i = 0; i < level; i++)
             {
                 abi.Add(bulletAbilities[Random.Range(0, bulletAbilities.Count)]);
@@ -69,19 +67,4 @@ public class Enemy2001 : Enemy
             b.AddAbility(abi);
         }
     }
-}
-
-
-public interface AIEnemyRandomMove
-{
-    void RandomPos();
-    void MovePos();
-}
-public  interface AIEnemyChasingPlayer
-{
-    void MoveToPlayer();
-}
-public interface AIJumping
-{
-    void PosJump();
 }

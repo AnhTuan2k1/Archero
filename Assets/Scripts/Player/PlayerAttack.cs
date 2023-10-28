@@ -54,6 +54,7 @@ public class PlayerAttack : MonoBehaviour
         b.AddAbility(player.Abilities);
         b.BulletCreateSound();
         b.ActiveAllAbility();
+        b.OnInstantiate();
     }
 
     private void UnableAttack()
@@ -69,36 +70,4 @@ public class PlayerAttack : MonoBehaviour
     {
         isReadyAttack = true;
     }
-
-    //private Vector3 enemyPosition()
-    //{
-    //    try
-    //    {
-    //        Vector3 position = Vector3.zero;
-    //        if (EnemyManager.Instance.Enemies.Count == 0) return position;
-    //        else
-    //        {
-    //            List<Enemy> enemys = EnemyManager.Instance.Enemies;
-    //            position = enemys[0].transform.position;
-    //            float distance = Vector2.Distance(enemys[0].transform.position, player.transform.position);
-    //            for (int i = 1; i < enemys.Count; i++)
-    //            {
-    //                float d = Vector2.Distance(enemys[i]
-    //                    .transform.position, player.transform.position);
-    //                if (d < distance)
-    //                {
-    //                    distance = d;
-    //                    position = enemys[i].transform.position;
-    //                }
-    //            }
-    //            return position;
-    //        }
-    //    }
-    //    catch (Exception e)
-    //    {
-    //        Debug.LogWarning(e);
-    //        EnemyManager.Instance.Enemies.RemoveAll(x => !x);
-    //        return Vector3.zero;
-    //    }
-    //}
 }

@@ -71,9 +71,9 @@ public class EnemyManager : MonoBehaviour
         else if (random == 2 || random == 5 || random == 7)
             return ObjectPoolingType.Bat;
         else if(random == 3)
-            return ObjectPoolingType.SupperBat;
+            return ObjectPoolingType.SuperBat;
 
-        else return ObjectPoolingType.SupperBat;
+        else return ObjectPoolingType.SuperBat;
     }
 
     public void InstantiateBoss(int level)

@@ -1,25 +1,22 @@
+using System.Collections;
 using System.Threading.Tasks;
 using UnityEngine;
 
 public class GoldCoin : MonoBehaviour
 {
     [SerializeField] private Rigidbody2D rb;
+    [SerializeField] private Collider2D col;
     [SerializeField] private float force;
     public float pointExp;
-    private bool isGamepause = false;
 
     public Transform player;
     public float speed = 7f;
 
-    private void Update()
+    private void OnTriggerEnter2D(Collider2D collision)
     {
-        if (LevelManager.Instance.IsReadyForNewLevel && !isGamepause)
+        if (LevelManager.Instance.IsReadyForNewLevel)
         {
-            transform.position = Vector3.MoveTowards(transform
-              .position, player.position,
-                speed * Time.deltaTime);
-
-            if (Vector2.Distance(player.position, transform.position) < 0.1)
+            if (collision.gameObject.CompareTag(TagDefine.Tag_Player))
             {
                 PointManager.Instance.GetExpPoint(pointExp);
                 Die();
@@ -27,15 +24,32 @@ public class GoldCoin : MonoBehaviour
         }
     }
 
-    public void Die()
+    IEnumerator MovetoPlayer()
     {
-        ObjectPooling.Instance.ReturnObject(gameObject);
-        rb.gravityScale = 1;
+        while (true)
+        {
+            while (LevelManager.Instance.IsReadyForNewLevel)
+            {
+                if (GameManager.Instance.IsPaused)
+                    rb.velocity = Vector2.zero;
+                else
+                    rb.velocity = (player.position - transform.position).normalized * speed;
+
+                yield return new WaitForEndOfFrame();
+            }
+
+            
+            yield return new WaitForEndOfFrame();
+        }
+
     }
 
-    public void OnGamePaused(bool isPaused)
+    public void Die()
     {
-        isGamepause = isPaused;
+        StopAllCoroutines();
+        rb.gravityScale = 1;
+
+        ObjectPooling.Instance.ReturnObject(gameObject);
     }
 
     public async void OnInstantiate()
@@ -49,6 +63,7 @@ public class GoldCoin : MonoBehaviour
         if (this == null) return;
         rb.gravityScale = 0;
         rb.velocity = Vector3.zero;
+        StartCoroutine(MovetoPlayer());
     }
 
     public static GoldCoin Instantiate(Vector3 position)

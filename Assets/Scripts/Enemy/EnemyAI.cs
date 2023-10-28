@@ -34,18 +34,21 @@ public class EnemyAI : MonoBehaviour
         {
             while (playerInAttackRange)
             {
+                yield return new WaitUntil(() => !GameManager.Instance.IsPaused);
                 yield return new WaitForSeconds(enemy.Attack());
                 CheckPlayerDistance();
             }
 
             while (playerInSightRange && !playerInAttackRange)
             {
+                yield return new WaitUntil(() => !GameManager.Instance.IsPaused);
                 yield return new WaitForSeconds(enemy.ChasePlayer(player));
                 CheckPlayerDistance();
             }
 
             while (!playerInSightRange && !playerInAttackRange)
             {
+                yield return new WaitUntil(() => !GameManager.Instance.IsPaused);
                 yield return new WaitForSeconds(enemy.Patroling());
                 CheckPlayerDistance();
             }

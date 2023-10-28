@@ -7,6 +7,7 @@ public class NextArea : MonoBehaviour
     [SerializeField] private Player player;
     [SerializeField] private Cleaner cleaner;
 
+    private bool istrigger = false;
 
     void Start()
     {
@@ -14,16 +15,22 @@ public class NextArea : MonoBehaviour
         player = player != null ? player : FindObjectOfType<Player>();
     }
 
-    private void OnTriggerEnter2D(Collider2D collision)
+    private void OnTriggerStay2D(Collider2D collision)
     {
         if (LevelManager.Instance.IsReadyForNewLevel)
         {
             if (collision.gameObject.CompareTag("Player"))
             {
-                blackPanel.SetActive(true);
-                cleaner.Clean(transform.position);
-                Invoke(nameof(TurnToNextArea), 1);
+                if (!istrigger)
+                {
+                    istrigger = true;
+
+                    blackPanel.SetActive(true);
+                    cleaner.Clean(transform.position);
+                    Invoke(nameof(TurnToNextArea), 1);
+                }
             }
+
         }
     }
 
@@ -33,6 +40,7 @@ public class NextArea : MonoBehaviour
         player.ReturnToInitialPosition();
 
         LevelManager.Instance.SpawnEndlessLevel();
+        istrigger = false;
     }
 
 }
