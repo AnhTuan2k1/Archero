@@ -127,8 +127,8 @@ public class LevelManager : MonoBehaviour
         currentLevelObject.SetActive(true);
         EnemyManager.Instance.InstantiateBoss(level);
 
-
         CurrentLevel = level;
+        IsReadyForNewLevel = false;
     }
 
     public void SpawnNextLevel()

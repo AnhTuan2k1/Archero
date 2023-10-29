@@ -27,14 +27,17 @@ public abstract class Enemy : BaseObject
     public override void OnInstantiate()
     {
         base.OnInstantiate();
+        if (TryGetComponent<EnemyAI>(out var enemyAI)) enemyAI.Oninstantiate(this.transform);
         col.enabled = true;
+        burnTime = 0;
+        poisonedCoroutine = null;
         EnemyManager.Instance.AddEnemy(this);
 
         int level = LevelManager.Instance.CurrentLevel;
         maxhp = initalMaxHealth * (1 + 5*(level / 10) + 0.2f * (level % 10))
             + Mathf.Pow(2, 3 + level / 10) * 10;
         HP = maxhp;
-        Damage = initalDamage /** (1 + 0.5f * level / 10 + 0.02f * (level % 10))*/;
+        Damage = initalDamage * (1 + 0.5f * level / 10 + 0.02f * (level % 10));
     }
 
     public virtual float Patroling()
@@ -67,6 +70,8 @@ public abstract class Enemy : BaseObject
 
     public override async void Die(int time = 0)
     {
+        StopAllCoroutines();
+        if (TryGetComponent<EnemyAI>(out var enemyAI)) enemyAI.StopAllCoroutines();
         col.enabled = false;
 
         EnemyManager.Instance.RemoveEnemy(this);
@@ -75,9 +80,9 @@ public abstract class Enemy : BaseObject
         Player.Instance.ActiveBloodThirst();
         SpawnGoldCoin();
 
-        await Task.Delay(100);
+        base.Die(time + 100);
+        await Task.Delay(time + 100);
         ObjectPooling.Instance.ReturnObject(gameObject);
-        base.Die(time);
     }
 
     public override void HittedSound(DamageType type)
@@ -148,13 +153,21 @@ public abstract class Enemy : BaseObject
     public override void OnGamePaused(bool isPaused)
     {
         base.OnGamePaused(isPaused);
-        StopAllCoroutines();
+        if (isPaused)
+        {
+            StopAllCoroutines();
+        }
+        else
+        {
+            burnTime = 0;
+            poisonedCoroutine = null;
+        }
     }
 
     #region poisoned blaze freeze
     #region poisoned
     private float poisonedDamage;
-    private Coroutine poisonedCoroutine;
+    protected Coroutine poisonedCoroutine;
     public void Poisoned(float damage)
     {
         if (!isActiveAndEnabled) return;
@@ -174,7 +187,7 @@ public abstract class Enemy : BaseObject
     #endregion
     #region blaze
     private float burnDamage;
-    private float burnTime;
+    [SerializeField] protected float burnTime;
     public void Burned(float damage)
     {
         if (!isActiveAndEnabled) return;

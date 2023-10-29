@@ -6,7 +6,7 @@ using System.Linq;
 
 public class HPBoost : Ability
 {
-    private static readonly float HPBOOST_RATE = 1.25f;
+    private static readonly float HPBOOST_RATE = 1.35f;
     public HPBoost() => Id = "HPBoost";
 
     public static float CalculateHPBoostRate(List<AbilityType> abilities)

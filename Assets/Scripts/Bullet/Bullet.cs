@@ -44,7 +44,7 @@ public abstract class Bullet : BaseObject
         col.enabled = false;
         rb.velocity = Vector2.zero;
         await Task.Delay(time);
-        if (gameObject == null) return;
+        if (this == null) return;
         col.enabled = true;
 
         ObjectPooling.Instance.ReturnObject(gameObject);

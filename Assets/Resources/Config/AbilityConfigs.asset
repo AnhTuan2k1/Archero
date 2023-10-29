@@ -16,27 +16,31 @@ MonoBehaviour:
   - AbilityType: 0
     image: {fileID: 21300000, guid: cf36a1e8f3e8a904da4e36c80381e1d2, type: 3}
     title: Attack Boost
-    description: 
+    description: "T\u0103ng Damage"
   - AbilityType: 1
     image: {fileID: 21300000, guid: b0e0dc38bc7e62a479f1b34bab19f558, type: 3}
     title: Attack Speed Boost
-    description: 
+    description: "T\u0103ng th\xEAm t\u1ED1c \u0111\u1ED9 t\u1EA5n c\xF4ng"
   - AbilityType: 2
     image: {fileID: 21300000, guid: 18c40db416f7cfe489079b7d44becbcc, type: 3}
     title: Blaze
-    description: 
+    description: "\u0110\xF2n t\u1EA5n c\xF4ng c\xF3 kh\u1EA3 n\u0103ng thi\xEAu
+      \u0111\u1ED1t.#*Thi\xEAu \u0111\u1ED1t: g\xE2y (16%Damage  * s\u1ED1 ability
+      Blaze) s\xE1t th\u01B0\u01A1ng m\u1ED7i 0.25s trong 2s."
   - AbilityType: 3
     image: {fileID: 21300000, guid: c31538f4129676e4495f0cee61c5419a, type: 3}
     title: Blood Thirst
-    description: 
+    description: "H\u1ED3i m\xE1u khi enemy ch\u1EBFt"
   - AbilityType: 4
     image: {fileID: 21300000, guid: b08d10452a0fec4439076d24a945f2b4, type: 3}
     title: Bouncy Wall
-    description: 
+    description: "\u0110\xF2n t\u1EA5n c\xF4ng s\u1EBD ph\u1EA3n x\u1EA1 (2 * s\u1ED1
+      Ability Bounce) l\u1EA7n khi g\u1EB7p v\u1EADt c\u1EA3n."
   - AbilityType: 5
     image: {fileID: 21300000, guid: c406986155163944f809af776fba4aa8, type: 3}
     title: Crit Master
-    description: 
+    description: "\u0110\xF2n t\u1EA5n c\xF4ng c\xF3 t\u1EC9 l\u1EC7 g\xE2y X2 l\u1EA7n
+      Damage"
   - AbilityType: 6
     image: {fileID: 21300000, guid: ac9cf62fe6f79e9428b9565403f11ce2, type: 3}
     title: ' Diagonal Arrow'
@@ -44,7 +48,9 @@ MonoBehaviour:
   - AbilityType: 7
     image: {fileID: 21300000, guid: a18ae238c2f45474a8960bf06a462615, type: 3}
     title: Fire Circle
-    description: 
+    description: "g\xE2y s\xE1t th\u01B0\u01A1ng v\xE0 thi\xEAu \u0111\u1ED1t enemy.#*Tuy\u1EC7t
+      chi\xEAu: c\xF3 th\u1EC3 va ch\u1EA1m v\xE0 ph\xE1 h\u1EE7y bullet c\u1EE7a
+      enemy. h\u1ED3i chiu 2s"
   - AbilityType: 8
     image: {fileID: 21300000, guid: d4ebb6fcbbf8e17488980c0e95aed085, type: 3}
     title: Font Arrow
@@ -52,7 +58,7 @@ MonoBehaviour:
   - AbilityType: 10
     image: {fileID: 21300000, guid: 15b3608822bdcba4a9824f519b703943, type: 3}
     title: HP Boost
-    description: 
+    description: "T\u0103ng m\xE1u"
   - AbilityType: 11
     image: {fileID: 21300000, guid: 7140277d3a862514581d9dbabb77a267, type: 3}
     title: Multi Shot
@@ -60,15 +66,18 @@ MonoBehaviour:
   - AbilityType: 12
     image: {fileID: 21300000, guid: 178ba235150aab343ae3831ba028fb5d, type: 3}
     title: Piercing Shot
-    description: 
+    description: "\u0110\xF2n t\u1EA5n c\xF4ng c\xF3 th\u1EC3 xuy\xEAn qua enemy
+      (2 * s\u1ED1 Ability Piercing Shot) l\u1EA7n."
   - AbilityType: 13
     image: {fileID: 21300000, guid: fe8dd330a1c16564fb416fe1b55ab357, type: 3}
     title: Poisoned Touch
-    description: 
+    description: "\u0110\xF2n t\u1EA5n c\xF4ng c\xF3 th\u1EC3 g\xE2y \u0111\u1ED9c.#*\u0110\u1ED9c:
+      g\xE2y (34%Damage  * s\u1ED1 ability Poisoned Touch) s\xE1t th\u01B0\u01A1ng
+      m\u1ED7i 1s."
   - AbilityType: 14
     image: {fileID: 21300000, guid: 535ad2d55249097408ef8ab720775a6f, type: 3}
     title: Rage
-    description: 
+    description: "T\u0103ng s\xE1t th\u01B0\u01A1ng khi m\u1EA5t m\xE1u"
   - AbilityType: 15
     image: {fileID: 21300000, guid: dcfe34f4cc8c99a4a914d1c2949a2697, type: 3}
     title: Rear Arrow
@@ -76,7 +85,8 @@ MonoBehaviour:
   - AbilityType: 16
     image: {fileID: 21300000, guid: 1dc329bff7a23b34baed5e0c57dffafd, type: 3}
     title: Ricochet
-    description: 
+    description: "\u0110\xF2n t\u1EA5n c\xF4ng c\xF3 th\u1EC3 n\u1EA3y qua l\u1EA1i
+      gi\u1EEFa c\xE1c enemy (2 * s\u1ED1 Ability Ricochet) l\u1EA7n."
   - AbilityType: 17
     image: {fileID: 21300000, guid: 5b2bc462be47df24c82db30f10f18baf, type: 3}
     title: Side Arrow
@@ -84,12 +94,18 @@ MonoBehaviour:
   - AbilityType: 18
     image: {fileID: 21300000, guid: 23516335045520b4eb4c7a93bf7e1c67, type: 3}
     title: Bolt Strike
-    description: 
+    description: "\u0110\xF2n t\u1EA5n c\xF4ng g\xE2y hi\u1EC7u \u1EE9ng \u0111i\u1EC7n.#*\u0110i\u1EC7n:
+      g\xE2y (20%Damage  * s\u1ED1 ability Bolt Strike) s\xE1t th\u01B0\u01A1ng l\xEAn
+      c\xE1c enemy xung quanh. "
   - AbilityType: 19
     image: {fileID: 21300000, guid: 641c595fa6b248e43bf4929699e4b59f, type: 3}
     title: Bolt Circle
-    description: 
+    description: "g\xE2y s\xE1t th\u01B0\u01A1ng v\xE0 t\u1EA1o ra hi\u1EC7u \u1EE9ng
+      \u0111i\u1EC7n.#*Tuy\u1EC7t chi\xEAu: c\xF3 th\u1EC3 va ch\u1EA1m v\xE0 ph\xE1
+      h\u1EE7y bullet c\u1EE7a enemy. h\u1ED3i chiu 2s"
   - AbilityType: 20
     image: {fileID: 21300000, guid: 0f65b825b692a0640b7f36e1f575038c, type: 3}
     title: Toxic Circle
-    description: 
+    description: "g\xE2y s\xE1t th\u01B0\u01A1ng v\xE0 g\xE2y \u0111\u1ED9c cho enemy.#*Tuy\u1EC7t
+      chi\xEAu: c\xF3 th\u1EC3 va ch\u1EA1m v\xE0 ph\xE1 h\u1EE7y bullet c\u1EE7a
+      enemy. h\u1ED3i chiu 2s"

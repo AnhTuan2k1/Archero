@@ -7,7 +7,7 @@ using UnityEngine;
 public class Bolt : Ability
 {
     public static readonly int RANGE_ACTIVITY = 4;
-    public static readonly float BOLT_RATE = 0.27f;
+    public static readonly float BOLT_RATE = 0.2f;
     public Bolt() => Id = "Bolt";
 
     public static float CalculateBoltRate(List<AbilityType> abilities)

@@ -5044,11 +5044,6 @@ Transform:
   m_Father: {fileID: 2086013488}
   m_RootOrder: 2
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!1 &599191786 stripped
-GameObject:
-  m_CorrespondingSourceObject: {fileID: 7650614811588810013, guid: 6655619bc85dc4f418bae083817c7e21, type: 3}
-  m_PrefabInstance: {fileID: 4312341125185738630}
-  m_PrefabAsset: {fileID: 0}
 --- !u!1 &705507993
 GameObject:
   m_ObjectHideFlags: 0
@@ -5290,6 +5285,17 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 67db9e8f0e2ae9c40bc1e2b64352a6b4, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+--- !u!114 &1393988435 stripped
+MonoBehaviour:
+  m_CorrespondingSourceObject: {fileID: 4312341124343034612, guid: 6655619bc85dc4f418bae083817c7e21, type: 3}
+  m_PrefabInstance: {fileID: 4312341125185738630}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 2cc49530107daa44aa78b3b97d0cefab, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
 --- !u!114 &1534913841 stripped
@@ -5557,10 +5563,6 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
-    - target: {fileID: 4312341125507310710, guid: 6655619bc85dc4f418bae083817c7e21, type: 3}
-      propertyPath: blockPanel
-      value: 
-      objectReference: {fileID: 599191786}
     - target: {fileID: 5795826040530617614, guid: 6655619bc85dc4f418bae083817c7e21, type: 3}
       propertyPath: m_AnchorMax.y
       value: 0
@@ -5586,10 +5588,6 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 0}
     m_Modifications:
-    - target: {fileID: 1559258776618542178, guid: e237b2c56b90cbc4f9dcdb0f461569e9, type: 3}
-      propertyPath: m_IsActive
-      value: 1
-      objectReference: {fileID: 0}
     - target: {fileID: 1559258776618542207, guid: e237b2c56b90cbc4f9dcdb0f461569e9, type: 3}
       propertyPath: player
       value: 
@@ -5663,6 +5661,14 @@ PrefabInstance:
       propertyPath: expBar
       value: 
       objectReference: {fileID: 1755612486}
+    - target: {fileID: 5205834686549825508, guid: 05f4466b3b44f8b4e9fc0579bce6304c, type: 3}
+      propertyPath: pauseMenu
+      value: 
+      objectReference: {fileID: 1393988435}
+    - target: {fileID: 5205834686549825508, guid: 05f4466b3b44f8b4e9fc0579bce6304c, type: 3}
+      propertyPath: abilityMenu
+      value: 
+      objectReference: {fileID: 1026225136}
     - target: {fileID: 5205834686549825508, guid: 05f4466b3b44f8b4e9fc0579bce6304c, type: 3}
       propertyPath: gameOverMenu
       value: 

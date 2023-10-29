@@ -1,5 +1,6 @@
 ﻿
 
+using System.Threading.Tasks;
 using UnityEngine;
 using UnityEngine.UI;
 
@@ -50,8 +51,9 @@ public abstract class BaseObject : MonoBehaviour, IGameObserver
     public virtual void HittedSound(DamageType type) { }
     public virtual void TakeDamage(float damage, DamageType type) => HittedSound(type);
 
-    public virtual void Die(int time = 0) 
+    public virtual async void Die(int time = 0) 
     {
+        await Task.Delay(time);
         GameManager.Instance.UnregisterObserver(this);
     }
 

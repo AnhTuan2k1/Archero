@@ -29,6 +29,7 @@ public class Sound
         Thunder,
         LevelUp,
         SkillRotateEnd,
-        SkillRotating
+        SkillRotating,
+        FireCol
     }
 }

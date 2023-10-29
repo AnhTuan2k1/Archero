@@ -1,19 +1,29 @@
 using System.Collections;
 using System.Collections.Generic;
+using System.Threading.Tasks;
 using UnityEngine;
 
 public class SuperBat : Enemy
 {
     public override ObjectPoolingType EnemyType => ObjectPoolingType.SuperBat;
 
+    [SerializeField] private Animator enemyAni;
     public List<AbilityType> bulletAbilities;
     int attackRange = 10;
+    const string DIE = "SupperBatDie";
 
     public override void OnInstantiate()
     {
         base.OnInstantiate();
         attackRange = Random.Range(4, 12);
-        GetComponent<EnemyAI>().Oninstantiate(this.transform);
+    }
+
+    public override void Die(int time = 0)
+    {
+        enemyAni.Play(DIE);
+        rb.velocity = Vector2.zero;
+        base.Die(time + 1000);
+        //await Task.Delay(1000); if (!isActiveAndEnabled) return;
     }
 
     public override float Patroling()

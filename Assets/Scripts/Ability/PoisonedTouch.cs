@@ -5,7 +5,7 @@ using System.Linq;
 public class PoisonedTouch : Ability
 {
     public static readonly float POISONED_RATE = 0.34f;
-    public static readonly float POISONED_DELAY = 1.2f;
+    public static readonly float POISONED_DELAY = 1;
     public PoisonedTouch() => Id = "PoisonedTouch";
 
     public static float CalculatePoisonedRate(List<AbilityType> abilities)

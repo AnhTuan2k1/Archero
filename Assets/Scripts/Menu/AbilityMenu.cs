@@ -10,7 +10,7 @@ public class AbilityMenu : MonoBehaviour
     [SerializeField] GameObject[] abilityTemplate;
     [SerializeField] Transform parentTransform; 
     [SerializeField] GameObject blockPanel;
-    bool reroll;
+    [SerializeField] GameObject reroll;
 
     private void Start()
     {
@@ -21,12 +21,12 @@ public class AbilityMenu : MonoBehaviour
 
     public void ShowMenu()
     {
-        reroll = true;
+        reroll.SetActive(true);
         gameObject.SetActive(true);
 
         GameManager.Instance.OnGamePaused();
         ReRollAbility();
-        reroll = true;
+        reroll.SetActive(true);
     }
 
     public void HideMenu()
@@ -55,7 +55,7 @@ public class AbilityMenu : MonoBehaviour
         if (reroll)
         {
             SpawnAbility();
-            reroll = false;
+            reroll.SetActive(false);
         }
     }
 
@@ -82,7 +82,7 @@ public class AbilityMenu : MonoBehaviour
 
             image.sprite = ability.image;
             title.text = ability.title;
-            description.text = ability.description;
+            description.text = ability.description.Replace('#', '\n');
 
             yield return new WaitForSeconds(0.025f);
             milliseconds -= 25;

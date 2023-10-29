@@ -7,6 +7,7 @@ public class BallCircle : MonoBehaviour
     [SerializeField] private GameObject fireCircleBallPrefab;
     [SerializeField] private GameObject poisonCircleBallPrefab;
     [SerializeField] private GameObject boltCircleBallPrefab;
+    public Animator ani;
 
     [SerializeField] private int fireCircleAbility;
     public int FireCircle

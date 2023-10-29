@@ -5,6 +5,8 @@ public class GameManager : MonoBehaviour
 {
     public GameObject expBar;
     public GameOverMenu gameOverMenu;
+    public AbilityMenu abilityMenu;
+    public PauseMenu pauseMenu;
 
     private static GameManager _instance;
     public static GameManager Instance
@@ -31,12 +33,18 @@ public class GameManager : MonoBehaviour
 
     public void OnGamePaused()
     {
-        //Time.timeScale = 0;
+        if (isPaused == true) return;
         IsPaused = true;
     }
 
     public void OnGameResume()
     {
+        if (isPaused == false
+           || gameOverMenu.isActiveAndEnabled
+           || abilityMenu.isActiveAndEnabled
+           || pauseMenu.isActiveAndEnabled)
+            return;
+        else
         IsPaused = false;
         //Time.timeScale = 1;
     }

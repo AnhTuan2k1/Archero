@@ -1,8 +1,5 @@
 ﻿
-
-using System.Collections.Generic;
 using UnityEngine;
-using UnityEngine.UI;
 
 [CreateAssetMenu(fileName = "AbilityConfigs", menuName = "Configs/Ability")]
 public class AbilityConfigs : ScriptableObject

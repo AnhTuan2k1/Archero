@@ -9,20 +9,8 @@ public class GoldCoin : MonoBehaviour
     [SerializeField] private float force;
     public float pointExp;
 
-    public Transform player;
-    public float speed = 7f;
-
-    private void OnTriggerEnter2D(Collider2D collision)
-    {
-        if (LevelManager.Instance.IsReadyForNewLevel)
-        {
-            if (collision.gameObject.CompareTag(TagDefine.Tag_Player))
-            {
-                PointManager.Instance.GetExpPoint(pointExp);
-                Die();
-            }
-        }
-    }
+    private Transform player;
+    private float speed = 8;
 
     IEnumerator MovetoPlayer()
     {
@@ -30,15 +18,18 @@ public class GoldCoin : MonoBehaviour
         {
             while (LevelManager.Instance.IsReadyForNewLevel)
             {
-                if (GameManager.Instance.IsPaused)
-                    rb.velocity = Vector2.zero;
-                else
-                    rb.velocity = (player.position - transform.position).normalized * speed;
+                if (GameManager.Instance.IsPaused) rb.velocity = Vector2.zero;
+                else if(Vector2.Distance(player.position, transform.position) < 0.1f)
+                {
+                    PointManager.Instance.GetExpPoint(pointExp);
+                    Die();
+                }
+                else rb.velocity = (player.position - transform.position).normalized * speed;
 
                 yield return new WaitForEndOfFrame();
             }
 
-            
+            if (rb.velocity != Vector2.zero) rb.velocity = Vector2.zero;
             yield return new WaitForEndOfFrame();
         }
 
@@ -60,7 +51,7 @@ public class GoldCoin : MonoBehaviour
         rb.AddForce(new Vector2(randomNumber, 18) * force);
 
         await Task.Delay((int)(Random.Range(5.0f, 8) * 100));
-        if (this == null) return;
+        if (!isActiveAndEnabled) return;
         rb.gravityScale = 0;
         rb.velocity = Vector3.zero;
         StartCoroutine(MovetoPlayer());

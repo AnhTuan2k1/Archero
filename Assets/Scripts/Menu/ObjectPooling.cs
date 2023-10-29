@@ -147,15 +147,10 @@ public class ObjectPooling : MonoBehaviour
     public void ReturnObject(GameObject gameObject,
         ObjectPoolingType type = ObjectPoolingType.None)
     {
-
-
-
-
-            gameObject.transform.position = poolPosition;
-            if (type == ObjectPoolingType.None) type = GetType(gameObject);
-            gameObject.SetActive(false);
-            poolDictionary[type].Enqueue(gameObject);
-        
+        gameObject.transform.position = poolPosition;
+        if (type == ObjectPoolingType.None) type = GetType(gameObject);
+        gameObject.SetActive(false);
+        poolDictionary[type].Enqueue(gameObject);
     }
 
     private ObjectPoolingType GetType(GameObject gameObject)

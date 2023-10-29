@@ -10,14 +10,14 @@ public class Arrow : Bullet
 
     protected override void OnCollisionEnter2D(Collision2D collision)
     {
-        if (collision.gameObject.CompareTag("Wall"))
+        if (collision.gameObject.CompareTag(TagDefine.Tag_Wall))
         {
             BouncyWall bouncy = (BouncyWall)abilities.FindLast(a => a is BouncyWall);
             if (bouncy != null) bouncy.BulletBounce(collision, this);
             else Die(1000);
         }
 
-        else if (collision.gameObject.CompareTag("Enemy") && this.Owner is Player)
+        else if (collision.gameObject.CompareTag(TagDefine.Tag_Enemy) && this.Owner is Player)
         {
             Physics2D.IgnoreCollision(col, collision.collider, true);
             EnableCollisionAgain(collision.collider, 70);

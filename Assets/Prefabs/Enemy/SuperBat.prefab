@@ -171,6 +171,8 @@ MonoBehaviour:
   initalMaxHealth: 700
   initalDamage: 180
   CausedDamage: 0
+  burnTime: 0
+  enemyAni: {fileID: 147604646878693830}
   bulletAbilities: 0b0000000b00000006000000
 --- !u!114 &-5100120490017295544
 MonoBehaviour:

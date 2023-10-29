@@ -10,8 +10,9 @@ GameObject:
   m_Component:
   - component: {fileID: 621348983052377903}
   - component: {fileID: 621348983052377900}
-  - component: {fileID: 621348983052377901}
+  - component: {fileID: 8759861327640754955}
   - component: {fileID: 621348983052377898}
+  - component: {fileID: 5689665299400693404}
   - component: {fileID: 621348983052377899}
   m_Layer: 11
   m_Name: BounceFireBullet
@@ -29,7 +30,7 @@ Transform:
   m_GameObject: {fileID: 621348983052377896}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: -2, y: -2, z: 0}
-  m_LocalScale: {x: 1.5, y: 1.2, z: 1}
+  m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 0}
@@ -76,7 +77,7 @@ SpriteRenderer:
   m_SortingLayerID: -1855317085
   m_SortingLayer: 7
   m_SortingOrder: 0
-  m_Sprite: {fileID: -1385008116, guid: 46383cce777dc984385f425dfb84d297, type: 3}
+  m_Sprite: {fileID: 1389443273, guid: 46383cce777dc984385f425dfb84d297, type: 3}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
   m_FlipX: 0
   m_FlipY: 0
@@ -87,8 +88,8 @@ SpriteRenderer:
   m_WasSpriteAssigned: 1
   m_MaskInteraction: 0
   m_SpriteSortPoint: 0
---- !u!70 &621348983052377901
-CapsuleCollider2D:
+--- !u!58 &8759861327640754955
+CircleCollider2D:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
@@ -101,8 +102,8 @@ CapsuleCollider2D:
   m_UsedByEffector: 0
   m_UsedByComposite: 0
   m_Offset: {x: 0, y: 0}
-  m_Size: {x: 0.3, y: 0.1}
-  m_Direction: 1
+  serializedVersion: 2
+  m_Radius: 0.11
 --- !u!50 &621348983052377898
 Rigidbody2D:
   serializedVersion: 4
@@ -124,6 +125,26 @@ Rigidbody2D:
   m_SleepingMode: 1
   m_CollisionDetection: 0
   m_Constraints: 4
+--- !u!95 &5689665299400693404
+Animator:
+  serializedVersion: 4
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 621348983052377896}
+  m_Enabled: 1
+  m_Avatar: {fileID: 0}
+  m_Controller: {fileID: 9100000, guid: d2449cd9576dcc747a9a4ff01345a0fa, type: 2}
+  m_CullingMode: 0
+  m_UpdateMode: 0
+  m_ApplyRootMotion: 0
+  m_LinearVelocityBlending: 0
+  m_StabilizeFeet: 0
+  m_WarningMessage: 
+  m_HasTransformHierarchy: 1
+  m_AllowConstantClipSamplingOptimization: 1
+  m_KeepAnimatorControllerStateOnDisable: 0
 --- !u!114 &621348983052377899
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -137,7 +158,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   rb: {fileID: 621348983052377898}
-  col: {fileID: 621348983052377901}
+  col: {fileID: 8759861327640754955}
   maxhp: 0
   healthBar: {fileID: 0}
   speed: 3

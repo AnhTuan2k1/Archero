@@ -74,7 +74,7 @@ SpriteRenderer:
   m_AutoUVMaxAngle: 89
   m_LightmapParameters: {fileID: 0}
   m_SortingLayerID: -1855317085
-  m_SortingLayer: 5
+  m_SortingLayer: 7
   m_SortingOrder: 0
   m_Sprite: {fileID: -1070338325, guid: 30d40a4d1a8280e47b4529b5109ba3ed, type: 3}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
@@ -152,7 +152,7 @@ MonoBehaviour:
   healthBar: {fileID: 0}
   speed: 20
   hp: 0
-  damage: 10
+  damage: 0
   velocity: {x: 0, y: 0, z: 0}
   direction: {x: 1, y: 0, z: 0}
   owner: {fileID: 0}

@@ -10,12 +10,6 @@ public class GameOverMenu : MonoBehaviour
     [SerializeField] private int reviveTimes;
     [SerializeField] private GameObject buttonRevive;
 
-    private void Awake()
-    {
-        reviveTimes = 3;
-        textDieTimes.text = "Lives: " + reviveTimes;
-    }
-
     public void ShowMenu()
     {
         gameObject.SetActive(true);

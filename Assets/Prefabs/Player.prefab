@@ -169,6 +169,7 @@ MonoBehaviour:
   fireCircleBallPrefab: {fileID: 2489183656260242689, guid: 6c39ee66a7fb68a4b820df48d0b90d70, type: 3}
   poisonCircleBallPrefab: {fileID: 7272692348198380863, guid: c49966aeea7321d40b735084c22e559e, type: 3}
   boltCircleBallPrefab: {fileID: 8883578745079429778, guid: a2c6f51e7199f154a9907edaee2bc7b6, type: 3}
+  ani: {fileID: 1457010271}
   fireCircleAbility: 0
   poisonCircleAbility: 0
   boltCircleAbility: 0
@@ -370,7 +371,7 @@ MonoBehaviour:
   damage: 0
   velocity: {x: 0, y: 0, z: 0}
   textPoint: {fileID: 7024882195199339842}
-  InitalDamage: 1500
+  InitalDamage: 200
   InitalMaxHealth: 1500
   playerAttack: {fileID: 4900630605066763452}
   playerMovement: {fileID: 4900630605066763448}

@@ -83,6 +83,7 @@ public class Player : BaseObject
         base.OnGamePaused(isPaused);
         playerAttack.enabled = !isPaused;
         playerMovement.enabled = !isPaused;
+        ballCircle.ani.enabled = !isPaused;
     }
 
     private async void OnCollisionEnter2D(Collision2D collision)

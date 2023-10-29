@@ -13,7 +13,6 @@ public class Bat : Enemy
     {
         base.OnInstantiate();
         attackRange = Random.Range(4, 12);
-        GetComponent<EnemyAI>().Oninstantiate(this.transform);
     }
 
     public override float Patroling()

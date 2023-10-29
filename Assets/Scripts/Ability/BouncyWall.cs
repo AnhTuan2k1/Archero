@@ -4,11 +4,11 @@ using UnityEngine;
 
 public class BouncyWall : Ability
 {
-    [SerializeField] private int bouncyTimes;
+    private int bouncyTimes;
     public BouncyWall()
     {
         Id = "BouncyWall";
-        bouncyTimes = 3;
+        bouncyTimes = 2;
     }
 
     public void BulletBounce(Collision2D collision, Bullet bullet)
