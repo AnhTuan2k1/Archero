@@ -27,6 +27,7 @@ public class SuperBatBoss : BossEnemy, IGameObserver
         poisonedCoroutine = null;
 
         attackRange = Random.Range(4, 12);
+        GetComponent<EnemyAI>().Oninstantiate(this.transform);
 
         EnemyManager.Instance.AddEnemy(this);
         GameManager.Instance.expBar.SetActive(false);
@@ -56,7 +57,7 @@ public class SuperBatBoss : BossEnemy, IGameObserver
     {
         attackRange = Random.Range(5, 12);
         base.Patroling();
-        return Random.Range(2f, 5f);
+        return Random.Range(2f, 3f);
     }
 
     public override float AttackRange() => attackRange;
@@ -67,7 +68,7 @@ public class SuperBatBoss : BossEnemy, IGameObserver
         attackRange = 0;
         rb.velocity = Vector2.zero;
         Invoke(nameof(SpawnBullet), Random.Range(0.5f, 1.2f));
-        return Random.Range(1.5f, 2.5f);
+        return Random.Range(2, 3.5f);
     }
 
     private void SpawnBullet()
