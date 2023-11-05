@@ -15,8 +15,8 @@ public class PlayerAttack : MonoBehaviour
 
     public float AttackSpeed
     {
-        get { return delayTime; }
-        set { delayTime = value; }
+        get => delayTime;
+        set => delayTime = value; 
     }
 
     void Start()

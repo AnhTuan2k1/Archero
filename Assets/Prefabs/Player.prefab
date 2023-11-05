@@ -364,8 +364,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   rb: {fileID: 4900630605066763453}
   col: {fileID: 4900630605066763450}
-  maxhp: 0
   healthBar: {fileID: 4900630605923581136}
+  maxhp: 0
   speed: 4
   hp: 0
   damage: 0
@@ -382,7 +382,7 @@ MonoBehaviour:
   blazeRate: 0
   boltRate: 0
   ballCircle: {fileID: 1457010272}
-  abilities: 
+  abilities: 0b0000000b0000000b0000000b0000000b000000
 --- !u!114 &4900630605066763448
 MonoBehaviour:
   m_ObjectHideFlags: 0

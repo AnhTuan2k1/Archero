@@ -150,6 +150,7 @@ MonoBehaviour:
   initalMaxHealth: 600
   initalDamage: 120
   CausedDamage: 0
+  burnTime: 0
   bulletAbilities: 06000000060000000b0000000f00000011000000
 --- !u!114 &4677263221125039454
 MonoBehaviour:

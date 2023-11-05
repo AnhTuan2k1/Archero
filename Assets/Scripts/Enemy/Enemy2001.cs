@@ -36,6 +36,7 @@ public class Enemy2001 : Enemy
 
     private void SpawnBullet()
     {
+        if (GameManager.Instance.IsPaused) return;
         Bullet b = ObjectPooling.Instance
             .GetObject(bullet.BulletType, transform.position).GetComponent<Bullet>();
         b.Direction = GetBulletDirection();

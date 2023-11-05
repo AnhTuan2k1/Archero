@@ -59,7 +59,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   m_Material: {fileID: 0}
-  m_Color: {r: 1, g: 0.09461251, b: 0, a: 1}
+  m_Color: {r: 1, g: 0, b: 0, a: 0.6666667}
   m_RaycastTarget: 1
   m_RaycastPadding: {x: 0, y: 0, z: 0, w: 0}
   m_Maskable: 1
@@ -112,7 +112,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 1}
   m_AnchorMax: {x: 1, y: 1}
-  m_AnchoredPosition: {x: 0, y: -180}
+  m_AnchoredPosition: {x: 0, y: -155}
   m_SizeDelta: {x: -200, y: 50}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &7449184244878936083
@@ -327,8 +327,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   rb: {fileID: 6994613260396945296}
   col: {fileID: 6890446385600001087}
-  maxhp: 0
   healthBar: {fileID: 7449184244878936083}
+  maxhp: 0
   speed: 0.7
   hp: 0
   damage: 0
@@ -337,6 +337,7 @@ MonoBehaviour:
   initalMaxHealth: 6000
   initalDamage: 100
   CausedDamage: 0
+  burnTime: 0
   enemyAni: {fileID: 7829097283971988826}
   bulletAbilities: 0b0000000b00000006000000060000000600000006000000
 --- !u!114 &3912997070573982083
@@ -450,7 +451,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   m_Material: {fileID: 0}
-  m_Color: {r: 1, g: 1, b: 1, a: 1}
+  m_Color: {r: 1, g: 1, b: 1, a: 0.6666667}
   m_RaycastTarget: 1
   m_RaycastPadding: {x: 0, y: 0, z: 0, w: 0}
   m_Maskable: 1

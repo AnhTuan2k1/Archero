@@ -1,5 +1,6 @@
 
 
+using DG.Tweening;
 using UnityEngine;
 
 public static class TagDefine
@@ -10,27 +11,50 @@ public static class TagDefine
     public static readonly string Tag_Wall = "Wall";
 }
 
-public class CircleBullet : Bullet
+public abstract class CircleBullet : Bullet
 {
-    public override ObjectPoolingType BulletType => ObjectPoolingType.CircleBullet;
-
-    protected override void OnCollisionEnter2D(Collision2D collision)
+    [SerializeField] GameObject barrier;
+    bool isBarrierCollided;
+    protected virtual void Start()
     {
-        base.OnCollisionEnter2D(collision);
-        if(collision.gameObject.CompareTag(TagDefine.Tag_Player))
+        owner = Player.Instance;
+        isBarrierCollided = false;
+    }
+
+    protected virtual void OnTriggerEnter2D(Collider2D collision)
+    {
+        if (collision.gameObject.CompareTag(TagDefine.Tag_Bullet))
         {
-            collision.gameObject.GetComponent<Player>().TakeDamage(Damage);
-            Die();
-        }
-        else if (collision.gameObject.CompareTag(TagDefine.Tag_Enemy))
-        {
-            Physics2D.IgnoreCollision(col, collision.collider, true);
-            this.Velocity = Direction.normalized * Speed;
+            if (!isBarrierCollided)
+            {
+                Bullet bullet = collision.gameObject.GetComponent<Bullet>();
+                if (bullet.Owner is Enemy)
+                {
+                    bullet.Die();
+                    isBarrierCollided = true;
+                    barrier.transform.DOScale(2, 0.2f)
+                        .OnComplete(() =>
+                        {
+                            barrier.transform.localScale = new Vector3(1.2f, 1.2f, 0);
+                            barrier.SetActive(false);
+                            Invoke(nameof(EnabbleBarrier), 1.8f);
+                        });
+                }
+            }
         }
     }
 
-    public override void BulletCreateSound()
+    private void EnabbleBarrier()
     {
-        //base.BulletCreateSound();
+        if (GameManager.Instance.IsPaused)
+        {
+            Invoke(nameof(EnabbleBarrier), 1.9f);
+            return;
+        }
+        else
+        {
+            barrier.SetActive(true);
+            isBarrierCollided = false;
+        }
     }
 }

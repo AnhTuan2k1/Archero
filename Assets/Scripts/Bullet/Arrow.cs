@@ -20,7 +20,7 @@ public class Arrow : Bullet
         else if (collision.gameObject.CompareTag(TagDefine.Tag_Enemy) && this.Owner is Player)
         {
             Physics2D.IgnoreCollision(col, collision.collider, true);
-            EnableCollisionAgain(collision.collider, 70);
+            EnableCollisionAgain(collision.collider, 100);
 
             PlayerCauseDamageToEnemy(collision);
 

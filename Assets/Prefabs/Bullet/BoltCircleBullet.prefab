@@ -200,7 +200,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   rb: {fileID: 0}
-  col: {fileID: 0}
+  col: {fileID: 8883578745079429782}
   maxhp: 0
   healthBar: {fileID: 0}
   speed: 0

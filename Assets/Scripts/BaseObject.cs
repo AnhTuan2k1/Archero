@@ -8,8 +8,14 @@ public abstract class BaseObject : MonoBehaviour, IGameObserver
 {
     public Rigidbody2D rb;
     public Collider2D col;
-    [SerializeField] protected float maxhp;
     [SerializeField] protected Slider healthBar;
+
+    [SerializeField] protected float maxhp;
+    public virtual float Maxhp
+    {
+        get => maxhp;
+        protected set => maxhp = value;
+    }
 
     [SerializeField] private float speed;
     public virtual float Speed

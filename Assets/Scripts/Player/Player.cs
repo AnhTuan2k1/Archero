@@ -70,7 +70,26 @@ public class Player : BaseObject
         Damage = InitalDamage;
         HP = maxhp = InitalMaxHealth;
         abilities ??= new List<AbilityType>();
+
+        GameManager.Instance.RegisterObserver(this);
         OnInstantiate();
+    }
+
+    public override void OnInstantiate()
+    {
+        HP = maxhp = InitalMaxHealth;
+        Damage = InitalDamage;
+        abilities ??= new List<AbilityType>();
+        playerAttack.AttackSpeed = 1;
+        critRate = 0;
+        bloodThirstRate = 0;
+        rageRate = 0;
+        poisonedRate = 0;
+        blazeRate = 0;
+        boltRate = 0;
+        ballCircle.FireCircle = 0;
+        ballCircle.PoisonCircle = 0;
+        ballCircle.BoltCircle = 0;
     }
 
     public override void Die(int time = 0)

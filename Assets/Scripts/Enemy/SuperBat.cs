@@ -46,6 +46,8 @@ public class SuperBat : Enemy
 
     private void SpawnBullet()
     {
+        if (GameManager.Instance.IsPaused) return;
+
         Bullet b = ObjectPooling.Instance
             .GetObject(bullet.BulletType, transform.position).GetComponent<Bullet>();
         b.Direction = GetBulletDirection();

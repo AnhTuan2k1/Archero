@@ -176,7 +176,7 @@ GameObject:
   m_Component:
   - component: {fileID: 530205509793049026}
   m_Layer: 0
-  m_Name: CircleBullet
+  m_Name: RedCircleBullet
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -362,7 +362,7 @@ MonoBehaviour:
     size: 7
   _objectPoolHolder: {fileID: 1267447038769960399}
   _Arrow: {fileID: 5448181174412344913}
-  _CircleBullet: {fileID: 4900759067706966247}
+  _RedCircleBullet: {fileID: 4900759067706966247}
   _GoldCoin: {fileID: 7283261984934257356}
   _FloatingText: {fileID: 2869969930154123974}
   _LightningBolt: {fileID: 1861817774866784275}

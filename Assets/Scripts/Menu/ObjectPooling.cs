@@ -1,14 +1,13 @@
 
 using System.Collections.Generic;
 using System.Linq;
-using System.Threading.Tasks;
 using UnityEngine;
 
 public enum ObjectPoolingType
 {
     None,
     Arrow,
-    CircleBullet,
+    RedCircleBullet,
     GoldCoin,
     FloatingText,
     LightningBolt,
@@ -48,7 +47,7 @@ public class ObjectPooling : MonoBehaviour
 
     [SerializeField] private GameObject _objectPoolHolder;
     [SerializeField] private GameObject _Arrow;
-    [SerializeField] private GameObject _CircleBullet;
+    [SerializeField] private GameObject _RedCircleBullet;
     [SerializeField] private GameObject _GoldCoin;
     [SerializeField] private GameObject _FloatingText;
     [SerializeField] private GameObject _LightningBolt;
@@ -156,7 +155,7 @@ public class ObjectPooling : MonoBehaviour
     private ObjectPoolingType GetType(GameObject gameObject)
     {
         if (gameObject.GetComponent<Arrow>()) return ObjectPoolingType.Arrow;
-        else if (gameObject.GetComponent<CircleBullet>()) return ObjectPoolingType.CircleBullet;
+        else if (gameObject.GetComponent<RedCircleBullet>()) return ObjectPoolingType.RedCircleBullet;
         else if (gameObject.GetComponent<GoldCoin>()) return ObjectPoolingType.GoldCoin;
         else if (gameObject.GetComponent<FloatingText>()) return ObjectPoolingType.FloatingText;
         else if (gameObject.GetComponent<LightningBolt>()) return ObjectPoolingType.LightningBolt;
@@ -180,7 +179,7 @@ public class ObjectPooling : MonoBehaviour
         return type switch
         {
             ObjectPoolingType.Arrow => _Arrow.transform,
-            ObjectPoolingType.CircleBullet => _CircleBullet.transform,
+            ObjectPoolingType.RedCircleBullet => _RedCircleBullet.transform,
             ObjectPoolingType.GoldCoin => _GoldCoin.transform,
             ObjectPoolingType.FloatingText => _FloatingText.transform,
             ObjectPoolingType.LightningBolt => _LightningBolt.transform,
