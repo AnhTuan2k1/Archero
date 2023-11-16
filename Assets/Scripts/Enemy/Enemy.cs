@@ -73,6 +73,7 @@ public abstract class Enemy : BaseObject
         StopAllCoroutines();
         if (TryGetComponent<EnemyAI>(out var enemyAI)) enemyAI.StopAllCoroutines();
         col.enabled = false;
+        rb.velocity = Vector2.zero;
 
         EnemyManager.Instance.RemoveEnemy(this);
         PointManager.Instance.AddPoint(1);
@@ -82,7 +83,7 @@ public abstract class Enemy : BaseObject
 
         base.Die(time + 100);
         await Task.Delay(time + 100);
-        ObjectPooling.Instance.ReturnObject(gameObject);
+        ObjectPooling.Instance.ReturnObject(gameObject, EnemyType);
     }
 
     public override void HittedSound(DamageType type)
@@ -101,7 +102,8 @@ public abstract class Enemy : BaseObject
 
     protected virtual void OnCollisionEnter2D(Collision2D collision)
     {
-        if (collision.gameObject.CompareTag(TagDefine.Tag_Wall))
+        if (collision.gameObject.CompareTag(TagDefine.Tag_Wall)
+            || collision.gameObject.CompareTag(TagDefine.Tag_Water))
         {          
             MoveToDirection(RandomDirection(collision.contacts[0].normal));
         }
@@ -126,7 +128,7 @@ public abstract class Enemy : BaseObject
         CausedDamage = false;
     }
 
-    private void MoveToDirection(Vector2 direction)
+    protected void MoveToDirection(Vector2 direction)
     {
         Velocity = direction.normalized * Speed;
     }

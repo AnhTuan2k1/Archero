@@ -21,7 +21,6 @@ public class SuperBat : Enemy
     public override void Die(int time = 0)
     {
         enemyAni.Play(DIE);
-        rb.velocity = Vector2.zero;
         base.Die(time + 1000);
         //await Task.Delay(1000); if (!isActiveAndEnabled) return;
     }

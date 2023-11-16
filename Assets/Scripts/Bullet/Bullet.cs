@@ -47,7 +47,7 @@ public abstract class Bullet : BaseObject
         if (this == null) return;
         col.enabled = true;
 
-        ObjectPooling.Instance.ReturnObject(gameObject);
+        ObjectPooling.Instance.ReturnObject(gameObject, BulletType);
         base.Die(time);
     }
 

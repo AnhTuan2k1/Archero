@@ -1,6 +1,5 @@
-using System.Collections;
+
 using System.Collections.Generic;
-using Unity.VisualScripting;
 using UnityEngine;
 
 public class Aim : MonoBehaviour
@@ -64,7 +63,7 @@ public class Aim : MonoBehaviour
         Transform player = Player.Instance.transform;
 
         if (enemys.Count == 0) target = null;
-        else if(enemys.Count == 1) target = enemys[0];
+        else if(enemys.Count == 1 || target == null) target = enemys[0];
         else if(target != null || target.isActiveAndEnabled) // already had target
         {
             float newDistance = 1000;

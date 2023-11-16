@@ -16,7 +16,8 @@ public enum ObjectPoolingType
     Enemy2001,
     FireBullet,
     BounceFireBullet,
-    SuperBat
+    SuperBat,
+    GrimReaper
 }
 
 public class ObjectPooling : MonoBehaviour
@@ -57,6 +58,7 @@ public class ObjectPooling : MonoBehaviour
     [SerializeField] private GameObject _FireBullet;
     [SerializeField] private GameObject _BounceFireBullet;
     [SerializeField] private GameObject _SupperBat;
+    [SerializeField] private GameObject _GrimReaper;
     [SerializeField] private Vector2 poolPosition;
 
     private void Awake()
@@ -115,6 +117,9 @@ public class ObjectPooling : MonoBehaviour
         GameObject obj;
         if (poolDictionary[type].Count == 0)
         {
+            //don't create more LightningBolt
+            if (type == ObjectPoolingType.LightningBolt) return null;
+
             obj = InitMoreObject(type);
         }
         else
@@ -131,6 +136,9 @@ public class ObjectPooling : MonoBehaviour
         GameObject obj;
         if (poolDictionary[type].Count == 0)
         {
+            //don't create more LightningBolt
+            if (type == ObjectPoolingType.LightningBolt) return null;
+
             obj = InitMoreObject(type);
         }
         else
@@ -165,6 +173,7 @@ public class ObjectPooling : MonoBehaviour
         else if (gameObject.GetComponent<FireBullet>()) return ObjectPoolingType.FireBullet;
         else if (gameObject.GetComponent<BounceFireBullet>()) return ObjectPoolingType.BounceFireBullet;
         else if (gameObject.GetComponent<SuperBat>()) return ObjectPoolingType.SuperBat;
+        else if (gameObject.GetComponent<GrimReaper>()) return ObjectPoolingType.GrimReaper;
 
         else throw new System.Exception("can't determinate gameobject type");
     }
@@ -189,6 +198,7 @@ public class ObjectPooling : MonoBehaviour
             ObjectPoolingType.FireBullet => _FireBullet.transform,
             ObjectPoolingType.BounceFireBullet => _BounceFireBullet.transform,
             ObjectPoolingType.SuperBat => _SupperBat.transform,
+            ObjectPoolingType.GrimReaper => _GrimReaper.transform,
             _ => null,
         };
     }

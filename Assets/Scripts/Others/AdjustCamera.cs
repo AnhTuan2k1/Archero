@@ -10,17 +10,35 @@ public class AdjustCamera : MonoBehaviour
 
     private void Start()
     {
+        Screen.orientation = ScreenOrientation.Portrait;
         StartCoroutine(ObjectVisibleInCamera());
     }
 
     private IEnumerator ObjectVisibleInCamera()
     {
         yield return new WaitForSeconds(2);
-        while (!IsObjectVisible())
+
+        if (IsObjectVisible())
+        {
+            mainCamera.fieldOfView--;
+            yield return new WaitForEndOfFrame();
+
+            while (IsObjectVisible())
+            {
+                mainCamera.fieldOfView--;
+                yield return new WaitForEndOfFrame();
+            }
+        }
+        else
         {
             mainCamera.fieldOfView++;
-
             yield return new WaitForEndOfFrame();
+
+            while (!IsObjectVisible())
+            {
+                mainCamera.fieldOfView++;
+                yield return new WaitForEndOfFrame();
+            }
         }
     }
 

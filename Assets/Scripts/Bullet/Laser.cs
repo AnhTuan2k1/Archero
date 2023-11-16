@@ -38,6 +38,6 @@ public class Laser : Bullet
 
     private void Die()
     {
-        ObjectPooling.Instance.ReturnObject(gameObject);
+        ObjectPooling.Instance.ReturnObject(gameObject, ObjectPoolingType.Laser);
     }
 }

@@ -70,8 +70,40 @@ Transform:
   - {fileID: 1554842409527198519}
   - {fileID: 405121580026142704}
   - {fileID: 1714248298127025553}
+  - {fileID: 8011658380489556185}
   m_Father: {fileID: 5205834686549825519}
   m_RootOrder: 2
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!1 &1272300599889407710
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 8011658380489556185}
+  m_Layer: 0
+  m_Name: GrimReaper
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &8011658380489556185
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1272300599889407710}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 4616137590080632916}
+  m_RootOrder: 11
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &1861817774866784275
 GameObject:
@@ -338,10 +370,10 @@ MonoBehaviour:
     size: 20
   - type: 4
     prefab: {fileID: 3439975688456297023, guid: def7d07d376b64a4c856562adfe266b6, type: 3}
-    size: 70
+    size: 100
   - type: 5
     prefab: {fileID: 526987272267711301, guid: 0edf0d5b01e11b8408918881c54ce50e, type: 3}
-    size: 120
+    size: 30
   - type: 6
     prefab: {fileID: 7659073959150280173, guid: cd891431901a1db448d80603c16223b7, type: 3}
     size: 10
@@ -360,6 +392,9 @@ MonoBehaviour:
   - type: 11
     prefab: {fileID: 5242894485288513977, guid: 069d342d99b12d840baf7bf3612f8c5c, type: 3}
     size: 7
+  - type: 12
+    prefab: {fileID: 8258954942512175702, guid: 0920324480b19e94c81813c23c6c6233, type: 3}
+    size: 7
   _objectPoolHolder: {fileID: 1267447038769960399}
   _Arrow: {fileID: 5448181174412344913}
   _RedCircleBullet: {fileID: 4900759067706966247}
@@ -372,6 +407,7 @@ MonoBehaviour:
   _FireBullet: {fileID: 8247171606420148662}
   _BounceFireBullet: {fileID: 6519030875229632909}
   _SupperBat: {fileID: 8213696343281287231}
+  _GrimReaper: {fileID: 1272300599889407710}
   poolPosition: {x: 0, y: 0}
 --- !u!1 &5448181174412344913
 GameObject:

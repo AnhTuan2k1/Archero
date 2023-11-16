@@ -364,9 +364,11 @@ public class LightningBolt : MonoBehaviour
 
     public static LightningBolt Instantiate(Vector3 start, Vector3 end)
     {
-        LightningBolt bolt = ObjectPooling.Instance
-            .GetObject(ObjectPoolingType.LightningBolt).GetComponent<LightningBolt>();
+        GameObject gameObject = ObjectPooling.Instance
+            .GetObject(ObjectPoolingType.LightningBolt);
+        if (gameObject == null) return null;
 
+        LightningBolt bolt = gameObject.GetComponent<LightningBolt>();
         bolt.StartPosition = start;
         bolt.EndPosition = end;
         bolt.OnInstantiate();
@@ -387,6 +389,6 @@ public class LightningBolt : MonoBehaviour
 
     private void Die()
     {
-        ObjectPooling.Instance.ReturnObject(gameObject);
+        ObjectPooling.Instance.ReturnObject(gameObject, ObjectPoolingType.LightningBolt);
     }
 }

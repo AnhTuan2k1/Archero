@@ -32,7 +32,7 @@ public class FloatingText : MonoBehaviour
 
     public void Die()
     {
-        ObjectPooling.Instance.ReturnObject(gameObject);
+        ObjectPooling.Instance.ReturnObject(gameObject, ObjectPoolingType.FloatingText);
     }
 
     /// <summary>

@@ -9,6 +9,7 @@ public static class TagDefine
     public static readonly string Tag_Enemy = "Enemy";
     public static readonly string Tag_Bullet = "Bullet";
     public static readonly string Tag_Wall = "Wall";
+    public static readonly string Tag_Water = "Water";
 }
 
 public abstract class CircleBullet : Bullet

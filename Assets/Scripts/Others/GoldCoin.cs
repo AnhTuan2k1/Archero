@@ -40,7 +40,7 @@ public class GoldCoin : MonoBehaviour
         StopAllCoroutines();
         rb.gravityScale = 1;
 
-        ObjectPooling.Instance.ReturnObject(gameObject);
+        ObjectPooling.Instance.ReturnObject(gameObject, ObjectPoolingType.GoldCoin);
     }
 
     public async void OnInstantiate()
